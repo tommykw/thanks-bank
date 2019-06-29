@@ -21,7 +21,7 @@ class InMemoryRepository : Repository {
 
     override suspend fun emoji(id: Int) = emojis.find { it.id == id }
 
-    override suspend fun emojis() = emojis.toList()
+    override suspend fun emojis() = emojis
 
     override suspend fun remove(id: Int): Boolean {
         emojis.find { it.id == id } ?: throw IllegalArgumentException("No emoji found for id $id")

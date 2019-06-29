@@ -4,6 +4,7 @@ import com.ryanharter.ktor.moshi.moshi
 import com.tommykw.api.emoji
 import com.tommykw.repository.InMemoryRepository
 import com.tommykw.webapp.about
+import com.tommykw.webapp.emojis
 import io.ktor.application.*
 import io.ktor.features.ContentNegotiation
 import io.ktor.features.DefaultHeaders
@@ -41,6 +42,8 @@ fun Application.module(testing: Boolean = false) {
     routing {
         home()
         about()
+        emojis(repository)
+
         emoji(repository)
     }
 }
