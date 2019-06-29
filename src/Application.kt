@@ -12,13 +12,7 @@ fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 @kotlin.jvm.JvmOverloads
 fun Application.module(testing: Boolean = false) {
     routing {
-        get("/") {
-            call.respondText("Hello World")
-        }
-
-        get("/hello") {
-            call.respondText("Hello Ktor")
-        }
+        home()
     }
 }
 
