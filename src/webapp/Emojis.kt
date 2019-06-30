@@ -35,8 +35,18 @@ fun Route.emojis(repository: Repository) {
         }
         post(EMOJIS) {
             val params = call.receiveParameters()
-            val emoji = params["emoji"] ?: throw IllegalArgumentException("Missing parameter: emoji")
-            repository.add(Emoji( emoji))
+            val action = params["action"] ?: throw IllegalArgumentException("Missing parameter: action")
+            when (action) {
+                "delete" -> {
+                    val id = params["id"] as? Int ?: throw IllegalArgumentException("Missing parameter: id")
+                    repository.remove(id)
+                }
+                "add" -> {
+                    val emoji = params["emoji"] ?: throw IllegalArgumentException("Missing parameter: emoji")
+                    repository.add(Emoji(emoji))
+                }
+            }
+
             call.respondRedirect(EMOJIS)
         }
     }

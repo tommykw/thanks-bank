@@ -16,6 +16,8 @@ import io.ktor.features.StatusPages
 import io.ktor.freemarker.FreeMarker
 import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
+import io.ktor.http.content.resources
+import io.ktor.http.content.static
 import io.ktor.response.*
 import io.ktor.routing.routing
 
@@ -60,6 +62,10 @@ fun Application.module(testing: Boolean = false) {
     val repository = InMemoryRepository()
 
     routing {
+        static("/static") {
+            resources("images")
+        }
+
         home()
         about()
         emojis(repository)
