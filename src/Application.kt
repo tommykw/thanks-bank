@@ -18,6 +18,9 @@ import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.content.resources
 import io.ktor.http.content.static
+import io.ktor.locations.Location
+import io.ktor.locations.Locations
+import io.ktor.locations.locations
 import io.ktor.response.*
 import io.ktor.routing.routing
 
@@ -59,6 +62,8 @@ fun Application.module(testing: Boolean = false) {
         }
     }
 
+    install(Locations)
+
     val repository = InMemoryRepository()
 
     routing {
@@ -75,3 +80,7 @@ fun Application.module(testing: Boolean = false) {
 }
 
 const val API_VERSION = "/api/v1"
+
+suspend fun ApplicationCall.redirect(location: Any) {
+    respondRedirect(application.locations.href(location))
+}
