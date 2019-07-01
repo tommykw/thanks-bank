@@ -1,9 +1,7 @@
 package com.tommykw.webapp
 
-import com.tommykw.model.Emoji
 import com.tommykw.model.User
 import com.tommykw.redirect
-import com.tommykw.repository.InMemoryRepository
 import com.tommykw.repository.Repository
 import io.ktor.application.call
 import io.ktor.auth.authenticate
@@ -14,7 +12,6 @@ import io.ktor.locations.get
 import io.ktor.locations.post
 import io.ktor.request.receiveParameters
 import io.ktor.response.respond
-import io.ktor.response.respondRedirect
 import io.ktor.routing.Route
 
 const val EMOJIS = "/emojis"
@@ -48,7 +45,7 @@ fun Route.emojis(repository: Repository) {
                 }
                 "add" -> {
                     val emoji = params["emoji"] ?: throw IllegalArgumentException("Missing parameter: emoji")
-                    repository.add(Emoji(emoji))
+                    repository.add(emoji)
                 }
             }
 

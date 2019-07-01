@@ -20,7 +20,7 @@ fun Route.emoji(repository: Repository) {
     authenticate("auth") {
         post(EMOJI_ENDPOINT) {
             val request = call.receive<Request>()
-            val emoji = repository.add(Emoji(request.name))
+            val emoji = repository.add(request.name)
             call.respond(emoji)
         }
     }

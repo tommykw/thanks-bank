@@ -34,6 +34,9 @@ dependencies {
     compile "io.ktor:ktor-auth:$ktor_version"
     compile "io.ktor:ktor-locations:$ktor_version"
     compile "ch.qos.logback:logback-classic:$logback_version"
-    compile 'com.ryanharter.ktor:ktor-moshi:1.0.1'
+    compile "com.ryanharter.ktor:ktor-moshi:1.0.1"
+    compile "com.h2database:h2:$h2_version"
+    compile "com.zaxxer:HikariCP:$hikaricp_version"
+    compile "org.jetbrains.exposed:exposed:$exposed_version"
     testCompile "io.ktor:ktor-server-tests:$ktor_version"
 }

@@ -3,7 +3,8 @@ package com.tommykw
 import com.ryanharter.ktor.moshi.moshi
 import com.tommykw.api.emoji
 import com.tommykw.model.User
-import com.tommykw.repository.InMemoryRepository
+import com.tommykw.repository.DatabaseFactory
+import com.tommykw.repository.EmojiRepository
 import com.tommykw.webapp.about
 import com.tommykw.webapp.emojis
 import freemarker.cache.ClassTemplateLoader
@@ -18,7 +19,6 @@ import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.content.resources
 import io.ktor.http.content.static
-import io.ktor.locations.Location
 import io.ktor.locations.Locations
 import io.ktor.locations.locations
 import io.ktor.response.*
@@ -64,7 +64,9 @@ fun Application.module(testing: Boolean = false) {
 
     install(Locations)
 
-    val repository = InMemoryRepository()
+    DatabaseFactory.init()
+
+    val repository = EmojiRepository()
 
     routing {
         static("/static") {
