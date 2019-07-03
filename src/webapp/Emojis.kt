@@ -40,8 +40,8 @@ fun Route.emojis(repository: Repository) {
             val action = params["action"] ?: throw IllegalArgumentException("Missing parameter: action")
             when (action) {
                 "delete" -> {
-                    val id = params["id"] as? Int ?: throw IllegalArgumentException("Missing parameter: id")
-                    repository.remove(id)
+                    val id = params["id"] ?: throw IllegalArgumentException("Missing parameter: id")
+                    repository.remove(id.toInt())
                 }
                 "add" -> {
                     val emoji = params["emoji"] ?: throw IllegalArgumentException("Missing parameter: emoji")
