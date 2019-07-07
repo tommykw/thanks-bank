@@ -5,8 +5,7 @@ import com.tommykw.api.emoji
 import com.tommykw.model.User
 import com.tommykw.repository.DatabaseFactory
 import com.tommykw.repository.EmojiRepository
-import com.tommykw.webapp.about
-import com.tommykw.webapp.emojis
+import com.tommykw.webapp.*
 import freemarker.cache.ClassTemplateLoader
 import io.ktor.application.*
 import io.ktor.auth.Authentication
@@ -49,20 +48,9 @@ fun Application.module(testing: Boolean = false) {
         templateLoader = ClassTemplateLoader(this::class.java.classLoader, "templates")
     }
 
-    install(Authentication) {
-        basic(name = "auth") {
-            realm = "Ktor server"
-            validate { credentials ->
-                if (credentials.password == "${credentials.name}123") {
-                    User(credentials.name)
-                } else {
-                    null
-                }
-            }
-        }
-    }
-
     install(Locations)
+
+    val hashFunction = { s: String -> hash(s) }
 
     DatabaseFactory.init()
 
@@ -76,6 +64,9 @@ fun Application.module(testing: Boolean = false) {
         home()
         about()
         emojis(repository)
+        signin(repository, hashFunction)
+        signout()
+        signup(repository, hashFunction)
 
         emoji(repository)
     }

@@ -16,12 +16,9 @@ import io.ktor.routing.post
 const val EMOJI_ENDPOINT = "$API_VERSION/emoji"
 
 fun Route.emoji(repository: Repository) {
-
-    authenticate("auth") {
-        post(EMOJI_ENDPOINT) {
-            val request = call.receive<Request>()
-            val emoji = repository.add(request.name)
-            call.respond(emoji)
-        }
+    post(EMOJI_ENDPOINT) {
+        val request = call.receive<Request>()
+        val emoji = repository.add("", request.name)
+        call.respond(emoji)
     }
 }

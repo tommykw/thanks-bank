@@ -1,6 +1,7 @@
 package com.tommykw.repository
 
 import com.tommykw.model.EmojiData
+import com.tommykw.model.Users
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
 import kotlinx.coroutines.Dispatchers
@@ -17,6 +18,7 @@ object DatabaseFactory {
 
         transaction {
             SchemaUtils.create(EmojiData)
+            SchemaUtils.create(Users)
         }
     }
 
