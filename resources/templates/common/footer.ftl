@@ -2,5 +2,5 @@
   <br>
   <br>
   <br>
-  <p>XXX</p>
+  <p>Copyright 2019 tommykw's park</p>
 </footer>

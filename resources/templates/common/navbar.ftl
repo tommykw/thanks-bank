@@ -7,7 +7,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="/">EmojiPhrases</a>
+      <a class="navbar-brand" href="/">Emoji</a>
     </div>
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
@@ -17,7 +17,7 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
       <#if user??>
-        <li><p class="navbar-text">Welcome ${user.name}</p></li>
+        <li><p class="navbar-text">Welcome ${user.displayName}</p></li>
         <li><a href="/signout">Sign Out</a></li>
       <#else>
         <li><a href="/signin">Sign In</a></li>
