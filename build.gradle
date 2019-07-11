@@ -33,7 +33,7 @@ dependencies {
     compile "io.ktor:ktor-server-netty:$ktor_version"
     compile "ch.qos.logback:logback-classic:$logback_version"
     testCompile "io.ktor:ktor-server-tests:$ktor_version"
-    compile "com.ryanharter.ktor:ktor-moshi:$moshi_version"
+    compile "io.ktor:ktor-gson:$ktor_version"
     compile "io.ktor:ktor-freemarker:$ktor_version"
     compile "io.ktor:ktor-locations:$ktor_version"
     compile "com.h2database:h2:$h2_version"

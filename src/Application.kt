@@ -1,7 +1,6 @@
 package com.tommykw
 
-import com.ryanharter.ktor.moshi.moshi
-import com.tommykw.api.emoji
+import com.tommykw.api.emojiApi
 import com.tommykw.api.login
 import com.tommykw.model.EPSession
 import com.tommykw.model.User
@@ -16,6 +15,7 @@ import io.ktor.features.ContentNegotiation
 import io.ktor.features.DefaultHeaders
 import io.ktor.features.StatusPages
 import io.ktor.freemarker.FreeMarker
+import io.ktor.gson.gson
 import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpStatusCode
@@ -51,7 +51,7 @@ fun Application.module(testing: Boolean = false) {
     }
 
     install(ContentNegotiation) {
-        moshi()
+        gson()
     }
 
     install(FreeMarker) {
@@ -101,7 +101,7 @@ fun Application.module(testing: Boolean = false) {
         signup(repository, hashFunction)
 
         login(repository, jwtService)
-        emoji(repository)
+        emojiApi(repository)
     }
 }
 
