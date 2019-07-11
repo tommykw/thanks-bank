@@ -2,6 +2,7 @@ package com.tommykw
 
 import com.ryanharter.ktor.moshi.moshi
 import com.tommykw.api.emoji
+import com.tommykw.api.login
 import com.tommykw.model.EPSession
 import com.tommykw.model.User
 import com.tommykw.repository.DatabaseFactory
@@ -9,6 +10,8 @@ import com.tommykw.repository.EmojiRepository
 import com.tommykw.webapp.*
 import freemarker.cache.ClassTemplateLoader
 import io.ktor.application.*
+import io.ktor.auth.Authentication
+import io.ktor.auth.jwt.jwt
 import io.ktor.features.ContentNegotiation
 import io.ktor.features.DefaultHeaders
 import io.ktor.features.StatusPages
@@ -68,6 +71,22 @@ fun Application.module(testing: Boolean = false) {
     DatabaseFactory.init()
 
     val repository = EmojiRepository()
+    val jwtService = JwtService()
+
+    install(Authentication) {
+        jwt("jwt") {
+            verifier(jwtService.verifier)
+            realm = "emojis app"
+            validate {
+                val payload = it.payload
+                val claim = payload.getClaim("id")
+                val claimString = claim.asString()
+                val user = repository.userById(claimString)
+                user
+
+            }
+        }
+    }
 
     routing {
         static("/static") {
@@ -81,6 +100,7 @@ fun Application.module(testing: Boolean = false) {
         signout()
         signup(repository, hashFunction)
 
+        login(repository, jwtService)
         emoji(repository)
     }
 }

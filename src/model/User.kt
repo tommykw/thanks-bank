@@ -1,5 +1,6 @@
 package com.tommykw.model
 
+import io.ktor.auth.Principal
 import org.jetbrains.exposed.sql.Table
 import java.io.Serializable
 
@@ -8,7 +9,7 @@ data class User(
     val email: String,
     val displayName: String,
     val passwordhash: String
-): Serializable
+): Serializable, Principal
 
 object Users: Table() {
     val id = varchar("id", 20).primaryKey()
