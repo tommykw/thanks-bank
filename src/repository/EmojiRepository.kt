@@ -8,14 +8,22 @@ import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 
 class EmojiRepository : Repository {
-    override suspend fun add(userId: String, emojiValue: String) {
-        transaction {
-            EmojiData.insert {
-                it[user] = userId
-                it[emoji] = emojiValue
+    override suspend fun add(userId: String, emojiValue: String) =
+        DatabaseFactory.dbQuery {
+            transaction {
+                val insertStatement = EmojiData.insert {
+                    it[user] = userId
+                    it[emoji] = emojiValue
+                }
+
+                val result = insertStatement.resultedValues?.get(0)
+                if (result != null) {
+                    toEmoji(result)
+                } else {
+                    null
+                }
             }
-        }
-    }
+       }
 
     override suspend fun emoji(id: Int): Emoji? {
         return DatabaseFactory.dbQuery {
