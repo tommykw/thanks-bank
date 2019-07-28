@@ -11,7 +11,7 @@ buildscript {
 apply plugin: 'kotlin'
 apply plugin: 'application'
 
-group 'com.tommykw.backend'
+group 'com.tommykw'
 version '0.0.1'
 mainClassName = "io.ktor.server.netty.EngineMain"
 
@@ -34,6 +34,5 @@ dependencies {
     compile "ch.qos.logback:logback-classic:$logback_version"
     compile "io.ktor:ktor-server-core:$ktor_version"
     compile "io.ktor:ktor-locations:$ktor_version"
-    compile "io.ktor:ktor-websockets:$ktor_version"
     testCompile "io.ktor:ktor-server-tests:$ktor_version"
 }
