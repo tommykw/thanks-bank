@@ -1,3 +1,4 @@
 rootProject.name = "emojiapp"
 include 'frontend'
+include 'frontend'
 
