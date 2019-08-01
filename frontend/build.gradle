@@ -5,11 +5,13 @@ buildscript {
     
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "org.jetbrains.kotlin:kotlin-serialization:$kotlin_version"
     }
 }
 
 apply plugin: 'kotlin'
 apply plugin: 'application'
+apply plugin: 'kotlinx-serialization'
 
 group 'com.tommykw'
 version '0.0.1'
@@ -28,8 +30,15 @@ repositories {
 }
 
 dependencies {
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-    compile "io.ktor:ktor-server-netty:$ktor_version"
-    compile "ch.qos.logback:logback-classic:$logback_version"
-    testCompile "io.ktor:ktor-server-tests:$ktor_version"
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    compile "org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.11.1"
+    compile "org.jetbrains.kotlin:kotlin-stdlib-js:$kotlin_version"
+//    compile "org.jetbrains.kotlinx:kotlinx-html-js:$kotlinx_html_version"
+//    compile "org.jetbrains.kotlinx:kotlinx-serialization-runtime-js:$kotlin_serializable_version"
+    compile "io.ktor:ktor-client-js:$ktor_version"
+    
+
+    testCompile "org.jetbrains.kotlin:kotlin-test-js:$kotlin_version"
+    testCompile "org.jetbrains.kotlin:kotlin-test-common:$kotlin_version"
+    testCompile "org.jetbrains.kotlin:kotlin-test-annotations-common:$kotlin_version"
 }
