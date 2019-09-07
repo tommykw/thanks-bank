@@ -1,6 +1,7 @@
 package com.tommykw.repository
 
 import com.tommykw.model.EmojiData
+import com.tommykw.model.Playgrounds
 import com.tommykw.model.Users
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
@@ -8,7 +9,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils
-import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.transactions.transaction
 
 object DatabaseFactory {
@@ -19,6 +19,7 @@ object DatabaseFactory {
         transaction {
             SchemaUtils.create(EmojiData)
             SchemaUtils.create(Users)
+            SchemaUtils.create(Playgrounds)
         }
     }
 

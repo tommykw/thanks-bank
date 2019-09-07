@@ -1,6 +1,7 @@
 package com.tommykw
 
 import com.tommykw.model.EPSession
+import com.tommykw.repository.ERepository
 import com.tommykw.repository.Repository
 import io.ktor.application.call
 import io.ktor.freemarker.FreeMarkerContent
@@ -17,9 +18,11 @@ const val HOME = "/"
 @Location(HOME)
 class Home
 
-fun Route.home(repository: Repository) {
+fun Route.home(repository: Repository, eRepository: ERepository) {
     get<Home> {
         val user = call.sessions.get<EPSession>()?.let { repository.user(it.userId) }
         call.respond(FreeMarkerContent("home.ftl", mapOf("user" to user)))
+
+        eRepository.addPlayground("hoge", "fun main() {}")
     }
 }

@@ -4,6 +4,7 @@
         <head>
             <title>EmojiPhrases</title>
             <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+            <script src="https://unpkg.com/kotlin-playground@1" data-selector="code"></script>
         </head>
         <body>
             <#include "navbar.ftl">

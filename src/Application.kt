@@ -6,6 +6,7 @@ import com.tommykw.model.EPSession
 import com.tommykw.model.User
 import com.tommykw.repository.DatabaseFactory
 import com.tommykw.repository.EmojiRepository
+import com.tommykw.repository.PlaygroundRepository
 import com.tommykw.webapp.*
 import freemarker.cache.ClassTemplateLoader
 import io.ktor.application.*
@@ -72,6 +73,7 @@ fun Application.module(testing: Boolean = false) {
     DatabaseFactory.init()
 
     val repository = EmojiRepository()
+    val playgroundRepository = PlaygroundRepository()
     val jwtService = JwtService()
 
     install(Authentication) {
@@ -94,7 +96,7 @@ fun Application.module(testing: Boolean = false) {
             resources("images")
         }
 
-        home(repository)
+        home(repository, playgroundRepository)
         about(repository)
         emojis(repository, hashFunction)
         signin(repository, hashFunction)
