@@ -2,6 +2,7 @@ package com.tommykw.webapp
 
 import com.tommykw.*
 import com.tommykw.model.EPSession
+import com.tommykw.repository.EmojiRepository
 import com.tommykw.repository.Repository
 import com.tommykw.userNameValid
 import io.ktor.application.call
@@ -16,14 +17,17 @@ import io.ktor.routing.Route
 import io.ktor.sessions.get
 import io.ktor.sessions.sessions
 import io.ktor.sessions.set
+import org.kodein.di.generic.instance
+import org.kodein.di.ktor.kodein
 
 const val SIGNIN = "/signin"
 
 @Location(SIGNIN)
 data class Signin(val userId: String = "", val error: String = "")
 
-fun Route.signin(db: Repository, hashFunction: (String) -> String) {
+fun Route.signin(hashFunction: (String) -> String) {
     post<Signin> {
+        val db by kodein().instance<EmojiRepository>()
         val signInParameters = call.receive<Parameters>()
         val userId = signInParameters["userId"] ?: return@post call.redirect(it)
         val password = signInParameters["password"] ?: return@post call.redirect(it)
@@ -45,6 +49,7 @@ fun Route.signin(db: Repository, hashFunction: (String) -> String) {
     }
 
     get<Signin> {
+        val db by kodein().instance<EmojiRepository>()
         val user = call.sessions.get<EPSession>()?.let { db.user(it.userId) }
 
         if (user != null) {

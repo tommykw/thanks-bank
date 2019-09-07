@@ -3,6 +3,7 @@ package com.tommykw.webapp
 import com.tommykw.model.EPSession
 import com.tommykw.model.User
 import com.tommykw.redirect
+import com.tommykw.repository.EmojiRepository
 import com.tommykw.repository.Repository
 import com.tommykw.securityCode
 import com.tommykw.verifyCode
@@ -18,14 +19,18 @@ import io.ktor.response.respond
 import io.ktor.routing.Route
 import io.ktor.sessions.get
 import io.ktor.sessions.sessions
+import org.kodein.di.generic.instance
+import org.kodein.di.ktor.kodein
 
 const val EMOJIS = "/emojis"
 
 @Location(EMOJIS)
 class Emojis
 
-fun Route.emojis(repository: Repository, hashFunction: (String) -> String) {
+fun Route.emojis(hashFunction: (String) -> String) {
     get<Emojis> {
+        val repository by kodein().instance<EmojiRepository>()
+
         val user = call.sessions.get<EPSession>()?.let { repository.user(it.userId) }
 
         if (user == null) {
@@ -50,6 +55,7 @@ fun Route.emojis(repository: Repository, hashFunction: (String) -> String) {
     }
 
     post<Emojis> {
+        val repository by kodein().instance<EmojiRepository>()
         val user = call.sessions.get<EPSession>()?.let { repository.user(it.userId) }
 
         val params = call.receiveParameters()

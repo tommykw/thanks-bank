@@ -42,6 +42,8 @@ dependencies {
     compile "org.postgresql:postgresql:$postgres_version"
     compile "io.ktor:ktor-auth-jwt:$ktor_version"
     compile "com.auth0:java-jwt:3.1.0"
+    compile "org.kodein.di:kodein-di-generic-jvm:6.3.3"
+    compile "org.kodein.di:kodein-di-framework-ktor-server-jvm:6.3.3"
 }
 
 task stage(dependsOn: ['installDist'])

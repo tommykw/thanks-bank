@@ -3,6 +3,7 @@ package com.tommykw.api
 import com.tommykw.API_VERSION
 import com.tommykw.api.requests.EmojiApiRequest
 import com.tommykw.apiuser
+import com.tommykw.repository.EmojiRepository
 import com.tommykw.repository.Repository
 import io.ktor.application.call
 import io.ktor.auth.authenticate
@@ -14,20 +15,24 @@ import io.ktor.request.receive
 import io.ktor.response.respond
 import io.ktor.response.respondText
 import io.ktor.routing.Route
+import org.kodein.di.generic.instance
+import org.kodein.di.ktor.kodein
 
 const val EMOJI_ENDPOINT = "$API_VERSION/emoji"
 
 @Location(EMOJI_ENDPOINT)
 class EmojiApi
 
-fun Route.emojiApi(repository: Repository) {
+fun Route.emojiApi() {
 
     authenticate("jwt") {
         get<EmojiApi> {
+            val repository by kodein().instance<EmojiRepository>()
             call.respond(repository.emojis())
         }
 
         post<EmojiApi> {
+            val repository by kodein().instance<EmojiRepository>()
             val user = call.apiuser!!
 
             try {

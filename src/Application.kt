@@ -32,6 +32,9 @@ import io.ktor.routing.routing
 import io.ktor.sessions.SessionTransportTransformerMessageAuthentication
 import io.ktor.sessions.Sessions
 import io.ktor.sessions.cookie
+import org.kodein.di.generic.bind
+import org.kodein.di.generic.singleton
+import org.kodein.di.ktor.kodein
 import java.net.URI
 import java.util.concurrent.TimeUnit
 
@@ -40,6 +43,10 @@ fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 @Suppress("unused") // Referenced in application.conf
 @kotlin.jvm.JvmOverloads
 fun Application.module(testing: Boolean = false) {
+    kodein {
+        bind<EmojiRepository>() with singleton { EmojiRepository() }
+        bind<PlaygroundRepository>() with singleton { PlaygroundRepository() }
+    }
 
     install(DefaultHeaders) {}
 
@@ -72,8 +79,6 @@ fun Application.module(testing: Boolean = false) {
 
     DatabaseFactory.init()
 
-    val repository = EmojiRepository()
-    val playgroundRepository = PlaygroundRepository()
     val jwtService = JwtService()
 
     install(Authentication) {
@@ -84,6 +89,7 @@ fun Application.module(testing: Boolean = false) {
                 val payload = it.payload
                 val claim = payload.getClaim("id")
                 val claimString = claim.asString()
+                val repository = EmojiRepository()
                 val user = repository.userById(claimString)
                 user
 
@@ -96,15 +102,14 @@ fun Application.module(testing: Boolean = false) {
             resources("images")
         }
 
-        home(repository, playgroundRepository)
-        about(repository)
-        emojis(repository, hashFunction)
-        signin(repository, hashFunction)
+        home()
+        about()
+        emojis(hashFunction)
+        signin(hashFunction)
         signout()
-        signup(repository, hashFunction)
-
-        login(repository, jwtService)
-        emojiApi(repository)
+        signup(hashFunction)
+        login(jwtService)
+        emojiApi()
     }
 }
 

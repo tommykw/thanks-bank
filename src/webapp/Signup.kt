@@ -5,6 +5,7 @@ import com.tommykw.MIN_USER_ID_LENGTH
 import com.tommykw.model.EPSession
 import com.tommykw.model.User
 import com.tommykw.redirect
+import com.tommykw.repository.EmojiRepository
 import com.tommykw.repository.Repository
 import com.tommykw.userNameValid
 import io.ktor.application.application
@@ -21,6 +22,8 @@ import io.ktor.routing.Route
 import io.ktor.sessions.get
 import io.ktor.sessions.sessions
 import io.ktor.sessions.set
+import org.kodein.di.generic.instance
+import org.kodein.di.ktor.kodein
 
 const val SIGNUP = "/signup"
 
@@ -32,8 +35,9 @@ data class Signup(
     val error: String = ""
 )
 
-fun Route.signup(db: Repository, hashFunction: (String) -> String) {
+fun Route.signup(hashFunction: (String) -> String) {
     post<Signup> {
+        val db by kodein().instance<EmojiRepository>()
         val user = call.sessions.get<EPSession>()?.let { db.user(it.userId) }
         if (user != null) return@post call.redirect(Emojis())
 
@@ -80,6 +84,7 @@ fun Route.signup(db: Repository, hashFunction: (String) -> String) {
     }
 
     get<Signup> {
+        val db by kodein().instance<EmojiRepository>()
         val user = call.sessions.get<EPSession>()?.let {
             db.user(it.userId)
         }
