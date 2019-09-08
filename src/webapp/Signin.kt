@@ -3,8 +3,6 @@ package com.tommykw.webapp
 import com.tommykw.*
 import com.tommykw.model.EPSession
 import com.tommykw.repository.EmojiRepository
-import com.tommykw.repository.Repository
-import com.tommykw.userNameValid
 import io.ktor.application.call
 import io.ktor.freemarker.FreeMarkerContent
 import io.ktor.http.Parameters

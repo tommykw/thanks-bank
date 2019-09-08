@@ -1,7 +1,6 @@
 package com.tommykw.repository
 
 import com.tommykw.model.Emoji
-import com.tommykw.model.Playground
 import com.tommykw.model.User
 
 interface Repository {

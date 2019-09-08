@@ -9,7 +9,10 @@ import com.tommykw.repository.EmojiRepository
 import com.tommykw.repository.PlaygroundRepository
 import com.tommykw.webapp.*
 import freemarker.cache.ClassTemplateLoader
-import io.ktor.application.*
+import io.ktor.application.Application
+import io.ktor.application.ApplicationCall
+import io.ktor.application.call
+import io.ktor.application.install
 import io.ktor.auth.Authentication
 import io.ktor.auth.authentication
 import io.ktor.auth.jwt.jwt
@@ -27,7 +30,8 @@ import io.ktor.locations.Locations
 import io.ktor.locations.locations
 import io.ktor.request.header
 import io.ktor.request.host
-import io.ktor.response.*
+import io.ktor.response.respondRedirect
+import io.ktor.response.respondText
 import io.ktor.routing.routing
 import io.ktor.sessions.SessionTransportTransformerMessageAuthentication
 import io.ktor.sessions.Sessions

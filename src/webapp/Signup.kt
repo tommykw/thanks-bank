@@ -6,7 +6,6 @@ import com.tommykw.model.EPSession
 import com.tommykw.model.User
 import com.tommykw.redirect
 import com.tommykw.repository.EmojiRepository
-import com.tommykw.repository.Repository
 import com.tommykw.userNameValid
 import io.ktor.application.application
 import io.ktor.application.call

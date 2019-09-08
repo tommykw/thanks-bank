@@ -4,7 +4,6 @@ import com.tommykw.JwtService
 import com.tommykw.hash
 import com.tommykw.redirect
 import com.tommykw.repository.EmojiRepository
-import com.tommykw.repository.Repository
 import io.ktor.application.call
 import io.ktor.http.Parameters
 import io.ktor.locations.Location

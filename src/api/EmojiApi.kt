@@ -4,7 +4,6 @@ import com.tommykw.API_VERSION
 import com.tommykw.api.requests.EmojiApiRequest
 import com.tommykw.apiuser
 import com.tommykw.repository.EmojiRepository
-import com.tommykw.repository.Repository
 import io.ktor.application.call
 import io.ktor.auth.authenticate
 import io.ktor.http.HttpStatusCode

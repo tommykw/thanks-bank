@@ -1,15 +1,11 @@
 package com.tommykw.webapp
 
 import com.tommykw.model.EPSession
-import com.tommykw.model.User
 import com.tommykw.redirect
 import com.tommykw.repository.EmojiRepository
-import com.tommykw.repository.Repository
 import com.tommykw.securityCode
 import com.tommykw.verifyCode
 import io.ktor.application.call
-import io.ktor.auth.authenticate
-import io.ktor.auth.authentication
 import io.ktor.freemarker.FreeMarkerContent
 import io.ktor.locations.Location
 import io.ktor.locations.get
