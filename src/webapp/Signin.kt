@@ -42,7 +42,7 @@ fun Route.signin(hashFunction: (String) -> String) {
             call.redirect(signInError.copy(error = "Invalid username or password"))
         } else {
             call.sessions.set(EPSession(signin.userId))
-            call.redirect(Emojis())
+            call.redirect(Playground())
         }
     }
 

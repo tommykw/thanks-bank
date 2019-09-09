@@ -4,23 +4,13 @@
     <div class="row">
                     <p>Turns into:</p>
 
-                    <div class="kotlin-code">
-                    <code class="hljs language-kotlin">
-                    fun main() {
-
-                    }
-                    </code>
-                    </div>
-
-                    <div id="myid" class="code-blocks-selector">
-                    AAAAAAA
+                    <div id="code" class="code-blocks-selector">
+                    AAAAAA
                     </div>
 
                     <script>
                     function onChange(code) {
-                      console.log("Editor code was changed:" + code);
-                      // 取れたとしてコードを保存しましょう。
-
+                       console.log("Editor code was changed:" + code);
                     }
 
                     function onTestPassed() {
@@ -39,11 +29,10 @@
                        console.log("Test Failed!");
                     }
 
-                    var mydiv = document.getElementById("myid")
-                    //onChange: onChange(mydiv.innerHTML),
+                    var code = document.getElementById("code")
 
                     const options = {
-                      onChange: onChange("code"),
+                      onChange: onChange(code.textContent),
                       onTestPassed: onTestPassed,
                       onCloseConsole: onCloseConsole,
                       onOpenConsole: onOpenConsole,
@@ -52,10 +41,18 @@
 
                     document.addEventListener('DOMContentLoaded', function() {
                       KotlinPlayground('.code-blocks-selector', options);
-                      //KotlinPlayground('.code-blocks-selector', options);
-                      //KotlinPlayground('code', options);
                     });
-
                     </script>
     </div>
+
+        <div class="panel-body">
+        <form method="post" action="/playground">
+        <input type="hidden" name="action" value="add">
+        Playground:<br>
+        name:<input type="text" name="name" /><br>
+        code:<input type="text" name="code" /><br>
+        <input type="submit" value="submit" />
+        </form>
+        </div>
+
 </@b.page>

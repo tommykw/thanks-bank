@@ -26,8 +26,8 @@ class PlaygroundRepository : ERepository {
 
     override suspend fun playground(id: Int): Playground? {
         return DatabaseFactory.dbQuery {
-            EmojiData.select {
-                (EmojiData.id eq id)
+            Playgrounds.select {
+                (Playgrounds.id eq id)
             }.mapNotNull { toPlayground(it) }
                 .singleOrNull()
         }

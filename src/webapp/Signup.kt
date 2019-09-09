@@ -38,7 +38,7 @@ fun Route.signup(hashFunction: (String) -> String) {
     post<Signup> {
         val db by kodein().instance<EmojiRepository>()
         val user = call.sessions.get<EPSession>()?.let { db.user(it.userId) }
-        if (user != null) return@post call.redirect(Emojis())
+        if (user != null) return@post call.redirect(Playground())
 
         val signupParameters = call.receive<Parameters>()
         val userId = signupParameters["userId"] ?: return@post call.redirect(it)
@@ -77,7 +77,7 @@ fun Route.signup(hashFunction: (String) -> String) {
                 }
 
                 call.sessions.set(EPSession(newUser.userId))
-                call.redirect(Emojis())
+                call.redirect(Playground())
             }
         }
     }
@@ -89,7 +89,7 @@ fun Route.signup(hashFunction: (String) -> String) {
         }
 
         if (user != null) {
-            call.redirect(Emojis())
+            call.redirect(Playground())
         } else {
             call.respond(FreeMarkerContent("signup.ftl", mapOf("error" to it.error)))
         }

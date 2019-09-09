@@ -1,22 +1,23 @@
 <#import "common/bootstrap.ftl" as b>
 
 <@b.page>
-    <#if emojis?? && (emojis?size > 0)>
+    <#if playgrounds?? && (playgrounds?size > 0)>
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>Emoji</th>
+                    <th>Playground</th>
                 </tr>
             </thead>
             <tbody>
-                <#list emojis as emoji>
+                <#list playgrounds as playground>
                     <tr>
-                        <td style="vertical-align:middle"><h3>${emoji.name}</h3></td>
+                        <td style="vertical-align:middle"><h3>${playground.name}</h3></td>
+                        <td style="vertical-align:middle"><h3>${playground.code}</h3></td>
                         <td class="col-md-1" style="text-align:center;vertical-align:middle;">
-                            <form method="post" action="/emojis">
+                            <form method="post" action="/playground">
                                 <input type="hidden" name="date" value="${date?c}">
                                 <input type="hidden" name="code" value="${code}">
-                                <input type="hidden" name="id" value="${emoji.id}">
+                                <input type="hidden" name="id" value="${playground.id}">
                                 <input type="hidden" name="action" value="delete">
                                 <input type="image" src="/static/tommykw.png" width="24" height="24" border="0" alt="Delete" />
                             </form>
@@ -26,14 +27,4 @@
             </tbody>
         </table>
     </#if>
-    <div class="panel-body">
-    <form method="post" action="/emojis">
-    <input type="hidden" name="date" value="${date?c}">
-    <input type="hidden" name="code" value="${code}">
-    <input type="hidden" name="action" value="add">
-    Emoji:<br>
-    <input type="text" name="emoji" /><br>
-    <input type="submit" value="submit" />
-    </form>
-    </div>
 </@b.page>

@@ -3,6 +3,7 @@ package com.tommykw.webapp
 import com.tommykw.model.EPSession
 import com.tommykw.redirect
 import com.tommykw.repository.EmojiRepository
+import com.tommykw.repository.PlaygroundRepository
 import com.tommykw.securityCode
 import com.tommykw.verifyCode
 import io.ktor.application.call
@@ -18,29 +19,28 @@ import io.ktor.sessions.sessions
 import org.kodein.di.generic.instance
 import org.kodein.di.ktor.kodein
 
-const val EMOJIS = "/emojis"
+@Location("/playground")
+class Playground
 
-@Location(EMOJIS)
-class Emojis
+fun Route.playground(hashFunction: (String) -> String) {
+    get<Playground> {
+        val userRepository by kodein().instance<EmojiRepository>()
+        val repository by kodein().instance<PlaygroundRepository>()
 
-fun Route.emojis(hashFunction: (String) -> String) {
-    get<Emojis> {
-        val repository by kodein().instance<EmojiRepository>()
-
-        val user = call.sessions.get<EPSession>()?.let { repository.user(it.userId) }
+        val user = call.sessions.get<EPSession>()?.let { userRepository.user(it.userId) }
 
         if (user == null) {
             call.redirect(Signin())
         } else {
-            val emojis = repository.emojis()
+            val playgrounds = repository.playgrounds()
             val date = System.currentTimeMillis()
             val code = call.securityCode(date, user, hashFunction)
 
             call.respond(
                 FreeMarkerContent(
-                    "emojis.ftl",
+                    "playground.ftl",
                     mapOf(
-                        "emojis" to emojis,
+                        "playgrounds" to playgrounds,
                         "name" to user.displayName,
                         "date" to date,
                         "code" to code
@@ -50,30 +50,31 @@ fun Route.emojis(hashFunction: (String) -> String) {
         }
     }
 
-    post<Emojis> {
+    post<Playground> {
         val repository by kodein().instance<EmojiRepository>()
+        val playgroundRepository by kodein().instance<PlaygroundRepository>()
         val user = call.sessions.get<EPSession>()?.let { repository.user(it.userId) }
 
         val params = call.receiveParameters()
-        val date = params["date"]?.toLongOrNull() ?: return@post call.redirect(it)
-        val code = params["code"] ?: return@post call.redirect(it)
+        //val date = params["date"]?.toLongOrNull() ?: return@post call.redirect(it)
         val action = params["action"] ?: throw IllegalArgumentException("Missing parameter: action")
 
-        if (user == null || !call.verifyCode(date, user, code, hashFunction)) {
-            call.redirect(Signin())
-        }
+//        if (user == null || !call.verifyCode(date, user, code, hashFunction)) {
+//            call.redirect(Signin())
+//        }
 
         when (action) {
             "delete" -> {
                 val id = params["id"] ?: throw IllegalArgumentException("Missing parameter: id")
-                repository.remove(id.toInt())
+                playgroundRepository.removePlayground(id.toInt())
             }
             "add" -> {
-                val emoji = params["emoji"] ?: throw IllegalArgumentException("Missing parameter: emoji")
-                repository.add(user!!.userId, emoji)
+                val code = params["code"] ?: return@post call.redirect(it)
+                val name = params["name"] ?: return@post call.redirect(it)
+                playgroundRepository.addPlayground(name, code)
             }
         }
 
-        call.redirect(Emojis())
+        call.redirect(Playground())
     }
 }

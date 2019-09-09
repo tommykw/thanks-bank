@@ -96,7 +96,6 @@ fun Application.module(testing: Boolean = false) {
                 val repository = EmojiRepository()
                 val user = repository.userById(claimString)
                 user
-
             }
         }
     }
@@ -108,7 +107,7 @@ fun Application.module(testing: Boolean = false) {
 
         home()
         about()
-        emojis(hashFunction)
+        playground(hashFunction)
         signin(hashFunction)
         signout()
         signup(hashFunction)

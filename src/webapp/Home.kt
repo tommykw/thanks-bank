@@ -26,7 +26,5 @@ fun Route.home() {
 
         val user = call.sessions.get<EPSession>()?.let { repository.user(it.userId) }
         call.respond(FreeMarkerContent("home.ftl", mapOf("user" to user)))
-
-        eRepository.addPlayground("hoge", "fun main() {}")
     }
 }
