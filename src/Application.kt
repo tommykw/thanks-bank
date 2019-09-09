@@ -1,7 +1,7 @@
 package com.tommykw
 
-import com.tommykw.api.emojiApi
 import com.tommykw.api.login
+import com.tommykw.api.playgroundApi
 import com.tommykw.model.EPSession
 import com.tommykw.model.User
 import com.tommykw.repository.DatabaseFactory
@@ -112,7 +112,7 @@ fun Application.module(testing: Boolean = false) {
         signout()
         signup(hashFunction)
         login(jwtService)
-        emojiApi()
+        playgroundApi()
     }
 }
 
