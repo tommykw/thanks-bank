@@ -20,7 +20,6 @@ import org.kodein.di.ktor.kodein
 class PlaygroundApi
 
 fun Route.playgroundApi() {
-
     get<PlaygroundApi> {
         val repository by kodein().instance<PlaygroundRepository>()
         call.respond(repository.playgrounds())
@@ -28,7 +27,7 @@ fun Route.playgroundApi() {
 
     post<PlaygroundApi> {
         val repository by kodein().instance<PlaygroundRepository>()
-        val user = call.apiuser!!
+        //val user = call.apiuser!!
 
         try {
             val request = call.receive<PlaygroundApiRequest>()
