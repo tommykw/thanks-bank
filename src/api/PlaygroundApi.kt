@@ -3,6 +3,7 @@ package com.tommykw.api
 import com.tommykw.API_VERSION
 import com.tommykw.api.requests.PlaygroundApiRequest
 import com.tommykw.apiuser
+import com.tommykw.repository.InMemoryRepository
 import com.tommykw.repository.PlaygroundRepository
 import io.ktor.application.call
 import io.ktor.http.HttpStatusCode
@@ -19,7 +20,7 @@ import org.kodein.di.ktor.kodein
 @Location("$API_VERSION/playground")
 class PlaygroundApi
 
-fun Route.playgroundApi() {
+fun Route.playgroundApi(inMemoryRepository: InMemoryRepository) {
     get<PlaygroundApi> {
         val repository by kodein().instance<PlaygroundRepository>()
         call.respond(repository.playgrounds())
@@ -31,12 +32,9 @@ fun Route.playgroundApi() {
 
         try {
             val request = call.receive<PlaygroundApiRequest>()
-            val playgrounds = repository.addPlayground(request.name, request.code)
-            if (playgrounds != null) {
-                call.respond(playgrounds)
-            } else {
-                call.respondText("Invalid data received", status = HttpStatusCode.InternalServerError)
-            }
+
+            val result = inMemoryRepository.updatePlayground(request.code)
+            call.respond(result)
         } catch (e: Throwable) {
             call.respondText("Invalid data received", status = HttpStatusCode.BadRequest)
         }

@@ -2,6 +2,7 @@ package com.tommykw
 
 import com.tommykw.model.EPSession
 import com.tommykw.repository.EmojiRepository
+import com.tommykw.repository.InMemoryRepository
 import com.tommykw.repository.PlaygroundRepository
 import io.ktor.application.call
 import io.ktor.freemarker.FreeMarkerContent
@@ -19,12 +20,20 @@ const val HOME = "/"
 @Location(HOME)
 class Home
 
-fun Route.home() {
+fun Route.home(inMemoryRepository: InMemoryRepository) {
     get<Home> {
         val repository by kodein().instance<EmojiRepository>()
         val eRepository by kodein().instance<PlaygroundRepository>()
 
         val user = call.sessions.get<EPSession>()?.let { repository.user(it.userId) }
-        call.respond(FreeMarkerContent("home.ftl", mapOf("user" to user)))
+        val code = inMemoryRepository.playground()?.code ?: "fun main() { println(1) }"
+
+        call.respond(FreeMarkerContent(
+            "home.ftl",
+            mapOf<String, Any?>(
+                "user" to user,
+                "code" to code
+            )
+        ))
     }
 }

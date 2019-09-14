@@ -1,6 +1,5 @@
 package com.tommykw.repository
 
-import com.tommykw.model.EmojiData
 import com.tommykw.model.Playground
 import com.tommykw.model.Playgrounds
 import org.jetbrains.exposed.sql.*
@@ -23,6 +22,19 @@ class PlaygroundRepository : ERepository {
                 }
             }
         }
+
+    override suspend fun updatePlayground(idValue: Int, nameValue: String, codeValue: String): Int {
+        return DatabaseFactory.dbQuery {
+            transaction {
+                val updateStatement = Playgrounds.update({ Playgrounds.id eq idValue }) {
+                    it[name] = nameValue
+                    it[code] = codeValue
+                }
+
+                updateStatement
+            }
+        }
+    }
 
     override suspend fun playground(id: Int): Playground? {
         return DatabaseFactory.dbQuery {

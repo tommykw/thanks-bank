@@ -24,9 +24,7 @@
     <div id="kotlin-example" class="kotlin-code-2">
     <pre>
     <code class="hljs language-text">
-    fun main() {
-       println(111111)
-    }
+    ${code}
     </code>
     </pre>
     </div>

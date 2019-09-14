@@ -6,6 +6,7 @@ import com.tommykw.model.EPSession
 import com.tommykw.model.User
 import com.tommykw.repository.DatabaseFactory
 import com.tommykw.repository.EmojiRepository
+import com.tommykw.repository.InMemoryRepository
 import com.tommykw.repository.PlaygroundRepository
 import com.tommykw.webapp.*
 import freemarker.cache.ClassTemplateLoader
@@ -85,6 +86,8 @@ fun Application.module(testing: Boolean = false) {
 
     val jwtService = JwtService()
 
+    val inMemoryRepository = InMemoryRepository()
+
     install(Authentication) {
         jwt("jwt") {
             verifier(jwtService.verifier)
@@ -105,14 +108,14 @@ fun Application.module(testing: Boolean = false) {
             resources("images")
         }
 
-        home()
+        home(inMemoryRepository)
         about()
         playground(hashFunction)
         signin(hashFunction)
         signout()
         signup(hashFunction)
         login(jwtService)
-        playgroundApi()
+        playgroundApi(inMemoryRepository)
     }
 }
 
