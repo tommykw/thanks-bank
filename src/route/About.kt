@@ -1,7 +1,6 @@
-package com.tommykw
+package com.tommykw.route
 
 import com.tommykw.model.EPSession
-import com.tommykw.repository.InMemoryRepository
 import com.tommykw.repository.PlaygroundRepository
 import io.ktor.application.call
 import io.ktor.freemarker.FreeMarkerContent
@@ -14,25 +13,13 @@ import io.ktor.sessions.sessions
 import org.kodein.di.generic.instance
 import org.kodein.di.ktor.kodein
 
-const val HOME = "/"
+@Location("/about")
+class About
 
-@Location(HOME)
-class Home
-
-fun Route.home(inMemoryRepository: InMemoryRepository) {
-    get<Home> {
+fun Route.about() {
+    get<About> {
         val repository by kodein().instance<PlaygroundRepository>()
-        val eRepository by kodein().instance<PlaygroundRepository>()
-
         val user = call.sessions.get<EPSession>()?.let { repository.user(it.userId) }
-        val code = inMemoryRepository.playground()?.code ?: "fun main() { println(1) }"
-
-        call.respond(FreeMarkerContent(
-            "home.ftl",
-            mapOf<String, Any?>(
-                "user" to user,
-                "code" to code
-            )
-        ))
+        call.respond(FreeMarkerContent("about.ftl", mapOf("user" to user)))
     }
 }

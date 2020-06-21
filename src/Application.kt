@@ -7,7 +7,7 @@ import com.tommykw.model.User
 import com.tommykw.repository.DatabaseFactory
 import com.tommykw.repository.InMemoryRepository
 import com.tommykw.repository.PlaygroundRepository
-import com.tommykw.webapp.*
+import com.tommykw.route.*
 import freemarker.cache.ClassTemplateLoader
 import io.ktor.application.Application
 import io.ktor.application.ApplicationCall

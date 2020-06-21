@@ -1,4 +1,4 @@
-package com.tommykw.webapp
+package com.tommykw.route
 
 import com.tommykw.MIN_PASSWORD_LENGTH
 import com.tommykw.MIN_USER_ID_LENGTH
