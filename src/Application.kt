@@ -5,7 +5,6 @@ import com.tommykw.api.playgroundApi
 import com.tommykw.model.EPSession
 import com.tommykw.model.User
 import com.tommykw.repository.DatabaseFactory
-import com.tommykw.repository.EmojiRepository
 import com.tommykw.repository.InMemoryRepository
 import com.tommykw.repository.PlaygroundRepository
 import com.tommykw.webapp.*
@@ -49,7 +48,6 @@ fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 @kotlin.jvm.JvmOverloads
 fun Application.module(testing: Boolean = false) {
     kodein {
-        bind<EmojiRepository>() with singleton { EmojiRepository() }
         bind<PlaygroundRepository>() with singleton { PlaygroundRepository() }
     }
 
@@ -91,12 +89,12 @@ fun Application.module(testing: Boolean = false) {
     install(Authentication) {
         jwt("jwt") {
             verifier(jwtService.verifier)
-            realm = "emojis app"
+            realm = "playgrounds"
             validate {
                 val payload = it.payload
                 val claim = payload.getClaim("id")
                 val claimString = claim.asString()
-                val repository = EmojiRepository()
+                val repository = PlaygroundRepository()
                 val user = repository.userById(claimString)
                 user
             }

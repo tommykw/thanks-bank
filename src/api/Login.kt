@@ -3,7 +3,7 @@ package com.tommykw.api
 import com.tommykw.JwtService
 import com.tommykw.hash
 import com.tommykw.redirect
-import com.tommykw.repository.EmojiRepository
+import com.tommykw.repository.PlaygroundRepository
 import io.ktor.application.call
 import io.ktor.http.Parameters
 import io.ktor.locations.Location
@@ -21,7 +21,7 @@ class Login
 
 fun Route.login(jwtService: JwtService) {
     post<Login> {
-        val repository by kodein().instance<EmojiRepository>()
+        val repository by kodein().instance<PlaygroundRepository>()
         val params = call.receive<Parameters>()
         val userId = params["userId"] ?: return@post call.redirect(it)
         val password = params["password"] ?: return@post call.redirect(it)

@@ -1,1 +1,1 @@
-# emoji-app
+# kotlin-text-editor

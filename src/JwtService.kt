@@ -7,7 +7,7 @@ import com.tommykw.model.User
 import java.util.*
 
 class JwtService {
-    private val issuer = "emojis"
+    private val issuer = "playgrounds"
     private val jwtSecret = System.getenv("JWT_SECRET")
     private val algorithm = Algorithm.HMAC512(jwtSecret)
 

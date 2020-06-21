@@ -2,7 +2,6 @@ package com.tommykw.webapp
 
 import com.tommykw.model.EPSession
 import com.tommykw.redirect
-import com.tommykw.repository.EmojiRepository
 import com.tommykw.repository.PlaygroundRepository
 import com.tommykw.securityCode
 import com.tommykw.verifyCode
@@ -24,7 +23,7 @@ class Playground
 
 fun Route.playground(hashFunction: (String) -> String) {
     get<Playground> {
-        val userRepository by kodein().instance<EmojiRepository>()
+        val userRepository by kodein().instance<PlaygroundRepository>()
         val repository by kodein().instance<PlaygroundRepository>()
 
         val user = call.sessions.get<EPSession>()?.let { userRepository.user(it.userId) }
@@ -51,7 +50,7 @@ fun Route.playground(hashFunction: (String) -> String) {
     }
 
     post<Playground> {
-        val repository by kodein().instance<EmojiRepository>()
+        val repository by kodein().instance<PlaygroundRepository>()
         val playgroundRepository by kodein().instance<PlaygroundRepository>()
         val user = call.sessions.get<EPSession>()?.let { repository.user(it.userId) }
 

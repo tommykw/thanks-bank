@@ -2,7 +2,7 @@ package com.tommykw.webapp
 
 import com.tommykw.*
 import com.tommykw.model.EPSession
-import com.tommykw.repository.EmojiRepository
+import com.tommykw.repository.PlaygroundRepository
 import io.ktor.application.call
 import io.ktor.freemarker.FreeMarkerContent
 import io.ktor.http.Parameters
@@ -25,7 +25,7 @@ data class Signin(val userId: String = "", val error: String = "")
 
 fun Route.signin(hashFunction: (String) -> String) {
     post<Signin> {
-        val db by kodein().instance<EmojiRepository>()
+        val db by kodein().instance<PlaygroundRepository>()
         val signInParameters = call.receive<Parameters>()
         val userId = signInParameters["userId"] ?: return@post call.redirect(it)
         val password = signInParameters["password"] ?: return@post call.redirect(it)
@@ -47,7 +47,7 @@ fun Route.signin(hashFunction: (String) -> String) {
     }
 
     get<Signin> {
-        val db by kodein().instance<EmojiRepository>()
+        val db by kodein().instance<PlaygroundRepository>()
         val user = call.sessions.get<EPSession>()?.let { db.user(it.userId) }
 
         if (user != null) {

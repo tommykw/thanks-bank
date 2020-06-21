@@ -5,7 +5,7 @@ import com.tommykw.MIN_USER_ID_LENGTH
 import com.tommykw.model.EPSession
 import com.tommykw.model.User
 import com.tommykw.redirect
-import com.tommykw.repository.EmojiRepository
+import com.tommykw.repository.PlaygroundRepository
 import com.tommykw.userNameValid
 import io.ktor.application.application
 import io.ktor.application.call
@@ -36,7 +36,7 @@ data class Signup(
 
 fun Route.signup(hashFunction: (String) -> String) {
     post<Signup> {
-        val db by kodein().instance<EmojiRepository>()
+        val db by kodein().instance<PlaygroundRepository>()
         val user = call.sessions.get<EPSession>()?.let { db.user(it.userId) }
         if (user != null) return@post call.redirect(Playground())
 
@@ -83,7 +83,7 @@ fun Route.signup(hashFunction: (String) -> String) {
     }
 
     get<Signup> {
-        val db by kodein().instance<EmojiRepository>()
+        val db by kodein().instance<PlaygroundRepository>()
         val user = call.sessions.get<EPSession>()?.let {
             db.user(it.userId)
         }

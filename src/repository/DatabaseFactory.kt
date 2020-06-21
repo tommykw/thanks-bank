@@ -1,6 +1,5 @@
 package com.tommykw.repository
 
-import com.tommykw.model.EmojiData
 import com.tommykw.model.Playgrounds
 import com.tommykw.model.Users
 import com.zaxxer.hikari.HikariConfig
@@ -17,7 +16,6 @@ object DatabaseFactory {
         Database.connect(hikari())
 
         transaction {
-            SchemaUtils.create(EmojiData)
             SchemaUtils.create(Users)
             SchemaUtils.create(Playgrounds)
         }

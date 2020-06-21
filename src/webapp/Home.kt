@@ -1,7 +1,6 @@
 package com.tommykw
 
 import com.tommykw.model.EPSession
-import com.tommykw.repository.EmojiRepository
 import com.tommykw.repository.InMemoryRepository
 import com.tommykw.repository.PlaygroundRepository
 import io.ktor.application.call
@@ -22,7 +21,7 @@ class Home
 
 fun Route.home(inMemoryRepository: InMemoryRepository) {
     get<Home> {
-        val repository by kodein().instance<EmojiRepository>()
+        val repository by kodein().instance<PlaygroundRepository>()
         val eRepository by kodein().instance<PlaygroundRepository>()
 
         val user = call.sessions.get<EPSession>()?.let { repository.user(it.userId) }

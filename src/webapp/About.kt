@@ -1,7 +1,7 @@
 package com.tommykw.webapp
 
 import com.tommykw.model.EPSession
-import com.tommykw.repository.EmojiRepository
+import com.tommykw.repository.PlaygroundRepository
 import io.ktor.application.call
 import io.ktor.freemarker.FreeMarkerContent
 import io.ktor.locations.Location
@@ -18,7 +18,7 @@ class About
 
 fun Route.about() {
     get<About> {
-        val repository by kodein().instance<EmojiRepository>()
+        val repository by kodein().instance<PlaygroundRepository>()
         val user = call.sessions.get<EPSession>()?.let { repository.user(it.userId) }
         call.respond(FreeMarkerContent("about.ftl", mapOf("user" to user)))
     }

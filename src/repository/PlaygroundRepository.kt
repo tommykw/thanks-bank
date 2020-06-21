@@ -1,11 +1,10 @@
 package com.tommykw.repository
 
-import com.tommykw.model.Playground
-import com.tommykw.model.Playgrounds
+import com.tommykw.model.*
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 
-class PlaygroundRepository : ERepository {
+class PlaygroundRepository : Repository {
     override suspend fun addPlayground(nameValue: String, codeValue: String) =
         DatabaseFactory.dbQuery {
             transaction {
@@ -66,6 +65,56 @@ class PlaygroundRepository : ERepository {
             id = row[Playgrounds.id].value,
             name = row[Playgrounds.name],
             code = row[Playgrounds.code]
+        )
+    }
+
+    override suspend fun user(userId: String, hash: String?): User? {
+        val user = DatabaseFactory.dbQuery {
+            Users.select {
+                Users.id eq userId
+            }.mapNotNull { toUser(it) }
+                .singleOrNull()
+        }
+
+        return when {
+            user == null -> null
+            hash == null -> user
+            user.passwordhash == hash -> user
+            else -> null
+        }
+    }
+
+    override suspend fun userByEmail(email: String) = DatabaseFactory.dbQuery {
+        Users.select { Users.email.eq(email) }
+            .map { User(
+                it[Users.id],
+                email,
+                it[Users.displayName],
+                it[Users.passwordHash]
+            ) }.singleOrNull()
+    }
+
+    override suspend fun userById(userId: String) = DatabaseFactory.dbQuery {
+        Users.select { Users.id.eq(userId) }
+            .map { User(userId, it[Users.email], it[Users.displayName], it[Users.passwordHash]) }.singleOrNull()
+    }
+
+    override suspend fun createUser(user: User) = DatabaseFactory.dbQuery {
+        Users.insert {
+            it[id] = user.userId
+            it[displayName] = user.displayName
+            it[email] = user.email
+            it[passwordHash] = user.passwordhash
+        }
+        Unit
+    }
+
+    private fun toUser(row: ResultRow): User {
+        return User(
+            userId = row[Users.id],
+            email = row[Users.email],
+            displayName = row[Users.displayName],
+            passwordhash = row[Users.passwordHash]
         )
     }
 }
