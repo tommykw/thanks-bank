@@ -1,1 +1,1 @@
-web: ./build/install/emoji-app/bin/emoji-app
+web: ./build/install/kotlin-text-editor/bin/kotlin-text-editor
