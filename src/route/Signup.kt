@@ -2,7 +2,7 @@ package com.tommykw.route
 
 import com.tommykw.MIN_PASSWORD_LENGTH
 import com.tommykw.MIN_USER_ID_LENGTH
-import com.tommykw.model.EPSession
+import com.tommykw.model.UserSession
 import com.tommykw.model.User
 import com.tommykw.redirect
 import com.tommykw.repository.PlaygroundRepository
@@ -37,7 +37,7 @@ data class Signup(
 fun Route.signup(hashFunction: (String) -> String) {
     post<Signup> {
         val db by kodein().instance<PlaygroundRepository>()
-        val user = call.sessions.get<EPSession>()?.let { db.user(it.userId) }
+        val user = call.sessions.get<UserSession>()?.let { db.user(it.userId) }
         if (user != null) return@post call.redirect(Playground())
 
         val signupParameters = call.receive<Parameters>()
@@ -76,7 +76,7 @@ fun Route.signup(hashFunction: (String) -> String) {
                     }
                 }
 
-                call.sessions.set(EPSession(newUser.userId))
+                call.sessions.set(UserSession(newUser.userId))
                 call.redirect(Playground())
             }
         }
@@ -84,7 +84,7 @@ fun Route.signup(hashFunction: (String) -> String) {
 
     get<Signup> {
         val db by kodein().instance<PlaygroundRepository>()
-        val user = call.sessions.get<EPSession>()?.let {
+        val user = call.sessions.get<UserSession>()?.let {
             db.user(it.userId)
         }
 

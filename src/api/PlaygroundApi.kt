@@ -1,8 +1,6 @@
 package com.tommykw.api
 
 import com.tommykw.API_VERSION
-import com.tommykw.api.requests.PlaygroundApiRequest
-import com.tommykw.apiuser
 import com.tommykw.repository.InMemoryRepository
 import com.tommykw.repository.PlaygroundRepository
 import io.ktor.application.call

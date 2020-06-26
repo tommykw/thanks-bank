@@ -1,4 +1,4 @@
-package com.tommykw.api.requests
+package com.tommykw.api
 
 data class PlaygroundApiRequest(
     val id: Int?,

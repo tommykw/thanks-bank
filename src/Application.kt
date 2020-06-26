@@ -2,7 +2,7 @@ package com.tommykw
 
 import com.tommykw.api.login
 import com.tommykw.api.playgroundApi
-import com.tommykw.model.EPSession
+import com.tommykw.model.UserSession
 import com.tommykw.model.User
 import com.tommykw.repository.DatabaseFactory
 import com.tommykw.repository.InMemoryRepository
@@ -73,7 +73,7 @@ fun Application.module(testing: Boolean = false) {
     install(Locations)
 
     install(Sessions) {
-        cookie<EPSession>("SESSION") {
+        cookie<UserSession>("SESSION") {
             transform(SessionTransportTransformerMessageAuthentication(hashKey))
         }
     }

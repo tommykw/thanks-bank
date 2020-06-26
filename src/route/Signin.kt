@@ -1,7 +1,7 @@
 package com.tommykw.route
 
 import com.tommykw.*
-import com.tommykw.model.EPSession
+import com.tommykw.model.UserSession
 import com.tommykw.repository.PlaygroundRepository
 import io.ktor.application.call
 import io.ktor.freemarker.FreeMarkerContent
@@ -41,14 +41,14 @@ fun Route.signin(hashFunction: (String) -> String) {
         if (signin == null) {
             call.redirect(signInError.copy(error = "Invalid username or password"))
         } else {
-            call.sessions.set(EPSession(signin.userId))
+            call.sessions.set(UserSession(signin.userId))
             call.redirect(Playground())
         }
     }
 
     get<Signin> {
         val db by kodein().instance<PlaygroundRepository>()
-        val user = call.sessions.get<EPSession>()?.let { db.user(it.userId) }
+        val user = call.sessions.get<UserSession>()?.let { db.user(it.userId) }
 
         if (user != null) {
             call.redirect(Home())
