@@ -102,6 +102,8 @@ fun Application.module(testing: Boolean = false) {
     }
 
     routing {
+        hello()
+
         static("/static") {
             resources("images")
         }
