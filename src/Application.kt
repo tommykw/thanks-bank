@@ -116,6 +116,7 @@ fun Application.module(testing: Boolean = false) {
         signup(hashFunction)
         login(jwtService)
         playgroundApi(inMemoryRepository)
+        googleCalender()
     }
 }
 
