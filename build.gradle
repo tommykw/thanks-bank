@@ -13,16 +13,16 @@ buildscript {
 
 apply plugin: 'kotlin'
 apply plugin: 'application'
-apply plugin: 'com.github.johnrengelman.shadow'
+//apply plugin: 'com.github.johnrengelman.shadow'
 apply plugin: 'kotlinx-serialization'
 
 mainClassName = 'com.tommykw.ApplicationKt'
 
-shadowJar {
-    baseName = 'kotlin-text-editor'
-    classifier = null
-    version = null
-}
+//shadowJar {
+//    baseName = 'kotlin-text-editor'
+//    classifier = null
+//    version = null
+//}
 
 group 'kotlin-text-editor'
 version '0.0.1'
@@ -60,6 +60,11 @@ dependencies {
     compile "com.google.oauth-client:google-oauth-client-jetty:1.30.6"
     compile "com.google.apis:google-api-services-calendar:v3-rev411-1.25.0"
     compile "org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.20.0"
+    compile "com.slack.api:slack-api-client:1.0.11"
+    compile "com.slack.api:slack-api-model:1.0.11"
+    compile "com.slack.api:bolt:1.0.11"
+    compile "com.slack.api:bolt-servlet:1.0.11"
+    compile "com.slack.api:bolt-jetty:1.0.11"
 }
 
-task stage(dependsOn: ['installDist'])
+//task stage(dependsOn: ['installDist'])

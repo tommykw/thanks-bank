@@ -1,5 +1,17 @@
 package com.tommykw
 
+import com.slack.api.bolt.App
+import com.slack.api.bolt.AppConfig
+import com.slack.api.bolt.request.Request
+import com.slack.api.bolt.request.RequestHeaders
+import com.slack.api.bolt.response.Response
+import com.slack.api.bolt.util.QueryStringParser
+import com.slack.api.bolt.util.SlackRequestParser
+import com.slack.api.model.block.Blocks.asBlocks
+import com.slack.api.model.block.Blocks.section
+import com.slack.api.model.block.composition.BlockCompositions.markdownText
+import com.slack.api.model.block.composition.BlockCompositions.plainText
+import com.slack.api.model.block.element.BlockElements.button
 import com.tommykw.route.login
 import com.tommykw.api.playgroundApi
 import com.tommykw.model.UserSession
@@ -19,23 +31,28 @@ import io.ktor.auth.jwt.jwt
 import io.ktor.features.ContentNegotiation
 import io.ktor.features.DefaultHeaders
 import io.ktor.features.StatusPages
+import io.ktor.features.origin
 import io.ktor.freemarker.FreeMarker
 import io.ktor.gson.gson
 import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpStatusCode
+import io.ktor.http.content.TextContent
 import io.ktor.http.content.resources
 import io.ktor.http.content.static
 import io.ktor.locations.Locations
 import io.ktor.locations.locations
-import io.ktor.request.header
-import io.ktor.request.host
+import io.ktor.request.*
+import io.ktor.response.header
+import io.ktor.response.respond
 import io.ktor.response.respondRedirect
 import io.ktor.response.respondText
+import io.ktor.routing.post
 import io.ktor.routing.routing
 import io.ktor.sessions.SessionTransportTransformerMessageAuthentication
 import io.ktor.sessions.Sessions
 import io.ktor.sessions.cookie
+import io.ktor.util.toMap
 import org.kodein.di.generic.bind
 import org.kodein.di.generic.singleton
 import org.kodein.di.ktor.kodein
@@ -43,6 +60,10 @@ import java.net.URI
 import java.util.concurrent.TimeUnit
 
 fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
+
+val appConfig = AppConfig()
+val requestParser = SlackRequestParser(appConfig)
+val app = App(appConfig)
 
 @Suppress("unused") // Referenced in application.conf
 @kotlin.jvm.JvmOverloads
@@ -101,8 +122,32 @@ fun Application.module(testing: Boolean = false) {
         }
     }
 
+    app.command("/ktor") { _, ctx ->
+        ctx.ack(asBlocks(
+            section { section ->
+                section
+                    .text(markdownText("Ktor is a framework for building asynchronous servers and clients in connected systems using the powerful Kotlin programming language."))
+                    .accessory(
+                        button { btn ->
+                            btn.actionId("link")
+                                .text(plainText("Ktor website"))
+                                .url("kttps://ktor.io/")
+                        }
+                    )
+            }
+        ))
+    }
+
+    app.blockAction("link") { _, ctx ->
+        ctx.ack()
+    }
+
     routing {
         hello()
+
+        post("/slack/events") {
+            respond(call, app.run(parseRequest(call)))
+        }
 
         static("/static") {
             resources("images")
@@ -136,3 +181,32 @@ fun ApplicationCall.verifyCode(date: Long, user: User, code: String, hashFunctio
         (System.currentTimeMillis() - date).let { it > 0 && it < TimeUnit.MILLISECONDS.convert(2, TimeUnit.HOURS) }
 
 val ApplicationCall.apiuser get() = authentication.principal<User>()
+
+suspend fun parseRequest(call: ApplicationCall): Request<*> {
+    val requestBody = call.receiveText()
+    val queryString = QueryStringParser.toMap(call.request.queryString())
+    val headers = RequestHeaders(call.request.headers.toMap())
+
+    return requestParser.parse(
+        SlackRequestParser.HttpRequest.builder()
+            .requestUri(call.request.uri)
+            .queryString(queryString)
+            .requestBody(requestBody)
+            .headers(headers)
+            .remoteAddress(call.request.origin.remoteHost)
+            .build()
+    )
+}
+
+suspend fun respond(call: ApplicationCall, slackResp: Response) {
+    for (header in slackResp.headers) {
+        for (value in header.value) {
+            call.response.header(header.key, value)
+        }
+    }
+
+    call.response.status(HttpStatusCode.fromValue(slackResp.statusCode))
+    if (slackResp.body != null) {
+        call.respond(TextContent(slackResp.body, ContentType.parse(slackResp.contentType)))
+    }
+}
