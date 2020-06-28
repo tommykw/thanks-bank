@@ -163,32 +163,32 @@ fun Application.module(testing: Boolean = false) {
     app.command("/thanks") { req, ctx ->
         ctx.ack(
             asBlocks(
-//                section { section ->
-//                    section.text(markdownText("あなたのありがと〜〜！を教えて!!"))
-//                },
-                //divider(),
                 section { section ->
-                    section
-                        .text(markdownText("誰に届けますか？"))
-                        .accessory(
-                            multiUsersSelect { multiusersSelect ->
-                                multiusersSelect.maxSelectedItems(10)
-                                multiusersSelect.placeholder(plainText("選択してください"))
-                            }
-                        )
-                },
-                //divider(),
-                section { section ->
-                    section
-                        .text(markdownText("メッセージをどうぞ"))
-                        .accessory(
-                            plainTextInput { input ->
-                                input.minLength(5)
-                                input.maxLength(500)
-                                input.placeholder(plainText("なんでもいいよ"))
-                            }
-                        )
+                    section.text(markdownText("あなたのありがと〜〜！を教えて!!"))
                 }
+                //divider(),
+//                section { section ->
+//                    section
+//                        .text(markdownText("誰に届けますか？"))
+//                        .accessory(
+//                            multiUsersSelect { multiusersSelect ->
+//                                multiusersSelect.maxSelectedItems(10)
+//                                multiusersSelect.placeholder(plainText("選択してください"))
+//                            }
+//                        )
+//                },
+//                //divider(),
+//                section { section ->
+//                    section
+//                        .text(markdownText("メッセージをどうぞ"))
+//                        .accessory(
+//                            plainTextInput { input ->
+//                                input.minLength(5)
+//                                input.maxLength(500)
+//                                input.placeholder(plainText("なんでもいいよ"))
+//                            }
+//                        )
+//                }
                 //divider()
 //                actions { actions ->
 //                    actions.elements(
