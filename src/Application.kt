@@ -10,6 +10,8 @@ import com.slack.api.bolt.util.SlackRequestParser
 import com.slack.api.model.block.Blocks.*
 import com.slack.api.model.block.composition.BlockCompositions.*
 import com.slack.api.model.block.element.BlockElements.*
+import com.slack.api.model.view.View
+import com.slack.api.model.view.Views.*
 import com.tommykw.route.login
 import com.tommykw.api.playgroundApi
 import com.tommykw.model.UserSession
@@ -161,51 +163,56 @@ fun Application.module(testing: Boolean = false) {
     }
 
     app.command("/thanks") { req, ctx ->
-        ctx.ack(
-            asBlocks(
-                section { section ->
-                    section.text(markdownText("あなたのありがと〜〜！を教えて!!"))
-                }
-                //divider(),
+        ctx.client().viewsOpen {
+            it.view(buildView())
+        }
+
+        ctx.ack()
+//        ctx.ack(
+//            asBlocks(
 //                section { section ->
-//                    section
-//                        .text(markdownText("誰に届けますか？"))
-//                        .accessory(
-//                            multiUsersSelect { multiusersSelect ->
-//                                multiusersSelect.maxSelectedItems(10)
-//                                multiusersSelect.placeholder(plainText("選択してください"))
-//                            }
-//                        )
-//                },
+//                    section.text(markdownText("あなたのありがと〜〜！を教えて!!"))
+//                }
 //                //divider(),
-//                section { section ->
-//                    section
-//                        .text(markdownText("メッセージをどうぞ"))
-//                        .accessory(
-//                            plainTextInput { input ->
-//                                input.minLength(5)
-//                                input.maxLength(500)
-//                                input.placeholder(plainText("なんでもいいよ"))
-//                            }
-//                        )
-//                }
-                //divider()
-//                actions { actions ->
-//                    actions.elements(
-//                        asElements(
-//                            button { button ->
-//                                button.text(plainText("送る"))
-//                                button.value("summit")
-//                            },
-//                            button { button ->
-//                                button.text(plainText("キャンセル"))
-//                                button.value("cancel")
-//                            }
-//                        )
-//                    )
-//                }
-            )
-        )
+////                section { section ->
+////                    section
+////                        .text(markdownText("誰に届けますか？"))
+////                        .accessory(
+////                            multiUsersSelect { multiusersSelect ->
+////                                multiusersSelect.maxSelectedItems(10)
+////                                multiusersSelect.placeholder(plainText("選択してください"))
+////                            }
+////                        )
+////                },
+////                //divider(),
+////                section { section ->
+////                    section
+////                        .text(markdownText("メッセージをどうぞ"))
+////                        .accessory(
+////                            plainTextInput { input ->
+////                                input.minLength(5)
+////                                input.maxLength(500)
+////                                input.placeholder(plainText("なんでもいいよ"))
+////                            }
+////                        )
+////                }
+//                //divider()
+////                actions { actions ->
+////                    actions.elements(
+////                        asElements(
+////                            button { button ->
+////                                button.text(plainText("送る"))
+////                                button.value("summit")
+////                            },
+////                            button { button ->
+////                                button.text(plainText("キャンセル"))
+////                                button.value("cancel")
+////                            }
+////                        )
+////                    )
+////                }
+//            )
+//        )
     }
 
     app.blockAction("test_action") { _, ctx ->
@@ -281,5 +288,37 @@ suspend fun respond(call: ApplicationCall, slackResp: Response) {
     call.response.status(HttpStatusCode.fromValue(slackResp.statusCode))
     if (slackResp.body != null) {
         call.respond(TextContent(slackResp.body, ContentType.parse(slackResp.contentType)))
+    }
+}
+
+fun buildView(): View {
+    return view { view ->
+        view.callbackId("meeting-arrangement")
+        view.type("modal")
+        view.notifyOnClose(true)
+        view.title(viewTitle { title -> title.type("plain_text").text("Meeting Arrangement").emoji(true) })
+        view.submit(viewSubmit { submit -> submit.type("plain_text").text("Submit").emoji(true) } )
+        view.close(viewClose { close -> close.type("plain_text").text("Cancel").emoji(true) } )
+        view.privateMetadata("{\"response_url\":\"https://hooks.slack.com/actions/T1ABCD2E12/330361579271/0dAEyLY19ofpLwxqozy3firz\"}")
+        view.blocks(asBlocks(
+            section { section ->
+                section.blockId("category-block")
+                section.text(markdownText("Select a category of the meeting!"))
+                section.accessory(staticSelect { staticSelect ->
+                    staticSelect.actionId("category-selection-action")
+                    staticSelect.placeholder(plainText("Select a category"))
+                    staticSelect.options(asOptions(
+                        option(plainText("Customer"), "customer"),
+                        option(plainText("Partner"), "partner"),
+                        option(plainText("Internal"), "internal")
+                    ))
+                })
+            },
+            input { input ->
+                input.blockId("agenda-block")
+                input.element(plainTextInput { pti -> pti.actionId("agenda-action").multiline(true) })
+                input.label(plainText { pt -> pt.text("Detailed Agenda").emoji(true) })
+            }
+        ))
     }
 }
