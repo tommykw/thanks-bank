@@ -163,9 +163,9 @@ fun Application.module(testing: Boolean = false) {
     app.command("/thanks") { req, ctx ->
         ctx.ack(
             asBlocks(
-                section { section ->
-                    section.text(markdownText("あなたのありがと〜〜！を教えて!!"))
-                },
+//                section { section ->
+//                    section.text(markdownText("あなたのありがと〜〜！を教えて!!"))
+//                },
                 //divider(),
                 section { section ->
                     section
