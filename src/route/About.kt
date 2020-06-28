@@ -1,6 +1,6 @@
 package com.tommykw.route
 
-import com.tommykw.model.UserSession
+import com.tommykw.model.AdminUserSession
 import com.tommykw.repository.PlaygroundRepository
 import io.ktor.application.call
 import io.ktor.freemarker.FreeMarkerContent
@@ -19,7 +19,7 @@ class About
 fun Route.about() {
     get<About> {
         val repository by kodein().instance<PlaygroundRepository>()
-        val user = call.sessions.get<UserSession>()?.let { repository.user(it.userId) }
+        val user = call.sessions.get<AdminUserSession>()?.let { repository.user(it.userId) }
         call.respond(FreeMarkerContent("about.ftl", mapOf("user" to user)))
     }
 }

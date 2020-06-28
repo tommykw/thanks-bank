@@ -1,6 +1,7 @@
 package com.tommykw.repository
 
 import com.tommykw.model.Playground
+import com.tommykw.model.SlackMessage
 import com.tommykw.model.User
 
 interface Repository {
@@ -13,4 +14,5 @@ interface Repository {
     suspend fun userByEmail(email: String): User?
     suspend fun userById(userId: String): User?
     suspend fun createUser(user: User)
+    suspend fun createSlackMessage(message: SlackMessage)
 }

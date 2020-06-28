@@ -1,6 +1,6 @@
 package com.tommykw.route
 
-import com.tommykw.model.UserSession
+import com.tommykw.model.AdminUserSession
 import com.tommykw.redirect
 import com.tommykw.repository.PlaygroundRepository
 import com.tommykw.securityCode
@@ -25,7 +25,7 @@ fun Route.playground(hashFunction: (String) -> String) {
         val userRepository by kodein().instance<PlaygroundRepository>()
         val repository by kodein().instance<PlaygroundRepository>()
 
-        val user = call.sessions.get<UserSession>()?.let { userRepository.user(it.userId) }
+        val user = call.sessions.get<AdminUserSession>()?.let { userRepository.user(it.userId) }
 
         if (user == null) {
             call.redirect(Signin())
@@ -51,7 +51,7 @@ fun Route.playground(hashFunction: (String) -> String) {
     post<Playground> {
         val repository by kodein().instance<PlaygroundRepository>()
         val playgroundRepository by kodein().instance<PlaygroundRepository>()
-        val user = call.sessions.get<UserSession>()?.let { repository.user(it.userId) }
+        val user = call.sessions.get<AdminUserSession>()?.let { repository.user(it.userId) }
 
         val params = call.receiveParameters()
         //val date = params["date"]?.toLongOrNull() ?: return@post call.redirect(it)

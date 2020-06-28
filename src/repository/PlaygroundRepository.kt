@@ -1,5 +1,6 @@
 package com.tommykw.repository
 
+import com.slack.api.Slack
 import com.tommykw.model.*
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
@@ -68,6 +69,14 @@ class PlaygroundRepository : Repository {
         )
     }
 
+    private fun toSlackMessage(row: ResultRow): SlackMessage {
+        return SlackMessage(
+            id = row[SlackMessages.id].value,
+            userName = row[SlackMessages.userName],
+            message = row[SlackMessages.message]
+        )
+    }
+
     override suspend fun user(userId: String, hash: String?): User? {
         val user = DatabaseFactory.dbQuery {
             Users.select {
@@ -107,6 +116,24 @@ class PlaygroundRepository : Repository {
             it[passwordHash] = user.passwordhash
         }
         Unit
+    }
+
+    override suspend fun createSlackMessage(slackMessage: SlackMessage) {
+        DatabaseFactory.dbQuery {
+            transaction {
+                val insertStatement = SlackMessages.insert {
+                    it[message] = slackMessage.message
+                    it[userName] = slackMessage.userName
+                }
+
+                val result = insertStatement.resultedValues?.get(0)
+                if (result != null) {
+                    toSlackMessage(result)
+                } else {
+                    null
+                }
+            }
+        }
     }
 
     private fun toUser(row: ResultRow): User {

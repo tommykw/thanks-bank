@@ -1,6 +1,6 @@
 package com.tommykw.route
 
-import com.tommykw.model.UserSession
+import com.tommykw.model.AdminUserSession
 import com.tommykw.repository.InMemoryRepository
 import com.tommykw.repository.PlaygroundRepository
 import io.ktor.application.call
@@ -24,7 +24,7 @@ fun Route.home(inMemoryRepository: InMemoryRepository) {
         val repository by kodein().instance<PlaygroundRepository>()
         val eRepository by kodein().instance<PlaygroundRepository>()
 
-        val user = call.sessions.get<UserSession>()?.let { repository.user(it.userId) }
+        val user = call.sessions.get<AdminUserSession>()?.let { repository.user(it.userId) }
         val code = inMemoryRepository.playground()?.code ?: "fun main() { println(1) }"
 
         call.respond(FreeMarkerContent(

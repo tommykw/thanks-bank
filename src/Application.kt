@@ -14,7 +14,7 @@ import com.slack.api.model.view.View
 import com.slack.api.model.view.Views.*
 import com.tommykw.route.login
 import com.tommykw.api.playgroundApi
-import com.tommykw.model.UserSession
+import com.tommykw.model.AdminUserSession
 import com.tommykw.model.User
 import com.tommykw.repository.DatabaseFactory
 import com.tommykw.repository.InMemoryRepository
@@ -94,7 +94,7 @@ fun Application.module(testing: Boolean = false) {
     install(Locations)
 
     install(Sessions) {
-        cookie<UserSession>("SESSION") {
+        cookie<AdminUserSession>("SESSION") {
             transform(SessionTransportTransformerMessageAuthentication(hashKey))
         }
     }
@@ -179,6 +179,16 @@ fun Application.module(testing: Boolean = false) {
         ctx.respond { r ->
             r.text("thx")
         }
+        ctx.ack()
+    }
+
+    app.viewSubmission("thanks-message") { req, ctx ->
+        val stateValues = req.payload.view.state.values
+        println(stateValues)
+
+        val userName = stateValues.get("user-block")?.get("user-selection-action")?.value
+        println(userName)
+
         ctx.ack()
     }
 

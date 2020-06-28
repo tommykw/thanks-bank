@@ -1,6 +1,6 @@
 package com.tommykw.route
 
-import com.tommykw.model.UserSession
+import com.tommykw.model.AdminUserSession
 import com.tommykw.redirect
 import io.ktor.application.call
 import io.ktor.locations.Location
@@ -16,7 +16,7 @@ class Signout
 
 fun Route.signout() {
     get<Signout> {
-        call.sessions.clear<UserSession>()
+        call.sessions.clear<AdminUserSession>()
         call.redirect(Signin())
     }
 }
