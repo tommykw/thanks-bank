@@ -166,7 +166,7 @@ fun Application.module(testing: Boolean = false) {
                 section { section ->
                     section.text(markdownText("あなたのありがと〜〜！を教えて!!"))
                 },
-                divider(),
+                //divider(),
                 section { section ->
                     section
                         .text(markdownText("誰に届けますか？"))
@@ -177,7 +177,7 @@ fun Application.module(testing: Boolean = false) {
                             }
                         )
                 },
-                divider(),
+                //divider(),
                 section { section ->
                     section
                         .text(markdownText("メッセージをどうぞ"))
@@ -188,8 +188,8 @@ fun Application.module(testing: Boolean = false) {
                                 input.placeholder(plainText("なんでもいいよ"))
                             }
                         )
-                },
-                divider()
+                }
+                //divider()
 //                actions { actions ->
 //                    actions.elements(
 //                        asElements(
