@@ -138,6 +138,10 @@ fun Application.module(testing: Boolean = false) {
         ))
     }
 
+    app.command("/hi") { _, ctx ->
+        ctx.ack("hai!")
+    }
+
     app.blockAction("link") { _, ctx ->
         ctx.ack()
     }
