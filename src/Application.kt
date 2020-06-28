@@ -189,21 +189,21 @@ fun Application.module(testing: Boolean = false) {
                             }
                         )
                 },
-                divider(),
-                actions { actions ->
-                    actions.elements(
-                        asElements(
-                            button { button ->
-                                button.text(plainText("送る"))
-                                button.value("summit")
-                            },
-                            button { button ->
-                                button.text(plainText("キャンセル"))
-                                button.value("cancel")
-                            }
-                        )
-                    )
-                }
+                divider()
+//                actions { actions ->
+//                    actions.elements(
+//                        asElements(
+//                            button { button ->
+//                                button.text(plainText("送る"))
+//                                button.value("summit")
+//                            },
+//                            button { button ->
+//                                button.text(plainText("キャンセル"))
+//                                button.value("cancel")
+//                            }
+//                        )
+//                    )
+//                }
             )
         )
     }
