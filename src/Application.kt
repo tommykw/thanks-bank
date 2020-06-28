@@ -173,53 +173,6 @@ fun Application.module(testing: Boolean = false) {
         } else {
             Response.builder().statusCode(500).body(res.error).build()
         }
-
-
-//        ctx.ack(
-//            asBlocks(
-//                section { section ->
-//                    section.text(markdownText("あなたのありがと〜〜！を教えて!!"))
-//                }
-//                //divider(),
-////                section { section ->
-////                    section
-////                        .text(markdownText("誰に届けますか？"))
-////                        .accessory(
-////                            multiUsersSelect { multiusersSelect ->
-////                                multiusersSelect.maxSelectedItems(10)
-////                                multiusersSelect.placeholder(plainText("選択してください"))
-////                            }
-////                        )
-////                },
-////                //divider(),
-////                section { section ->
-////                    section
-////                        .text(markdownText("メッセージをどうぞ"))
-////                        .accessory(
-////                            plainTextInput { input ->
-////                                input.minLength(5)
-////                                input.maxLength(500)
-////                                input.placeholder(plainText("なんでもいいよ"))
-////                            }
-////                        )
-////                }
-//                //divider()
-////                actions { actions ->
-////                    actions.elements(
-////                        asElements(
-////                            button { button ->
-////                                button.text(plainText("送る"))
-////                                button.value("summit")
-////                            },
-////                            button { button ->
-////                                button.text(plainText("キャンセル"))
-////                                button.value("cancel")
-////                            }
-////                        )
-////                    )
-////                }
-//            )
-//        )
     }
 
     app.blockAction("test_action") { _, ctx ->
@@ -300,31 +253,29 @@ suspend fun respond(call: ApplicationCall, slackResp: Response) {
 
 fun buildView(): View {
     return view { view ->
-        view.callbackId("meeting-arrangement")
+        view.callbackId("thanks-message")
         view.type("modal")
         view.notifyOnClose(true)
-        view.title(viewTitle { title -> title.type("plain_text").text("Meeting Arrangement").emoji(true) })
-        view.submit(viewSubmit { submit -> submit.type("plain_text").text("Submit").emoji(true) } )
-        view.close(viewClose { close -> close.type("plain_text").text("Cancel").emoji(true) } )
+        view.title(viewTitle { title -> title.type("plain_text").text("あなたのありがと〜〜！を教えて!!").emoji(true) })
+        view.submit(viewSubmit { submit -> submit.type("plain_text").text("送信").emoji(true) } )
+        view.close(viewClose { close -> close.type("plain_text").text("キャンセル").emoji(true) } )
         view.privateMetadata("{\"response_url\":\"https://hooks.slack.com/actions/T1ABCD2E12/330361579271/0dAEyLY19ofpLwxqozy3firz\"}")
         view.blocks(asBlocks(
             section { section ->
-                section.blockId("category-block")
-                section.text(markdownText("Select a category of the meeting!"))
+                section.blockId("user-block")
+                section.text(markdownText("誰に届けますか？"))
                 section.accessory(staticSelect { staticSelect ->
-                    staticSelect.actionId("category-selection-action")
-                    staticSelect.placeholder(plainText("Select a category"))
+                    staticSelect.actionId("user-selection-action")
+                    staticSelect.placeholder(plainText("選択する"))
                     staticSelect.options(asOptions(
-                        option(plainText("Customer"), "customer"),
-                        option(plainText("Partner"), "partner"),
-                        option(plainText("Internal"), "internal")
+                        option(plainText("a"), "a")
                     ))
                 })
             },
             input { input ->
-                input.blockId("agenda-block")
-                input.element(plainTextInput { pti -> pti.actionId("agenda-action").multiline(true) })
-                input.label(plainText { pt -> pt.text("Detailed Agenda").emoji(true) })
+                input.blockId("message-block")
+                input.element(plainTextInput { pti -> pti.actionId("message-action").multiline(true) })
+                input.label(plainText { pt -> pt.text("メッセージをどうぞ").emoji(true) })
             }
         ))
     }
