@@ -13,16 +13,16 @@ buildscript {
 
 apply plugin: 'kotlin'
 apply plugin: 'application'
-//apply plugin: 'com.github.johnrengelman.shadow'
+apply plugin: 'com.github.johnrengelman.shadow'
 apply plugin: 'kotlinx-serialization'
 
 mainClassName = 'com.tommykw.ApplicationKt'
 
-//shadowJar {
-//    baseName = 'kotlin-text-editor'
-//    classifier = null
-//    version = null
-//}
+shadowJar {
+    baseName = 'kotlin-text-editor'
+    classifier = null
+    version = null
+}
 
 group 'kotlin-text-editor'
 version '0.0.1'
@@ -67,4 +67,4 @@ dependencies {
     compile "com.slack.api:bolt-jetty:1.0.11"
 }
 
-//task stage(dependsOn: ['installDist'])
+task stage(dependsOn: ['installDist'])
