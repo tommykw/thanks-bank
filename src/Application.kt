@@ -7,11 +7,9 @@ import com.slack.api.bolt.request.RequestHeaders
 import com.slack.api.bolt.response.Response
 import com.slack.api.bolt.util.QueryStringParser
 import com.slack.api.bolt.util.SlackRequestParser
-import com.slack.api.model.block.Blocks.asBlocks
-import com.slack.api.model.block.Blocks.section
+import com.slack.api.model.block.Blocks.*
 import com.slack.api.model.block.composition.BlockCompositions.*
-import com.slack.api.model.block.element.BlockElements.button
-import com.slack.api.model.block.element.BlockElements.staticSelect
+import com.slack.api.model.block.element.BlockElements.*
 import com.tommykw.route.login
 import com.tommykw.api.playgroundApi
 import com.tommykw.model.UserSession
@@ -160,6 +158,54 @@ fun Application.module(testing: Boolean = false) {
                     )
             }
         ))
+    }
+
+    app.command("/thanks") { req, ctx ->
+        ctx.ack(
+            asBlocks(
+                section { section ->
+                    section.text(markdownText("あなたのありがと〜〜！を教えて!!"))
+                },
+                divider(),
+                section { section ->
+                    section
+                        .text(markdownText("誰に届けますか？"))
+                        .accessory(
+                            multiUsersSelect { multiusersSelect ->
+                                multiusersSelect.maxSelectedItems(10)
+                                multiusersSelect.placeholder(plainText("選択してください"))
+                            }
+                        )
+                },
+                divider(),
+                section { section ->
+                    section
+                        .text(markdownText("メッセージをどうぞ"))
+                        .accessory(
+                            plainTextInput { input ->
+                                input.minLength(5)
+                                input.maxLength(500)
+                                input.placeholder(plainText("なんでもいいよ"))
+                            }
+                        )
+                },
+                divider(),
+                actions { actions ->
+                    actions.elements(
+                        asElements(
+                            button { button ->
+                                button.text(plainText("送る"))
+                                button.value("summit")
+                            },
+                            button { button ->
+                                button.text(plainText("キャンセル"))
+                                button.value("cancel")
+                            }
+                        )
+                    )
+                }
+            )
+        )
     }
 
     app.blockAction("test_action") { _, ctx ->
