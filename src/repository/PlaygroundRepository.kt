@@ -95,12 +95,14 @@ class PlaygroundRepository : Repository {
 
     override suspend fun userByEmail(email: String) = DatabaseFactory.dbQuery {
         Users.select { Users.email.eq(email) }
-            .map { User(
-                it[Users.id],
-                email,
-                it[Users.displayName],
-                it[Users.passwordHash]
-            ) }.singleOrNull()
+            .map {
+                User(
+                    it[Users.id],
+                    email,
+                    it[Users.displayName],
+                    it[Users.passwordHash]
+                )
+            }.singleOrNull()
     }
 
     override suspend fun userById(userId: String) = DatabaseFactory.dbQuery {
@@ -118,23 +120,23 @@ class PlaygroundRepository : Repository {
         Unit
     }
 
-    override suspend fun createSlackMessage(slackMessage: SlackMessage) {
-        DatabaseFactory.dbQuery {
-            transaction {
-                val insertStatement = SlackMessages.insert {
-                    it[message] = slackMessage.message
-                    it[userName] = slackMessage.userName
-                }
+    override suspend fun createSlackMessage(slackMessage: String, slackUserName: String) = DatabaseFactory.dbQuery {
+        transaction {
+            val insertStatement = SlackMessages.insert {
+                it[message] = slackMessage
+                it[userName] = slackUserName
+            }
 
-                val result = insertStatement.resultedValues?.get(0)
-                if (result != null) {
-                    toSlackMessage(result)
-                } else {
-                    null
-                }
+            val result = insertStatement.resultedValues?.get(0)
+            if (result != null) {
+                toSlackMessage(result)
+            } else {
+                null
             }
         }
+        Unit
     }
+
 
     private fun toUser(row: ResultRow): User {
         return User(

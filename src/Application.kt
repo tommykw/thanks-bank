@@ -15,6 +15,7 @@ import com.slack.api.model.view.Views.*
 import com.tommykw.route.login
 import com.tommykw.api.playgroundApi
 import com.tommykw.model.AdminUserSession
+import com.tommykw.model.SlackMessage
 import com.tommykw.model.User
 import com.tommykw.repository.DatabaseFactory
 import com.tommykw.repository.InMemoryRepository
@@ -53,7 +54,9 @@ import io.ktor.sessions.SessionTransportTransformerMessageAuthentication
 import io.ktor.sessions.Sessions
 import io.ktor.sessions.cookie
 import io.ktor.util.toMap
+import kotlinx.coroutines.launch
 import org.kodein.di.generic.bind
+import org.kodein.di.generic.instance
 import org.kodein.di.generic.singleton
 import org.kodein.di.ktor.kodein
 import java.net.URI
@@ -184,10 +187,24 @@ fun Application.module(testing: Boolean = false) {
 
     app.viewSubmission("thanks-message") { req, ctx ->
         val stateValues = req.payload.view.state.values
-        println(stateValues)
+        println("req.payload: ${req.payload}")
+        println("req.payload.view.state.values: $stateValues")
 
-        val userName = stateValues.get("user-block")?.get("user-selection-action")?.value
-        println(userName)
+        val message = stateValues["message-block"]?.get("message-action")?.value
+        println("message-action.value: $message")
+
+        if (message?.isNotEmpty() == true) {
+            try {
+                launch {
+                    val repository by kodein().instance<PlaygroundRepository>()
+                    repository.createSlackMessage(
+                        slackUserName = "a",
+                        slackMessage = message
+                    )
+                }
+            } catch (e: Throwable) {
+            }
+        }
 
         ctx.ack()
     }
