@@ -9,9 +9,9 @@ import com.slack.api.bolt.util.QueryStringParser
 import com.slack.api.bolt.util.SlackRequestParser
 import com.slack.api.model.block.Blocks.asBlocks
 import com.slack.api.model.block.Blocks.section
-import com.slack.api.model.block.composition.BlockCompositions.markdownText
-import com.slack.api.model.block.composition.BlockCompositions.plainText
+import com.slack.api.model.block.composition.BlockCompositions.*
 import com.slack.api.model.block.element.BlockElements.button
+import com.slack.api.model.block.element.BlockElements.staticSelect
 import com.tommykw.route.login
 import com.tommykw.api.playgroundApi
 import com.tommykw.model.UserSession
@@ -138,11 +138,34 @@ fun Application.module(testing: Boolean = false) {
         ))
     }
 
-    app.command("/hi") { _, ctx ->
-        ctx.ack("hai!")
+    app.blockAction("link") { _, ctx ->
+        ctx.ack()
     }
 
-    app.blockAction("link") { _, ctx ->
+    app.command("/test-test") { req, ctx ->
+        ctx.ack(asBlocks(
+            section { section ->
+                section
+                    .text(markdownText("Hey ${req.payload.userName}. This is a test message with *bold* inside"))
+                    .accessory(
+                        staticSelect { staticSelect ->
+                            staticSelect.actionId("test_action")
+                            staticSelect.placeholder(plainText("Select an item"))
+                            staticSelect.options(listOf(
+                                option(plainText("Let's go!", true), "report_go"),
+                                option(plainText("Snooze", true), "report_snooze"),
+                                option(plainText("Not today", true), "report_today")
+                            ))
+                        }
+                    )
+            }
+        ))
+    }
+
+    app.blockAction("test_action") { _, ctx ->
+        ctx.respond { r ->
+            r.text("thx")
+        }
         ctx.ack()
     }
 
