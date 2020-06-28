@@ -163,11 +163,18 @@ fun Application.module(testing: Boolean = false) {
     }
 
     app.command("/thanks") { req, ctx ->
-        ctx.client().viewsOpen {
+        val res = ctx.client().viewsOpen {
+            it.triggerId(ctx.triggerId)
             it.view(buildView())
         }
 
-        ctx.ack()
+        if (res.isOk) {
+            ctx.ack()
+        } else {
+            Response.builder().statusCode(500).body(res.error).build()
+        }
+
+
 //        ctx.ack(
 //            asBlocks(
 //                section { section ->
