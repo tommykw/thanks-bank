@@ -1,6 +1,7 @@
 package com.tommykw.repository
 
 import com.tommykw.model.Playgrounds
+import com.tommykw.model.SlackMessages
 import com.tommykw.model.Users
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
@@ -18,6 +19,7 @@ object DatabaseFactory {
         transaction {
             SchemaUtils.create(Users)
             SchemaUtils.create(Playgrounds)
+            SchemaUtils.create(SlackMessages)
         }
     }
 

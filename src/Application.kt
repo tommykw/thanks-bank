@@ -122,6 +122,7 @@ fun Application.module(testing: Boolean = false) {
                 val user = repository.userById(claimString)
                 user
             }
+
         }
     }
 
