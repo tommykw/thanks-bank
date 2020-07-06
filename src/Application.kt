@@ -297,7 +297,7 @@ fun buildView(): View {
                     staticSelect.actionId("user-selection-action")
                     staticSelect.placeholder(plainText("選択する"))
                     staticSelect.options(asOptions(
-                        option(plainText("a"), "a")
+                        option(plainText("user_name"), "tommykw")
                     ))
                 })
             },
