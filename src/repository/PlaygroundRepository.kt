@@ -61,6 +61,12 @@ class PlaygroundRepository : Repository {
         }
     }
 
+    override suspend fun slackMessages(): List<SlackMessage> {
+        return transaction {
+            SlackMessages.selectAll().map { toSlackMessage(it) }
+        }
+    }
+
     private fun toPlayground(row: ResultRow): Playground {
         return Playground(
             id = row[Playgrounds.id].value,

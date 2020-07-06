@@ -230,6 +230,7 @@ fun Application.module(testing: Boolean = false) {
         login(jwtService)
         playgroundApi(inMemoryRepository)
         googleCalender()
+        slack()
     }
 }
 
