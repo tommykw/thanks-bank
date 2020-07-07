@@ -188,19 +188,16 @@ fun Application.module(testing: Boolean = false) {
     app.viewSubmission("thanks-message") { req, ctx ->
         val stateValues = req.payload.view.state.values
         println("req.payload.view.state.values: $stateValues")
-        println("")
-        println("req.payload.view.blocks: ${req.payload.view.blocks}")
 
         val message = stateValues["message-block"]?.get("message-action")?.value
-//        println("message-action.value: $message")
-//        println("userName: $userName")
+        val userName = stateValues["user-block"]?.get("user-action")?.value
 
-        if (message?.isNotEmpty() == true) {
+        if (message?.isNotEmpty() == true && userName?.isNotEmpty() == true) {
             try {
                 launch {
                     val repository by kodein().instance<PlaygroundRepository>()
                     repository.createSlackMessage(
-                        slackUserName = "a",
+                        slackUserName = userName,
                         slackMessage = message
                     )
                 }
