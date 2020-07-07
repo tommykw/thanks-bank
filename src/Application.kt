@@ -15,7 +15,6 @@ import com.slack.api.model.view.Views.*
 import com.tommykw.route.login
 import com.tommykw.api.playgroundApi
 import com.tommykw.model.AdminUserSession
-import com.tommykw.model.SlackMessage
 import com.tommykw.model.User
 import com.tommykw.repository.DatabaseFactory
 import com.tommykw.repository.InMemoryRepository
@@ -188,18 +187,10 @@ fun Application.module(testing: Boolean = false) {
 
     app.viewSubmission("thanks-message") { req, ctx ->
         val stateValues = req.payload.view.state.values
-        println("req.payload: ${req.payload}")
-        println("")
         println("req.payload.view.state.values: $stateValues")
-        println("")
-        println("req.payload.user: ${req.payload.user}")
         println("")
         println("req.payload.view.blocks: ${req.payload.view.blocks}")
 
-//        println("user-block: " + stateValues["user-block"])
-//        println("user-selection-action " + stateValues["user-block"]?.get("user-selection-action"))
-//
-//        val userName = stateValues["user-block"]?.get("user-selection-action")?.value
         val message = stateValues["message-block"]?.get("message-action")?.value
 //        println("message-action.value: $message")
 //        println("userName: $userName")
@@ -300,14 +291,15 @@ fun buildView(): View {
         view.close(viewClose { close -> close.type("plain_text").text("キャンセル").emoji(true) } )
         view.privateMetadata("{\"response_url\":\"https://hooks.slack.com/actions/T1ABCD2E12/330361579271/0dAEyLY19ofpLwxqozy3firz\"}")
         view.blocks(asBlocks(
-            section { section ->
-                section.blockId("user-block")
-                section.text(markdownText("誰に届けますか？"))
-                section.accessory(staticSelect { staticSelect ->
-                    staticSelect.actionId("user-selection-action")
-                    staticSelect.placeholder(plainText("選択する"))
-                    staticSelect.options(asOptions(
-                        option(plainText("user_name"), "tommykw")
+            input { input ->
+                input.blockId("user-block")
+                input.element(staticSelect { ss ->
+                    ss.actionId("user-action")
+                    ss.placeholder(plainText("選択してみよう"))
+                    ss.options(asOptions(
+                            option(plainText("tommykw1"), "tommykw1"),
+                            option(plainText("tommykw2"), "tommykw2"),
+                            option(plainText("tommykw3"), "tommykw3")
                     ))
                 })
             },
