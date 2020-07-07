@@ -193,6 +193,7 @@ fun Application.module(testing: Boolean = false) {
         val userName = stateValues["user-block"]?.get("user-action")?.selectedOption?.value
 
         println("!!!!!!! message $message")
+        println("!!!!!!! message-block " + stateValues["message-block"])
         println("!!!!!!! user-block " + stateValues["user-block"])
         println("!!!!!!! user-action " + stateValues["user-block"]?.get("user-action"))
         println("!!!!!!! userName $userName")
