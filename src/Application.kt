@@ -291,18 +291,19 @@ fun buildView(): View {
         view.close(viewClose { close -> close.type("plain_text").text("キャンセル").emoji(true) } )
         view.privateMetadata("{\"response_url\":\"https://hooks.slack.com/actions/T1ABCD2E12/330361579271/0dAEyLY19ofpLwxqozy3firz\"}")
         view.blocks(asBlocks(
-//            input { input ->
-//                input.blockId("user-block")
-//                input.element(staticSelect { ss ->
-//                    ss.actionId("user-action")
-//                    ss.placeholder(plainText("選択してみよう"))
-//                    ss.options(asOptions(
-//                            option(plainText("tommykw1"), "tommykw1"),
-//                            option(plainText("tommykw2"), "tommykw2"),
-//                            option(plainText("tommykw3"), "tommykw3")
-//                    ))
-//                })
-//            },
+            input { input ->
+                input.blockId("user-block")
+                input.label(plainText { pt -> pt.text("誰に届けますか？") })
+                input.element(staticSelect { ss ->
+                    ss.actionId("user-action")
+                    ss.placeholder(plainText("選択してみよう"))
+                    ss.options(asOptions(
+                            option(plainText("tommykw1"), "tommykw1"),
+                            option(plainText("tommykw2"), "tommykw2"),
+                            option(plainText("tommykw3"), "tommykw3")
+                    ))
+                })
+            },
             input { input ->
                 input.blockId("message-block")
                 input.element(plainTextInput { pti -> pti.actionId("message-action").multiline(true) })
