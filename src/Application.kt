@@ -190,7 +190,7 @@ fun Application.module(testing: Boolean = false) {
         println("req.payload.view.state.values: $stateValues")
 
         val message = stateValues["message-block"]?.get("message-action")?.value
-        val userName = stateValues["user-block"]?.get("user-action")?.value
+        val userName = stateValues["user-block"]?.get("user-action")?.selectedOption?.value
 
         println("!!!!!!! message $message")
         println("!!!!!!! user-block " + stateValues["user-block"])
