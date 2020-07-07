@@ -192,6 +192,10 @@ fun Application.module(testing: Boolean = false) {
         val message = stateValues["message-block"]?.get("message-action")?.value
         val userName = stateValues["user-block"]?.get("user-action")?.value
 
+        println("!!!!!!! message $message")
+        println("!!!!!!! user-block " + stateValues["user-block"])
+        println("!!!!!!! userName $userName")
+
         if (message?.isNotEmpty() == true && userName?.isNotEmpty() == true) {
             try {
                 launch {
