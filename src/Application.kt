@@ -189,22 +189,27 @@ fun Application.module(testing: Boolean = false) {
     app.viewSubmission("thanks-message") { req, ctx ->
         val stateValues = req.payload.view.state.values
         println("req.payload: ${req.payload}")
+        println("")
         println("req.payload.view.state.values: $stateValues")
+        println("")
+        println("req.payload.user: ${req.payload.user}")
+        println("")
+        println("req.payload.view.blocks: ${req.payload.view.blocks}")
 
-        println("user-block: " + stateValues["user-block"])
-        println("user-selection-action " + stateValues["user-block"]?.get("user-selection-action"))
-
-        val userName = stateValues["user-block"]?.get("user-selection-action")?.value
+//        println("user-block: " + stateValues["user-block"])
+//        println("user-selection-action " + stateValues["user-block"]?.get("user-selection-action"))
+//
+//        val userName = stateValues["user-block"]?.get("user-selection-action")?.value
         val message = stateValues["message-block"]?.get("message-action")?.value
-        println("message-action.value: $message")
-        println("userName: $userName")
+//        println("message-action.value: $message")
+//        println("userName: $userName")
 
-        if (message?.isNotEmpty() == true && userName?.isNotEmpty() == true) {
+        if (message?.isNotEmpty() == true) {
             try {
                 launch {
                     val repository by kodein().instance<PlaygroundRepository>()
                     repository.createSlackMessage(
-                        slackUserName = userName,
+                        slackUserName = "a",
                         slackMessage = message
                     )
                 }
