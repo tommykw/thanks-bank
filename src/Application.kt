@@ -187,16 +187,8 @@ fun Application.module(testing: Boolean = false) {
 
     app.viewSubmission("thanks-message") { req, ctx ->
         val stateValues = req.payload.view.state.values
-        println("req.payload.view.state.values: $stateValues")
-
         val message = stateValues["message-block"]?.get("message-action")?.value
         val userName = stateValues["user-block"]?.get("user-action")?.selectedOption?.value
-
-        println("!!!!!!! message $message")
-        println("!!!!!!! message-block " + stateValues["message-block"])
-        println("!!!!!!! user-block " + stateValues["user-block"])
-        println("!!!!!!! user-action " + stateValues["user-block"]?.get("user-action"))
-        println("!!!!!!! userName $userName")
 
         if (message?.isNotEmpty() == true && userName?.isNotEmpty() == true) {
             try {
