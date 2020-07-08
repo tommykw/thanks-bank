@@ -166,6 +166,14 @@ fun Application.module(testing: Boolean = false) {
     }
 
     app.command("/thanks") { req, ctx ->
+        println("!!!!!!! /thanks ")
+
+        val members = ctx.client().usersList {
+            it.token(System.getenv("SLACK_BOT_TOKEN"))
+        }.members
+
+        println("!!!!!!!!! members " + members)
+
         val res = ctx.client().viewsOpen {
             it.triggerId(ctx.triggerId)
             it.view(buildView())
