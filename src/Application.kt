@@ -168,13 +168,13 @@ fun Application.module(testing: Boolean = false) {
     app.command("/thanks") { req, ctx ->
         println("!!!!!!! /thanks ")
 
-        println("!!!!!!! System.getenv(\"SLACK_BOT_TOKEN\") " + System.getenv("SLACK_BOT_TOKEN"))
-
         val members = ctx.client().usersList {
             it.token(System.getenv("SLACK_BOT_TOKEN"))
-        }
+        }.members
 
-        println("!!!!!!!!! members " + members)
+        members.forEach { user ->
+            println("name " + user.name)
+        }
 
         val res = ctx.client().viewsOpen {
             it.triggerId(ctx.triggerId)
