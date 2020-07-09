@@ -2,6 +2,7 @@ package com.tommykw
 
 import com.slack.api.bolt.App
 import com.slack.api.bolt.AppConfig
+import com.slack.api.bolt.context.builtin.SlashCommandContext
 import com.slack.api.bolt.request.Request
 import com.slack.api.bolt.request.RequestHeaders
 import com.slack.api.bolt.response.Response
@@ -166,25 +167,9 @@ fun Application.module(testing: Boolean = false) {
     }
 
     app.command("/thanks") { req, ctx ->
-        println("!!!!!!! /thanks ")
-
-        val members = ctx.client().usersList {
-            it.token(System.getenv("SLACK_BOT_TOKEN"))
-        }.members
-
-        members.forEach { user ->
-            println("!!!!! realName " + user.realName)
-            println("!!!!! isBot " + user.isBot)
-            println("!!!!! userId " + user.id)
-            println("!!!!! isAdmin " + user.isAdmin)
-            println("!!!!! isAppUser " + user.isAppUser)
-
-            //println("name " + user.name) //destinys.lotus.1108mn
-        }
-
         val res = ctx.client().viewsOpen {
             it.triggerId(ctx.triggerId)
-            it.view(buildView())
+            it.view(buildView(ctx))
         }
 
         if (res.isOk) {
@@ -292,7 +277,11 @@ suspend fun respond(call: ApplicationCall, slackResp: Response) {
     }
 }
 
-fun buildView(): View {
+fun buildView(ctx: SlashCommandContext): View {
+    val members = ctx.client().usersList {
+        it.token(System.getenv("SLACK_BOT_TOKEN"))
+    }.members
+
     return view { view ->
         view.callbackId("thanks-message")
         view.type("modal")
@@ -308,11 +297,10 @@ fun buildView(): View {
                 input.element(staticSelect { ss ->
                     ss.actionId("user-action")
                     ss.placeholder(plainText("選択してみよう"))
-                    ss.options(asOptions(
-                            option(plainText("tommykw1"), "tommykw1"),
-                            option(plainText("tommykw2"), "tommykw2"),
-                            option(plainText("tommykw3"), "tommykw3")
-                    ))
+                    //ss.options(members.filter { it.isAppUser || it.isAdmin }.map { user ->
+                    ss.options(members.map { user ->
+                        option(plainText(user.realName), user.realName)
+                    })
                 })
             },
             input { input ->
