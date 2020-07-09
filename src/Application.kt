@@ -175,6 +175,10 @@ fun Application.module(testing: Boolean = false) {
         members.forEach { user ->
             println("!!!!! realName " + user.realName)
             println("!!!!! isBot " + user.isBot)
+            println("!!!!! userId " + user.id)
+            println("!!!!! isAdmin " + user.isAdmin)
+            println("!!!!! isAppUser " + user.isAppUser)
+
             //println("name " + user.name) //destinys.lotus.1108mn
         }
 
