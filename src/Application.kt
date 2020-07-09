@@ -282,6 +282,10 @@ fun buildView(ctx: SlashCommandContext): View {
         it.token(System.getenv("SLACK_BOT_TOKEN"))
     }.members
 
+    members.forEach { user ->
+        println("!!!!!!!!! color " + user.color)
+    }
+
     return view { view ->
         view.callbackId("thanks-message")
         view.type("modal")
