@@ -173,7 +173,9 @@ fun Application.module(testing: Boolean = false) {
         }.members
 
         members.forEach { user ->
-            println("name " + user.name)
+            println("!!!!! realName " + user.realName)
+            println("!!!!! isBot " + user.isBot)
+            //println("name " + user.name) //destinys.lotus.1108mn
         }
 
         val res = ctx.client().viewsOpen {
