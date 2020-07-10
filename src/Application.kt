@@ -283,6 +283,7 @@ fun buildView(ctx: SlashCommandContext): View {
     }.members
 
     members.forEach { user ->
+        println("!!!!!!!!! user.presence " + user.presence)
         println("!!!!!!!!! color " + user.color)
     }
 
