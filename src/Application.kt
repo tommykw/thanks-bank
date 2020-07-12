@@ -299,13 +299,17 @@ fun buildView(ctx: SlashCommandContext): View {
         view.blocks(asBlocks(
             input { input ->
                 input.blockId("user-block")
-                input.label(plainText { pt -> pt.text("誰に届けますか？") })
+                input.label(plainText {
+                    pt ->
+                    pt.emoji(true)
+                    pt.text("🔛 誰に届けますか？")
+                })
                 input.element(staticSelect { ss ->
                     ss.actionId("user-action")
                     ss.placeholder(plainText("選択してみよう"))
                     //ss.options(members.filter { it.isAppUser || it.isAdmin }.map { user ->
                     ss.options(members.map { user ->
-                        option(plainText(user.realName), user.realName)
+                        option(plainText(":white_circle: @${user.realName} ${user.name}", true), user.realName)
                     })
                 })
             },
