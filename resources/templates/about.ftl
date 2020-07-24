@@ -2,7 +2,7 @@
 
 <@b.page>
 <br>
-<div><h3>Kotlin Playgroundを用いた簡易エディタです。</h3></div>
+<div><h3>感謝の気持ちを集めるアプリケーション</h3></div>
 <br>
 <br>
 <br>

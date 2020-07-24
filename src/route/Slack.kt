@@ -10,7 +10,7 @@ import io.ktor.routing.Route
 import org.kodein.di.generic.instance
 import org.kodein.di.ktor.kodein
 
-@Location("/slack")
+@Location("/slack_messages")
 class Slack
 
 fun Route.slack() {
