@@ -1,8 +1,6 @@
 package com.tommykw.repository
 
-import com.tommykw.model.Playgrounds
-import com.tommykw.model.SlackMessages
-import com.tommykw.model.Users
+import com.tommykw.model.*
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
 import kotlinx.coroutines.Dispatchers
@@ -20,6 +18,8 @@ object DatabaseFactory {
             SchemaUtils.create(Users)
             SchemaUtils.create(Playgrounds)
             SchemaUtils.create(SlackMessages)
+            SchemaUtils.create(Thanks)
+            SchemaUtils.create(ThankReactions)
         }
     }
 

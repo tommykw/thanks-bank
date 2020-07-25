@@ -65,6 +65,7 @@ dependencies {
     compile "com.slack.api:bolt:$slack_api_version"
     compile "com.slack.api:bolt-servlet:$slack_api_version"
     compile "com.slack.api:bolt-jetty:$slack_api_version"
+
 }
 
 task stage(dependsOn: ['installDist'])

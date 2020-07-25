@@ -228,6 +228,7 @@ fun Application.module(testing: Boolean = false) {
         playgroundApi(inMemoryRepository)
         googleCalender()
         slack()
+        letter()
     }
 }
 

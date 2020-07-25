@@ -67,6 +67,12 @@ class PlaygroundRepository : Repository {
         }
     }
 
+    override suspend fun getThanks(): List<Thank> {
+        return transaction {
+            Thanks.selectAll().map { toThank(it) }
+        }
+    }
+
     private fun toPlayground(row: ResultRow): Playground {
         return Playground(
             id = row[Playgrounds.id].value,
@@ -80,6 +86,15 @@ class PlaygroundRepository : Repository {
             id = row[SlackMessages.id].value,
             userName = row[SlackMessages.userName],
             message = row[SlackMessages.message]
+        )
+    }
+
+    private fun toThank(row: ResultRow): Thank {
+        return Thank(
+            id = row[Thanks.id].value,
+            slackUserId = row[Thanks.slackUserId],
+            body = row[Thanks.body],
+            targetSlackUserId = row[Thanks.targetSlackUserId]
         )
     }
 
