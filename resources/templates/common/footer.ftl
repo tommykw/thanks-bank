@@ -1,6 +1,3 @@
 <footer>
-  <br>
-  <br>
-  <br>
-  <p>Copyright 2020 thanks bank</p>
+  <p class="copyright">thanks-bank</p>
 </footer>

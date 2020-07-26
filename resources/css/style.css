@@ -1,0 +1,241 @@
+/* Miligram overrides */
+a {
+    color: #261818;
+}
+
+.button, button, input[type='button'], input[type='reset'], input[type='submit'] {
+    background-color: #FF8080;
+    border: 0.1rem solid #FF8080;
+}
+
+.button-wide {
+    width: 100%;
+    font-size: 1.5rem;
+}
+
+.button-disabled {
+    cursor: not-allowed;
+    background-color: #606c76;
+    border-color: #606c76;
+    color: #fff;
+    outline: 0;
+}
+
+legend {
+    color: #FF8080;
+}
+
+label {
+    font-size: 1.5rem;
+    margin-bottom: 1.0rem;
+}
+
+/* Main */
+body {
+    font-family: 'Noto Sans JP', sans-serif;
+    background: #F7F6EE;
+    color: #261818;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.main {
+    margin: 2.5rem 0;
+}
+
+.content {
+    padding: 2.0rem;
+    background: #FFFFFF;
+    border-radius: .4rem;
+    /* Thanks Stripe */
+    box-shadow: 0 7px 14px 0 rgba(60,66,87, 0.1), 0 3px 6px 0 rgba(0, 0, 0, .07);
+}
+.actions a {
+    font-weight: bold;
+    padding: 0 .4rem;
+}
+th {
+    white-space: nowrap;
+}
+
+/* Nav bar */
+.top-nav {
+    background: #FFFFFF;
+    width: 100%;
+}
+.top-nav-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 112.0rem;
+    padding: 2.0rem;
+    margin: 0 auto 0rem;
+}
+.top-nav-title a {
+    font-size: 2.4rem;
+    *color: #261818;
+}
+.top-nav-title span {
+    color: #FF8080;
+}
+
+.top-nav-links a {
+    margin: 0 .5rem;
+}
+.top-nav-title a,
+.top-nav-links a {
+    font-weight: bold;
+}
+
+.main-title {
+    font-size: 2.2rem;
+    letter-spacing: -.08rem;
+    line-height: 1.35;
+    color: #FF8080;
+}
+
+.secondary {
+    margin-top: 2.0rem;
+}
+
+.bottom-action {
+    margin-bottom: 2.0rem;
+}
+
+/* View action */
+.content .text {
+    margin-top: 1.2rem;
+}
+.related {
+    margin-top: 2.0rem;
+}
+
+/* Flash messages */
+.message {
+    padding: 1.0rem;
+
+    background: #FFFFFF;
+    color: #FF8080;
+
+    border-color: #FF8080;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 4px;
+    margin-bottom: 2.0rem;
+}
+.message.hidden {
+    display: none;
+}
+.message.success {
+    background: #FFF6A7;
+    color: #FF8080;
+    border-color: #F2EC58;
+}
+.message.error {
+    background: #FFA7A7;
+    color: #FFFFFF;
+    border-color: #F25858;
+}
+
+/* Paginator */
+.paginator {
+    text-align: right;
+    margin-top: 1.0rem;
+}
+.pagination {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1.0rem;
+}
+.prev,
+.next {
+    margin: 0 1.0rem;
+}
+.prev.disabled a,
+.next.disabled a {
+    cursor: not-allowed;
+    color: #606c76;
+}
+.asc:after {
+    content: " \2193";
+}
+.desc:after {
+    content: " \2191";
+}
+
+footer {
+    margin-top: auto;
+    width: 100%;
+    background-color: #ffffff;
+    color: #261818;
+    text-align: center;
+}
+
+footer .link {
+    margin-top: 2.0rem;
+}
+
+footer .copyright {
+    margin: 1.1rem 0;
+}
+
+footer a {
+    margin: 0 .5rem;
+}
+
+/* Dashboard */
+.dashboard {
+    text-align: center;
+}
+
+.dashboard h3 {
+    color: #FF8080;
+}
+
+.dashboard .mile {
+    font-size: 2.8rem;
+    line-height: 1.35;
+    font-weight: bold;
+}
+
+.dashboard .leader {
+    font-size: 2.1rem;
+    line-height: 1.35;
+    font-weight: bold;
+}
+
+.dashboard .mile .note {
+    font-size: 1.4rem;
+    letter-spacing: -.08rem;
+}
+
+/* Error */
+.error-container {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    height: 50vh;
+    justify-content: center;
+}
+
+.error-container h2 {
+    font-size: 2.2rem;
+    letter-spacing: -.08rem;
+    line-height: 1.35;
+}
+
+.error-container .error {
+    margin-bottom: 1.0rem;
+}
+
+.error-container a {
+    color: #F25858;
+}
+
+.error-message {
+    color: #F25858;
+    margin-bottom: 1.5rem;
+}

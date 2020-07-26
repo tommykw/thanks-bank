@@ -2,20 +2,17 @@
 
 <@b.page>
     <#if thanks?? && (thanks?size > 0)>
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th>あなたへの宛てのおてがみ</th>
-            </tr>
-            </thead>
-            <tbody>
-            <#list thanks as thank>
-                <tr>
-                    <td style="vertical-align:middle"><h3>${thank.slackUserId}</h3></td>
-                    <td style="vertical-align:middle"><h3>${thank.body}</h3></td>
-                </tr>
-            </#list>
-            </tbody>
-        </table>
+        <div class="row">
+        <#list thanks as thank>
+            <div class="column">
+                <div class="content dashboard">
+                    <span>画像</span><span>${thank.slackUserId}名前さんへ</span>
+                    <span>${thank.body}</span>
+                    <span>リアクション数</span>
+                    <span>画像</span><span>XXXより</span>
+                </div>
+            </div>
+        </#list>
+        </div>
     </#if>
 </@b.page>

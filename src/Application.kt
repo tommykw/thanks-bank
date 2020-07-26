@@ -39,6 +39,7 @@ import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.content.TextContent
+import io.ktor.http.content.files
 import io.ktor.http.content.resources
 import io.ktor.http.content.static
 import io.ktor.locations.Locations
@@ -216,6 +217,7 @@ fun Application.module(testing: Boolean = false) {
 
         static("/static") {
             resources("images")
+            resources("css")
         }
 
         home(inMemoryRepository)
