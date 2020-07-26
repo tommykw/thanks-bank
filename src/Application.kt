@@ -188,6 +188,7 @@ fun Application.module(testing: Boolean = false) {
     }
 
     app.viewSubmission("thanks-message") { req, ctx ->
+        println("!!!!!!!!!!! thanks-message")
         val stateValues = req.payload.view.state.values
         val message = stateValues["message-block"]?.get("message-action")?.value
         val userName = stateValues["user-block"]?.get("user-action")?.selectedOption?.value
