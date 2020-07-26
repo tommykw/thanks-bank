@@ -19,12 +19,12 @@ apply plugin: 'kotlinx-serialization'
 mainClassName = 'com.tommykw.ApplicationKt'
 
 shadowJar {
-    baseName = 'kotlin-text-editor'
+    baseName = 'thanks-bank'
     classifier = null
     version = null
 }
 
-group 'kotlin-text-editor'
+group 'thanks-bank'
 version '0.0.1'
 mainClassName = "io.ktor.server.netty.EngineMain"
 
