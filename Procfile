@@ -1,1 +1,1 @@
-web: ./build/install/kotlin-text-editor/bin/kotlin-text-editor
+web: ./build/install/thanks-bank/bin/thanks-bank
