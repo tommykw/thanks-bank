@@ -62,10 +62,11 @@ dependencies {
     compile "org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.20.0"
     compile "com.slack.api:slack-api-client:$slack_api_version"
     compile "com.slack.api:slack-api-model:$slack_api_version"
+    compile "com.slack.api:slack-api-model-kotlin-extension:$slack_api_version"
+    compile "com.slack.api:slack-api-client-kotlin-extension:$slack_api_version"
     compile "com.slack.api:bolt:$slack_api_version"
     compile "com.slack.api:bolt-servlet:$slack_api_version"
     compile "com.slack.api:bolt-jetty:$slack_api_version"
-
 }
 
 task stage(dependsOn: ['installDist'])

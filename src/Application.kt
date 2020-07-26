@@ -11,6 +11,8 @@ import com.slack.api.bolt.util.SlackRequestParser
 import com.slack.api.model.block.Blocks.*
 import com.slack.api.model.block.composition.BlockCompositions.*
 import com.slack.api.model.block.element.BlockElements.*
+import com.slack.api.model.kotlin_extension.block.withBlocks
+import com.slack.api.model.kotlin_extension.view.blocks
 import com.slack.api.model.view.View
 import com.slack.api.model.view.Views.*
 import com.tommykw.route.login
@@ -39,7 +41,6 @@ import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.content.TextContent
-import io.ktor.http.content.files
 import io.ktor.http.content.resources
 import io.ktor.http.content.static
 import io.ktor.locations.Locations
@@ -128,19 +129,19 @@ fun Application.module(testing: Boolean = false) {
     }
 
     app.command("/ktor") { _, ctx ->
-        ctx.ack(asBlocks(
-            section { section ->
-                section
-                    .text(markdownText("Ktor is a framework for building asynchronous servers and clients in connected systems using the powerful Kotlin programming language."))
-                    .accessory(
-                        button { btn ->
-                            btn.actionId("link")
-                                .text(plainText("Ktor website"))
-                                .url("kttps://ktor.io/")
-                        }
-                    )
+        val blocks = withBlocks {
+            section {
+                markdownText("Ktor is a framework for building asynchronous servers and clients in connected systems using the powerful Kotlin programming language.")
+                accessory {
+                    button {
+                        actionId("link")
+                        text("Ktor website")
+                        url("kttps://ktor.io/")
+                    }
+                }
             }
-        ))
+        }
+        ctx.ack(blocks)
     }
 
     app.blockAction("link") { _, ctx ->
@@ -300,28 +301,32 @@ fun buildView(ctx: SlashCommandContext): View {
         view.submit(viewSubmit { submit -> submit.type("plain_text").text("送信").emoji(true) } )
         view.close(viewClose { close -> close.type("plain_text").text("キャンセル").emoji(true) } )
         view.privateMetadata("{\"response_url\":\"https://hooks.slack.com/actions/T1ABCD2E12/330361579271/0dAEyLY19ofpLwxqozy3firz\"}")
-        view.blocks(asBlocks(
-            input { input ->
-                input.blockId("user-block")
-                input.label(plainText {
-                    pt ->
-                    pt.emoji(true)
-                    pt.text("🔛 誰に届けますか？")
-                })
-                input.element(staticSelect { ss ->
-                    ss.actionId("user-action")
-                    ss.placeholder(plainText("選択してみよう"))
-                    //ss.options(members.filter { it.isAppUser || it.isAdmin }.map { user ->
-                    ss.options(members.map { user ->
-                        option(plainText(":white_circle: @${user.realName} ${user.name}", true), user.realName)
-                    })
-                })
-            },
-            input { input ->
-                input.blockId("message-block")
-                input.element(plainTextInput { pti -> pti.actionId("message-action").multiline(true) })
-                input.label(plainText { pt -> pt.text("メッセージをどうぞ").emoji(true) })
+        view.blocks {
+            input {
+                blockId("user-block")
+                label(text = "🔛 誰に届けますか？", emoji = true)
+                element {
+                    staticSelect {
+                        actionId("user-action")
+                        plainText("選択してみよう")
+                        options {
+                            members.map { user ->
+                                option(plainText(":white_circle: @${user.realName} ${user.name}", true), user.realName)
+                            }
+                        }
+                    }
+                }
             }
-        ))
+            input {
+                blockId("message-block")
+                element {
+                    plainTextInput {
+                        actionId("message-action")
+                        multiline(true)
+                    }
+                }
+                label(text = "メッセージをどうぞ", emoji = true)
+            }
+        }
     }
 }
