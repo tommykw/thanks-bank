@@ -192,6 +192,7 @@ fun Application.module(testing: Boolean = false) {
         println("!!!!!!!!!!! thanks-message")
         val stateValues = req.payload.view.state.values
         val message = stateValues["message-block"]?.get("message-action")?.value
+        println("!!!!!!!!!! " + stateValues["user-block"]?.get("user-action"))
         val userName = stateValues["user-block"]?.get("user-action")?.selectedOption?.value
 
         if (message?.isNotEmpty() == true && userName?.isNotEmpty() == true) {
@@ -310,16 +311,6 @@ fun buildView(ctx: SlashCommandContext): View {
                         actionId("user-action")
                         placeholder("選択してみよう")
                     }
-
-//                    staticSelect {
-//                        actionId("user-action")
-//                        plainText("選択してみよう")
-//                        options {
-//                            members.map { user ->
-//                                option(plainText(":white_circle: @${user.realName} ${user.name}", true), user.realName)
-//                            }
-//                        }
-//                    }
                 }
             }
             input {
