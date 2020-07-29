@@ -306,20 +306,26 @@ fun buildView(ctx: SlashCommandContext): View {
                 blockId("user-block")
                 label(text = "🔛 誰に届けますか？", emoji = true)
                 element {
-                    staticSelect {
+                    multiUsersSelect {
                         actionId("user-action")
-                        plainText("選択してみよう")
-                        options {
-                            members.map { user ->
-                                option(plainText(":white_circle: @${user.realName} ${user.name}", true), user.realName)
-                            }
-                        }
+                        placeholder("選択してみよう")
                     }
+
+//                    staticSelect {
+//                        actionId("user-action")
+//                        plainText("選択してみよう")
+//                        options {
+//                            members.map { user ->
+//                                option(plainText(":white_circle: @${user.realName} ${user.name}", true), user.realName)
+//                            }
+//                        }
+//                    }
                 }
             }
             input {
                 blockId("message-block")
                 element {
+                    //multiUsersSelect {  }
                     plainTextInput {
                         actionId("message-action")
                         multiline(true)
