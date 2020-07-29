@@ -193,16 +193,20 @@ fun Application.module(testing: Boolean = false) {
         val stateValues = req.payload.view.state.values
         val message = stateValues["message-block"]?.get("message-action")?.value
         println("!!!!!!!!!! " + stateValues["user-block"]?.get("user-action"))
-        val userName = stateValues["user-block"]?.get("user-action")?.selectedOption?.value
 
-        if (message?.isNotEmpty() == true && userName?.isNotEmpty() == true) {
+        val targetUsers = stateValues["user-block"]?.get("user-action")?.selectedUsers
+
+        if (message?.isNotEmpty() == true && targetUsers?.isNotEmpty() == true) {
             try {
                 launch {
                     val repository by kodein().instance<PlaygroundRepository>()
-                    repository.createSlackMessage(
-                        slackUserName = userName,
-                        slackMessage = message
-                    )
+
+                    targetUsers.forEach { userName ->
+                        repository.createSlackMessage(
+                            slackUserName = userName,
+                            slackMessage = message
+                        )
+                    }
                 }
             } catch (e: Throwable) {
             }
