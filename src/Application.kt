@@ -198,6 +198,7 @@ fun Application.module(testing: Boolean = false) {
     }
 
     app.viewSubmission("thanks-message") { req, ctx ->
+        println("!!!!!!!!!!! user " + req.payload.user)
         println("!!!!!!!!!!! thanks-message")
         val stateValues = req.payload.view.state.values
         println("!!!!!!!!!! stateValues " + stateValues)
