@@ -178,6 +178,7 @@ fun Application.module(testing: Boolean = false) {
             val ackRes = ctx.ack()
 
             ctx.client().chatPostMessage {
+                it.token(ctx.botToken)
                 it.channel("#general")
                 it.text("メッセージが送信されました")
             }
