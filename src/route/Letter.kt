@@ -16,6 +16,8 @@ class Letter
 fun Route.letter() {
     get<Letter> {
         val repository by kodein().instance<PlaygroundRepository>()
+
+        repository.getSlackMembers()
         val thanks = repository.getThanks()
 
         call.respond(
