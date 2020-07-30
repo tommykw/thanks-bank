@@ -182,8 +182,7 @@ fun Application.module(testing: Boolean = false) {
                 it.channel("#general")
                 it.text("メッセージが送信されました")
             }
-
-            println("!!!!!!!!!!! res " + res)
+            // TODO res.isOk
 
             ackRes
         } else {
@@ -201,6 +200,7 @@ fun Application.module(testing: Boolean = false) {
     app.viewSubmission("thanks-message") { req, ctx ->
         println("!!!!!!!!!!! thanks-message")
         val stateValues = req.payload.view.state.values
+        println("!!!!!!!!!! stateValues " + stateValues)
         val message = stateValues["message-block"]?.get("message-action")?.value
         println("!!!!!!!!!! " + stateValues["user-block"]?.get("user-action"))
 

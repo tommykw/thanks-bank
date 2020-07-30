@@ -1,9 +1,6 @@
 package com.tommykw.repository
 
-import com.tommykw.model.Playground
-import com.tommykw.model.SlackMessage
-import com.tommykw.model.Thank
-import com.tommykw.model.User
+import com.tommykw.model.*
 
 interface Repository {
     suspend fun playgrounds(): List<Playground>
@@ -18,4 +15,5 @@ interface Repository {
     suspend fun createSlackMessage(slackMessage: String, slackUserName: String)
     suspend fun slackMessages(): List<SlackMessage>
     suspend fun getThanks(): List<Thank>
+    suspend fun createThanks(thanks: List<ThankRequest>)
 }

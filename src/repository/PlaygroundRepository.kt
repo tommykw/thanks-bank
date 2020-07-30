@@ -158,6 +158,18 @@ class PlaygroundRepository : Repository {
         Unit
     }
 
+    override suspend fun createThanks(thanks: List<ThankRequest>) = DatabaseFactory.dbQuery {
+        thanks.forEach { thankRequest ->
+            transaction {
+                val insertStatement = Thanks.insert {
+                    it[slackUserId] = thankRequest.slackUserId
+                    it[body] = thankRequest.body
+                    it[targetSlackUserId] = thankRequest.targetSlackUserId
+                }
+            }
+        }
+        Unit
+    }
 
     private fun toUser(row: ResultRow): User {
         return User(
