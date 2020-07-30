@@ -8,6 +8,7 @@ import com.slack.api.bolt.request.RequestHeaders
 import com.slack.api.bolt.response.Response
 import com.slack.api.bolt.util.QueryStringParser
 import com.slack.api.bolt.util.SlackRequestParser
+import com.slack.api.methods.kotlin_extension.request.chat.blocks
 import com.slack.api.model.block.Blocks.*
 import com.slack.api.model.block.composition.BlockCompositions.*
 import com.slack.api.model.block.element.BlockElements.*
@@ -223,6 +224,18 @@ fun Application.module(testing: Boolean = false) {
         }
 
         ctx.ack()
+    }
+
+    app.use { req, resp, chain ->
+        println("!!!!!!!!!! use")
+
+        val members = req.context.client().usersList {
+            it.token(System.getenv("SLACK_BOT_TOKEN"))
+        }.members
+
+        println("!!!!!!!!! member " + members)
+
+        resp
     }
 
     routing {
