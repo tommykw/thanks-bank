@@ -1,9 +1,16 @@
 package com.tommykw.repository
 
+import com.google.api.client.http.HttpResponse
 import com.tommykw.model.*
 import io.ktor.client.HttpClient
+import io.ktor.client.features.json.JsonFeature
+//import io.ktor.client.engine.okhttp.OkHttp
+//import io.ktor.client.features.json.GsonSerializer
+//import io.ktor.client.features.json.JsonFeature
 import io.ktor.client.request.get
+import io.ktor.client.statement.DefaultHttpResponse
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.serializer
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 
@@ -96,7 +103,8 @@ class PlaygroundRepository : Repository {
             id = row[Thanks.id].value,
             slackUserId = row[Thanks.slackUserId],
             body = row[Thanks.body],
-            targetSlackUserId = row[Thanks.targetSlackUserId]
+            targetSlackUserId = row[Thanks.targetSlackUserId],
+            realName = ""
         )
     }
 
@@ -171,10 +179,11 @@ class PlaygroundRepository : Repository {
         Unit
     }
 
-    override suspend fun getSlackMembers() {
-        val client = HttpClient()
-        val result = client.get<Json>("https://slack.com/api/users.list?token=${System.getenv("SLACK_BOT_TOKEN")}")
-        println("!!!!!!!!!! result " + result)
+    override suspend fun getSlackMembers(): SlackUserRes {
+        val client = HttpClient {
+            install(JsonFeature)
+        }
+        return client.get<SlackUserRes>("https://slack.com/api/users.list?token=${System.getenv("SLACK_BOT_TOKEN")}")
     }
 
     private fun toUser(row: ResultRow): User {

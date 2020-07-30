@@ -16,9 +16,19 @@ class Letter
 fun Route.letter() {
     get<Letter> {
         val repository by kodein().instance<PlaygroundRepository>()
-
-        repository.getSlackMembers()
+        val members = repository.getSlackMembers()
         val thanks = repository.getThanks()
+
+        fun idToRealName(slackId: String): String {
+            val res = members.members.find { it.id == slackId }
+            return res?.real_name ?: ""
+        }
+
+        thanks.map { thank ->
+            thank.copy(
+                realName = idToRealName(thank.slackUserId)
+            )
+        }
 
         call.respond(
             FreeMarkerContent(
@@ -28,6 +38,5 @@ fun Route.letter() {
                 )
             )
         )
-
     }
 }

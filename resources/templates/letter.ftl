@@ -6,7 +6,7 @@
         <#list thanks as thank>
             <div class="column">
                 <div class="content dashboard">
-                    <span>画像</span><span>${thank.slackUserId}名前さんへ</span>
+                    <span>画像</span><span>${thank.realName}名前さんへ</span>
                     <span>${thank.body}</span>
                     <span>リアクション数</span>
                     <span>画像</span><span>XXXより</span>
