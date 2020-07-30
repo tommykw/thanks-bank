@@ -19,12 +19,15 @@ fun Route.letter() {
         val members = repository.getSlackMembers()
         val thanks = repository.getThanks()
 
+        println("!!!!!!!!!!! members " + members)
+
         fun idToRealName(slackId: String): String {
             val res = members.members.find { it.id == slackId }
             return res?.real_name ?: ""
         }
 
         thanks.map { thank ->
+            println("!!!!!!!!! slackUserId " + thank.slackUserId)
             thank.copy(
                 realName = idToRealName(thank.slackUserId)
             )
