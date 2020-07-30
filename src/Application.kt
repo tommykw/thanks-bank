@@ -18,6 +18,7 @@ import com.slack.api.model.view.Views.*
 import com.tommykw.route.login
 import com.tommykw.api.playgroundApi
 import com.tommykw.model.AdminUserSession
+import com.tommykw.model.ThankRequest
 import com.tommykw.model.User
 import com.tommykw.repository.DatabaseFactory
 import com.tommykw.repository.InMemoryRepository
@@ -198,13 +199,8 @@ fun Application.module(testing: Boolean = false) {
     }
 
     app.viewSubmission("thanks-message") { req, ctx ->
-        println("!!!!!!!!!!! user " + req.payload.user)
-        println("!!!!!!!!!!! thanks-message")
         val stateValues = req.payload.view.state.values
-        println("!!!!!!!!!! stateValues " + stateValues)
         val message = stateValues["message-block"]?.get("message-action")?.value
-        println("!!!!!!!!!! " + stateValues["user-block"]?.get("user-action"))
-
         val targetUsers = stateValues["user-block"]?.get("user-action")?.selectedUsers
 
         if (message?.isNotEmpty() == true && targetUsers?.isNotEmpty() == true) {
@@ -212,10 +208,13 @@ fun Application.module(testing: Boolean = false) {
                 launch {
                     val repository by kodein().instance<PlaygroundRepository>()
 
-                    targetUsers.forEach { userName ->
-                        repository.createSlackMessage(
-                            slackUserName = userName,
-                            slackMessage = message
+                    targetUsers.forEach { targetUser ->
+                        repository.createThank(
+                            ThankRequest(
+                                slackUserId = req.payload.user.id,
+                                targetSlackUserId = targetUser,
+                                body = message
+                            )
                         )
                     }
                 }

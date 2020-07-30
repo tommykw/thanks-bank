@@ -158,14 +158,12 @@ class PlaygroundRepository : Repository {
         Unit
     }
 
-    override suspend fun createThanks(thanks: List<ThankRequest>) = DatabaseFactory.dbQuery {
-        thanks.forEach { thankRequest ->
-            transaction {
-                val insertStatement = Thanks.insert {
-                    it[slackUserId] = thankRequest.slackUserId
-                    it[body] = thankRequest.body
-                    it[targetSlackUserId] = thankRequest.targetSlackUserId
-                }
+    override suspend fun createThank(thanks: ThankRequest) = DatabaseFactory.dbQuery {
+        transaction {
+            val insertStatement = Thanks.insert {
+                it[slackUserId] = thanks.slackUserId
+                it[body] = thanks.body
+                it[targetSlackUserId] = thanks.targetSlackUserId
             }
         }
         Unit
