@@ -34,6 +34,19 @@
 
 ### /thanksコマンドを実行する
 
+チャットメッセージを送信するユーザを招待する必要があります。
+`/invite @対象のメンバー`
+
+```
+020-07-30T00:31:45.446654+00:00 app[web.1]: [Response Body]
+2020-07-30T00:31:45.446654+00:00 app[web.1]: {"ok":false,"error":"not_in_channel"}
+```
+
+パーミッションの追加が必要です。
+https://api.slack.com/apps/A018EU8GR1N/oauth?
+
+
+
 
 ## 参考資料
 - https://slack.dev/java-slack-sdk/guides/ja/getting-started-with-bolt
