@@ -175,7 +175,14 @@ fun Application.module(testing: Boolean = false) {
         }
 
         if (res.isOk) {
-            ctx.ack()
+            val ackRes = ctx.ack()
+
+            ctx.client().chatPostMessage {
+                it.channel("#general")
+                it.text("メッセージが送信されました")
+            }
+
+            ackRes
         } else {
             Response.builder().statusCode(500).body(res.error).build()
         }
@@ -320,7 +327,6 @@ fun buildView(ctx: SlashCommandContext): View {
             input {
                 blockId("message-block")
                 element {
-                    //multiUsersSelect {  }
                     plainTextInput {
                         actionId("message-action")
                         multiline(true)
