@@ -177,11 +177,13 @@ fun Application.module(testing: Boolean = false) {
         if (res.isOk) {
             val ackRes = ctx.ack()
 
-            ctx.client().chatPostMessage {
+            val res = ctx.client().chatPostMessage {
                 it.token(ctx.botToken)
                 it.channel("#general")
                 it.text("メッセージが送信されました")
             }
+
+            println("!!!!!!!!!!! res " + res)
 
             ackRes
         } else {
