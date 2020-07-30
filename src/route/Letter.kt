@@ -28,6 +28,8 @@ fun Route.letter() {
 
         thanks.map { thank ->
             println("!!!!!!!!! slackUserId " + thank.slackUserId)
+            println("!!!!!!!!! idToRealName " + idToRealName(thank.slackUserId))
+
             thank.copy(
                 realName = idToRealName(thank.slackUserId)
             )
