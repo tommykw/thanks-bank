@@ -8,8 +8,8 @@
                     <div class="card">
 
                         <div class="card-to-user">
-                            <img class="card_user_image" src="${thank.userImage}" alt="" width="40" height="40"/>
-                            <div class="card-to-user-name">${thank.realName}さんへ</div>
+                            <img class="card_user_image" src="${thank.targetUserImage}" alt="" width="40" height="40"/>
+                            <div class="card-to-user-name">${thank.targetRealName}さんへ</div>
                         </div>
 
                         <div class="card_content">
@@ -22,8 +22,8 @@
                         </div>
 
                         <div class="card_info">
-                            <img class="card-from-image" src="${thank.targetUserImage}" alt="" width="30" height="30"/>
-                            <div class="card-from-user-name">ほげこさんより</div>
+                            <img class="card-from-image" src="${thank.userImage}" alt="" width="30" height="30"/>
+                            <div class="card-from-user-name">${thank.realName}</div>
                         </div>
                     </div>
                 </a>

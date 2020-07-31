@@ -322,7 +322,7 @@ footer a {
 
 .card_user_image {
     display: inline;
-    border-radius: 15px;
+    border-radius: 20px;
 }
 
 .card-to-user {
@@ -335,7 +335,7 @@ footer a {
 
 .card-to-user > img {
     margin-left: 2rem;
-    margin-top: 1rem;
+    margin-top: 2rem;
     margin-bottom: 1rem;
 }
 
@@ -363,7 +363,7 @@ footer a {
 }
 
 .card_info {
-    padding: 15px;
+    padding: 15px 15px 22px 15px;
     display: flex;
     align-items: center;
     justify-content: flex-end;
@@ -374,7 +374,7 @@ footer a {
 }
 
 .card-from-image {
-    border-radius: 15px;
+    border-radius: 20px;
 }
 
 .card-from-user-name {
@@ -422,12 +422,12 @@ footer a {
 }
 
 .letter-detail-thank-fromto-image-you {
-    border-radius: 15px;
+    border-radius: 20px;
 }
 
 .letter-detail-thank-fromto-image-target {
     margin-left: 1rem;
-    border-radius: 15px;
+    border-radius: 20px;
 }
 
 .letter-detail-thank-fromto-message {
@@ -478,7 +478,7 @@ footer a {
 }
 
 .letter-detail-tread-user-info-icon {
-    border-radius: 15px;
+    border-radius: 20px;
 }
 
 .letter-detail-tread-user-info-name {
