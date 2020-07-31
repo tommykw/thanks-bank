@@ -1,4 +1,4 @@
-<#import "common/bootstrap.ftl" as b>
+<#import "common/milligram.ftl" as b>
 
 <@b.page>
     <div class="row">

@@ -226,20 +226,6 @@ fun Application.module(testing: Boolean = false) {
         ctx.ack()
     }
 
-//    app.use { req, resp, chain ->
-//        println("!!!!!!!!!! use")
-//
-//        val members = req.context.client().usersList {
-//            it.token(System.getenv("SLACK_BOT_TOKEN"))
-//        }.members
-//
-//        println("!!!!!!!!! member " + members)
-//
-//        resp
-//    }
-
-
-
     routing {
         hello()
 

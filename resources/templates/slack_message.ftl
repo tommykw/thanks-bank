@@ -1,4 +1,4 @@
-<#import "common/bootstrap.ftl" as b>
+<#import "common/milligram.ftl" as b>
 
 <@b.page>
     <#if slack_messages?? && (slack_messages?size > 0)>

@@ -239,3 +239,149 @@ footer a {
     color: #F25858;
     margin-bottom: 1.5rem;
 }
+
+/* Letter */
+.thank-card {
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #FFFFFF;
+    margin-bottom: 2rem;
+}
+
+.user-container {
+    display: block;
+    align-items: center;
+    justify-content: center;
+}
+
+.user-image {
+    display: inline;
+    border-radius: 30px;
+}
+
+.user-name {
+    margin-left: 1rem;
+}
+
+.target-user-container {
+    display: block;
+    align-items: center;
+    justify-content: left;
+}
+
+.target-user-image {
+    border-radius: 30px;
+}
+
+.target-user-name {
+    margin-left: 1rem;
+}
+
+/* card */
+.cards {
+    margin: 0 auto;
+    max-width: 1000px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(225px, 1fr));
+    gap: 20px;
+}
+
+.card {
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+}
+
+.card_image {
+    width: 100%;
+    display: block;
+}
+
+.card_user_image {
+    display: inline;
+    border-radius: 15px;
+}
+
+.card-to-user {
+    display: flex;
+    font-size: 1rem;
+    align-items: center;
+    justify-content: start;
+    background: #ffffff;
+}
+
+.card-to-user > img {
+    margin-left: 2rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.card-to-user-name {
+    margin-left: 1rem;
+}
+
+.card_content {
+    line-height: 1.5;
+    font-size: 0.9rem;
+    padding: 5px 15px 15px 15px;
+    background: #FFFFFF;
+}
+
+.card_content > p {
+    word-wrap: break-word;
+}
+
+.card_content > p:first-of-type {
+    margin-top: 0;
+}
+
+.card_content > p:last-of-type {
+    margin-bottom: 0;
+}
+
+.card_info {
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    background: #FFFFFF;
+    color: #555555;
+    font-size: 0.8rem;
+    border-bottom: 2px solid #cccccc;
+}
+
+.card-from-image {
+    border-radius: 15px;
+}
+
+.card-from-user-name {
+    margin-left: 1rem;
+    font-weight: bold;
+}
+
+.card_reaction {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #FFFFFF;
+}
+
+.card_reaction > img {
+    margin-left: 2rem;
+}
+
+.card_reaction_count {
+    font-size: 0.8rem;
+    color: #e8e8e8;
+    margin-right: 2rem;
+}
+
+.card_link {
+    color: #64968c;
+    text-decoration: none;
+}
+
+.card_link:hover {
+    text-decoration: underline;
+}
+

@@ -1,5 +1,5 @@
 <#-- @ftlvariable name="error" type="java.lang.String" -->
-<#import "common/bootstrap.ftl" as b>
+<#import "common/milligram.ftl" as b>
 
 <@b.page>
   <div class="row">
