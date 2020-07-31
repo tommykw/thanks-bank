@@ -2,26 +2,29 @@
 
 <@b.page>
     <div class="cards">
-        <div class="card">
-            <div class="card-to-user">
-                <img class="card_user_image" src="http://wwwjp.kodak.com/JP/images/ja/digital/cameras/samplePicture/dc21203.jpg" width="40" height="40"/>
-                <div class="card-to-user-name">ほげこさんへ</div>
-            </div>
+        <a href="/letter/detail">
+            <div class="card" onclick="">
 
-            <div class="card_content">
-                <p>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</p>
-            </div>
+                <div class="card-to-user">
+                    <img class="card_user_image" src="http://wwwjp.kodak.com/JP/images/ja/digital/cameras/samplePicture/dc21203.jpg" width="40" height="40"/>
+                    <div class="card-to-user-name">ほげこさんへ</div>
+                </div>
 
-            <div class="card_reaction">
-                <img class="card_user_image" src="http://wwwjp.kodak.com/JP/images/ja/digital/cameras/samplePicture/dc21203.jpg" width="20" height="20"/>
-                <div class="card_reaction_count">スレッド10件</div>
-            </div>
+                <div class="card_content">
+                    <p>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</p>
+                </div>
 
-            <div class="card_info">
-                <img class="card-from-image" src="http://wwwjp.kodak.com/JP/images/ja/digital/cameras/samplePicture/dc21203.jpg" width="30" height="30"/>
-                <div class="card-from-user-name">ほげこさんより</div>
+                <div class="card_reaction">
+                    <img class="card_user_image" src="http://wwwjp.kodak.com/JP/images/ja/digital/cameras/samplePicture/dc21203.jpg" width="20" height="20"/>
+                    <div class="card_reaction_count">スレッド10件</div>
+                </div>
+
+                <div class="card_info">
+                    <img class="card-from-image" src="http://wwwjp.kodak.com/JP/images/ja/digital/cameras/samplePicture/dc21203.jpg" width="30" height="30"/>
+                    <div class="card-from-user-name">ほげこさんより</div>
+                </div>
             </div>
-        </div>
+        </a>
 
         <div class="card">
             <div class="card-to-user">

@@ -249,6 +249,7 @@ fun Application.module(testing: Boolean = false) {
         googleCalender()
         slack()
         letter()
+        letterDetail()
     }
 }
 

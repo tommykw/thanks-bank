@@ -385,3 +385,86 @@ footer a {
     text-decoration: underline;
 }
 
+.letter-detail-thank {
+    background-color: #FFFFFF;
+    padding: 15px 15px 30px 15px;
+    border-radius: 8px;
+}
+
+.letter-detail-thank-fromto {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    background-color: #FFFFFF;
+}
+
+.letter-detail-thank-fromto-image-you {
+    border-radius: 15px;
+}
+
+.letter-detail-thank-fromto-image-target {
+    margin-left: 1rem;
+    border-radius: 15px;
+}
+
+.letter-detail-thank-fromto-message {
+    margin-left: 1.4rem;
+    font-size: 1rem;
+    font-weight: bold;
+    background-color: #FFFFFF;
+}
+
+.letter-detail-thank-message {
+    font-size: 16px;
+    margin-top: 1rem;
+}
+
+.letter-detail-reaction {
+    margin-top: 2rem;
+    background-color: #FFFFFF;
+    padding: 15px 15px 30px 15px;
+    border-radius: 8px;
+}
+
+.letter-detail-reaction-title {
+    font-size: 8px;
+    font-weight: bold;
+}
+
+.letter-detail-reaction-icon {
+    margin-top: 1rem;
+}
+
+.letter-detail-tread {
+    margin-top: 2rem;
+    background-color: #FFFFFF;
+    padding: 15px 15px 30px 15px;
+    border-radius: 8px;
+}
+
+.letter-detail-tread-title {
+    font-size: 8px;
+    font-weight: bold;
+}
+
+.letter-detail-tread-user-info {
+    margin-top: 2rem;
+    align-items: center;
+    justify-content: start;
+    display: flex;
+}
+
+.letter-detail-tread-user-info-icon {
+    border-radius: 15px;
+}
+
+.letter-detail-tread-user-info-name {
+    margin-left: 1rem;
+    font-size: 10px;
+    font-weight: bold;
+}
+
+.letter-detail-tread-message {
+    margin-top: 2rem;
+    font-size: 16px;
+}
