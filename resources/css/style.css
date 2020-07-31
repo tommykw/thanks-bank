@@ -1,11 +1,20 @@
 /* Miligram overrides */
 a {
     color: #261818;
+    text-decoration: none;
 }
 
 .button, button, input[type='button'], input[type='reset'], input[type='submit'] {
     background-color: #FF8080;
     border: 0.1rem solid #FF8080;
+}
+
+.container {
+    margin: 0 auto;
+    max-width: 112.0rem;
+    padding: 0 2.0rem;
+    position: relative;
+    width: 100%;
 }
 
 .button-wide {
@@ -38,6 +47,15 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    font-size: 1.6em;
+    font-weight: 300;
+    letter-spacing: .01em;
+    line-height: 1.6;
+}
+
+html {
+    box-sizing: border-box;
+    font-size: 62.5%;
 }
 
 .main {
@@ -64,6 +82,11 @@ th {
     background: #FFFFFF;
     width: 100%;
 }
+
+*, *:after, *:before {
+    box-sizing: inherit;
+}
+
 .top-nav-content {
     display: flex;
     align-items: center;
