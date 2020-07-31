@@ -24,8 +24,16 @@ fun Route.letter() {
             return res?.real_name ?: ""
         }
 
+        fun idToProfileImage(slackId: String): String {
+            val res = members.members.find { it.id == slackId }
+            return res?.profile?.image_512 ?: ""
+        }
+
         thanks.map { thank ->
             thank.realName = idToRealName(thank.slackUserId)
+            thank.targetRealName = idToRealName(thank.targetSlackUserId)
+            thank.userImage = idToProfileImage(thank.slackUserId)
+            thank.targetUserImage = idToProfileImage(thank.targetSlackUserId)
         }
 
         call.respond(

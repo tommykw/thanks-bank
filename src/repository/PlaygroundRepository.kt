@@ -104,7 +104,10 @@ class PlaygroundRepository : Repository {
             slackUserId = row[Thanks.slackUserId],
             body = row[Thanks.body],
             targetSlackUserId = row[Thanks.targetSlackUserId],
-            realName = ""
+            realName = "",
+            targetRealName = "",
+            userImage = "",
+            targetUserImage = ""
         )
     }
 
