@@ -199,6 +199,7 @@ fun Application.module(testing: Boolean = false) {
                     it.token(ctx.botToken)
                     it.channel("#general")
                     it.text(message)
+                    it.asUser(true)
                     it.unfurlLinks(true)
                 }
             }
