@@ -192,13 +192,14 @@ fun Application.module(testing: Boolean = false) {
             launch {
                 val thanks = repository.getThanks()
                 val message = thanks.joinToString("\n") { thank ->
-                    "${thank.targetSlackUserId}さんから${thank.slackUserId}さんへメッセージが届いています。"
+                    "@${thank.targetSlackUserId}さんから@${thank.slackUserId}さんへメッセージが届いています。"
                 }
 
                 ctx.client().chatPostMessage {
                     it.token(ctx.botToken)
                     it.channel("#general")
                     it.text(message)
+                    it.asUser(true)
                 }
             }
 
