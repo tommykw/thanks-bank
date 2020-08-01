@@ -200,7 +200,7 @@ fun Application.module(testing: Boolean = false) {
                     it.channel("#general")
                     it.text(message)
                     it.asUser(true)
-                    it.unfurlLinks(true)
+                    it.unfurlLinks(false)
                 }
             }
 
