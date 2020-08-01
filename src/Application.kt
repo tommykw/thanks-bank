@@ -186,6 +186,22 @@ fun Application.module(testing: Boolean = false) {
             }
             // TODO res.isOk
 
+            // TODO Test message
+            val repository = PlaygroundRepository()
+
+            launch {
+                val thanks = repository.getThanks()
+                val message = thanks.joinToString("\n") { thank ->
+                    "${thank.targetSlackUserId}さんから${thank.slackUserId}さんへメッセージが届いています。"
+                }
+
+                ctx.client().chatPostMessage {
+                    it.token(ctx.botToken)
+                    it.channel("#general")
+                    it.text(message)
+                }
+            }
+
             ackRes
         } else {
             Response.builder().statusCode(500).body(res.error).build()
