@@ -8,7 +8,6 @@ import com.slack.api.bolt.request.RequestHeaders
 import com.slack.api.bolt.response.Response
 import com.slack.api.bolt.util.QueryStringParser
 import com.slack.api.bolt.util.SlackRequestParser
-import com.slack.api.methods.kotlin_extension.request.chat.blocks
 import com.slack.api.model.block.Blocks.*
 import com.slack.api.model.block.composition.BlockCompositions.*
 import com.slack.api.model.block.element.BlockElements.*
@@ -33,10 +32,7 @@ import io.ktor.application.install
 import io.ktor.auth.Authentication
 import io.ktor.auth.authentication
 import io.ktor.auth.jwt.jwt
-import io.ktor.features.ContentNegotiation
-import io.ktor.features.DefaultHeaders
-import io.ktor.features.StatusPages
-import io.ktor.features.origin
+import io.ktor.features.*
 import io.ktor.freemarker.FreeMarker
 import io.ktor.gson.gson
 import io.ktor.http.ContentType
@@ -200,7 +196,7 @@ fun Application.module(testing: Boolean = false) {
                     it.channel("#general")
                     it.text(message)
                     it.asUser(true)
-                    it.unfurlLinks(false)
+                    it.unfurlLinks(true)
                 }
             }
 
@@ -218,8 +214,6 @@ fun Application.module(testing: Boolean = false) {
     }
 
     app.viewSubmission("thanks-message") { req, ctx ->
-        println("!!!!!!!!! user.id " + req.payload.user.id)
-
         val stateValues = req.payload.view.state.values
         val message = stateValues["message-block"]?.get("message-action")?.value
         val targetUsers = stateValues["user-block"]?.get("user-action")?.selectedUsers
@@ -250,6 +244,7 @@ fun Application.module(testing: Boolean = false) {
         hello()
 
         post("/slack/events") {
+            println("!!!!!!! call slack events")
             respond(call, app.run(parseRequest(call)))
         }
 
