@@ -159,25 +159,27 @@ fun Application.module(testing: Boolean = false) {
         ctx.ack()
     }
 
-    app.event(ReactionAddedEvent::class.java) { payload: EventsApiPayload<ReactionAddedEvent>, ctx: EventContext ->
-        println("!!!!!!!!!!!!!!!!! reaction")
-//        val event = payload.event
-//        if (event.reaction == "white_check_mark") {
-//            val message = ctx.client().chatPostMessage { r: ChatPostMessageRequestBuilder ->
-//                r
-//                        .channel(event.item.channel)
-//                        .threadTs(event.item.ts)
-//                        .text("<@" + event.user + "> ご対応いただき、本当にありがとうございました :two_hearts:")
-//            }
-//            if (!message.isOk) {
-//                ctx.logger.error("chat.postMessage failed: {}", message.error)
-//            }
-//        }
+    app.event(ReactionAddedEvent::class.java) { payload, ctx ->
+        val event = payload.event
+        println("!!!!!!!!1 channel " + event.item.channel)
+
+        if (event.item.channel == "#general") {
+            println("!!!!!!!! todo save reaction")
+            // save reaction
+        }
+
         ctx.ack()
     }
 
-    app.event(MessageEvent::class.java) { handler, ctx ->
-        println("!!!!!!!!!!!!!!!!! messages")
+    app.event(MessageEvent::class.java) { payload, ctx ->
+        val event = payload.event
+        println("!!!!!!!!!2 channel " + event.channel)
+
+        if (event.channel == "#general") {
+            println("!!!!!!!! todo save reply")
+            // save reply
+        }
+
         ctx.ack()
     }
 
