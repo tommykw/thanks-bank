@@ -31,9 +31,13 @@ fun Route.letter() {
 
         thanks.map { thank ->
             thank.realName = idToRealName(thank.slackUserId)
-            thank.targetRealName = idToRealName(thank.targetSlackUserId)
+            thank.targetSlackUserId?.let {
+                thank.targetRealName = idToRealName(it)
+            }
             thank.userImage = idToProfileImage(thank.slackUserId)
-            thank.targetUserImage = idToProfileImage(thank.targetSlackUserId)
+            thank.targetSlackUserId?.let {
+                thank.targetUserImage = idToProfileImage(it)
+            }
         }
 
         call.respond(
