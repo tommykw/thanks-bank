@@ -17,15 +17,15 @@ fun Route.workerThankDaily(apiClient: MethodsClient) {
         val repository by kodein().instance<PlaygroundRepository>()
         val thanks = repository.getThanks()
 
-        val message = thanks.joinToString("\n") { thank ->
-            "<@${thank.targetSlackUserId}>さんから<@${thank.slackUserId}>さんへメッセージが届いています。"
+        thanks.forEach { thank ->
+            val message = "<@${thank.targetSlackUserId}>さんから<@${thank.slackUserId}>さんへメッセージが届いています。"
+
+            val request = ChatPostMessageRequest.builder()
+                    .channel("#general")
+                    .text(message)
+                    .build()
+
+            val response = apiClient.chatPostMessage(request)
         }
-
-        val request = ChatPostMessageRequest.builder()
-                .channel("#general")
-                .text(message)
-                .build()
-
-        val response = apiClient.chatPostMessage(request)
     }
 }
