@@ -16,6 +16,7 @@ import com.slack.api.model.block.Blocks.asBlocks
 import com.slack.api.model.block.Blocks.section
 import com.slack.api.model.block.composition.BlockCompositions.*
 import com.slack.api.model.block.element.BlockElements.staticSelect
+import com.slack.api.model.event.MessageEvent
 import com.slack.api.model.event.ReactionAddedEvent
 import com.slack.api.model.kotlin_extension.block.withBlocks
 import com.slack.api.model.kotlin_extension.view.blocks
@@ -158,9 +159,9 @@ fun Application.module(testing: Boolean = false) {
         ctx.ack()
     }
 
-    app.event(ReactionAddedEvent::class.java) { payload, ctx ->
-        val event = payload.event
-        println("!!!!!!!!! event " + event.reaction)
+    app.event(ReactionAddedEvent::class.java) { payload: EventsApiPayload<ReactionAddedEvent>, ctx: EventContext ->
+        println("!!!!!!!!!!!!!!!!! reaction")
+//        val event = payload.event
 //        if (event.reaction == "white_check_mark") {
 //            val message = ctx.client().chatPostMessage { r: ChatPostMessageRequestBuilder ->
 //                r
@@ -174,6 +175,12 @@ fun Application.module(testing: Boolean = false) {
 //        }
         ctx.ack()
     }
+
+    app.event(MessageEvent::class.java) { handler, ctx ->
+        println("!!!!!!!!!!!!!!!!! messages")
+        ctx.ack()
+    }
+
     app.command("/test-test") { req, ctx ->
         ctx.ack(asBlocks(
             section { section ->
