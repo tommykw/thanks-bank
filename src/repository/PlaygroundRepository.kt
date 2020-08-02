@@ -192,6 +192,9 @@ class PlaygroundRepository : Repository {
     }
 
     override suspend fun saveReaction(event: ReactionAddedEvent) {
+        println("!!!!!!!!!!! event.item.ts " + event.item.ts)
+        println("!!!!!!!!!!! event.eventTs " + event.eventTs)
+
         transaction {
             val inserted = ThankReactions.insert {
                 it[slackUserId] = event.user
