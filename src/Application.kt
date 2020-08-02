@@ -161,9 +161,8 @@ fun Application.module(testing: Boolean = false) {
 
     app.event(ReactionAddedEvent::class.java) { payload, ctx ->
         val event = payload.event
-        println("!!!!!!!!1 channel " + event.item.channel)
 
-        if (event.item.channel == "#general") {
+        if (event.item.channel == System.getenv("SLACK_THANKS_CHANNEL")) {
             println("!!!!!!!! todo save reaction")
             // save reaction
         }
@@ -173,9 +172,8 @@ fun Application.module(testing: Boolean = false) {
 
     app.event(MessageEvent::class.java) { payload, ctx ->
         val event = payload.event
-        println("!!!!!!!!!2 channel " + event.channel)
 
-        if (event.channel == "#general") {
+        if (event.channel == System.getenv("SLACK_THANKS_CHANNEL")) {
             println("!!!!!!!! todo save reply")
             // save reply
         }
