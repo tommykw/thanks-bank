@@ -26,6 +26,10 @@ fun Route.workerThankDaily(apiClient: MethodsClient) {
                     .build()
 
             val response = apiClient.chatPostMessage(request)
+
+            if (response.isOk) {
+                repository.updateSlackPostId(response.ts, thank)
+            }
         }
     }
 }

@@ -1,18 +1,11 @@
 package com.tommykw.repository
 
-import com.google.api.client.http.HttpResponse
 import com.slack.api.model.event.MessageEvent
 import com.slack.api.model.event.ReactionAddedEvent
 import com.tommykw.model.*
 import io.ktor.client.HttpClient
 import io.ktor.client.features.json.JsonFeature
-//import io.ktor.client.engine.okhttp.OkHttp
-//import io.ktor.client.features.json.GsonSerializer
-//import io.ktor.client.features.json.JsonFeature
 import io.ktor.client.request.get
-import io.ktor.client.statement.DefaultHttpResponse
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.serializer
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 
@@ -214,6 +207,17 @@ class PlaygroundRepository : Repository {
             install(JsonFeature)
         }
         return client.get<SlackUserRes>("https://slack.com/api/users.list?token=${System.getenv("SLACK_BOT_TOKEN")}")
+    }
+
+    override suspend fun updateSlackPostId(ts: String, thank: Thank) {
+        transaction {
+            val updated = ThankReactions.update({
+                Thanks.id eq thank.id
+            }) {
+                it[slackPostId] = ts
+            }
+        }
+        Unit
     }
 
     private fun toUser(row: ResultRow): User {
