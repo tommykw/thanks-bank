@@ -1,22 +1,26 @@
 package com.tommykw
 
 import com.slack.api.Slack
+import com.slack.api.app_backend.events.payload.EventsApiPayload
 import com.slack.api.bolt.App
 import com.slack.api.bolt.AppConfig
+import com.slack.api.bolt.context.builtin.EventContext
 import com.slack.api.bolt.context.builtin.SlashCommandContext
 import com.slack.api.bolt.request.Request
 import com.slack.api.bolt.request.RequestHeaders
 import com.slack.api.bolt.response.Response
 import com.slack.api.bolt.util.QueryStringParser
 import com.slack.api.bolt.util.SlackRequestParser
-import com.slack.api.model.block.Blocks.*
+import com.slack.api.methods.request.chat.ChatPostMessageRequest.ChatPostMessageRequestBuilder
+import com.slack.api.model.block.Blocks.asBlocks
+import com.slack.api.model.block.Blocks.section
 import com.slack.api.model.block.composition.BlockCompositions.*
-import com.slack.api.model.block.element.BlockElements.*
+import com.slack.api.model.block.element.BlockElements.staticSelect
+import com.slack.api.model.event.ReactionAddedEvent
 import com.slack.api.model.kotlin_extension.block.withBlocks
 import com.slack.api.model.kotlin_extension.view.blocks
 import com.slack.api.model.view.View
 import com.slack.api.model.view.Views.*
-import com.tommykw.route.login
 import com.tommykw.api.playgroundApi
 import com.tommykw.model.AdminUserSession
 import com.tommykw.model.ThankRequest
@@ -33,7 +37,10 @@ import io.ktor.application.install
 import io.ktor.auth.Authentication
 import io.ktor.auth.authentication
 import io.ktor.auth.jwt.jwt
-import io.ktor.features.*
+import io.ktor.features.ContentNegotiation
+import io.ktor.features.DefaultHeaders
+import io.ktor.features.StatusPages
+import io.ktor.features.origin
 import io.ktor.freemarker.FreeMarker
 import io.ktor.gson.gson
 import io.ktor.http.ContentType
@@ -62,6 +69,7 @@ import org.kodein.di.generic.singleton
 import org.kodein.di.ktor.kodein
 import java.net.URI
 import java.util.concurrent.TimeUnit
+
 
 fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 
@@ -150,6 +158,22 @@ fun Application.module(testing: Boolean = false) {
         ctx.ack()
     }
 
+    app.event(ReactionAddedEvent::class.java) { payload, ctx ->
+        val event = payload.event
+        println("!!!!!!!!! event " + event.reaction)
+//        if (event.reaction == "white_check_mark") {
+//            val message = ctx.client().chatPostMessage { r: ChatPostMessageRequestBuilder ->
+//                r
+//                        .channel(event.item.channel)
+//                        .threadTs(event.item.ts)
+//                        .text("<@" + event.user + "> ご対応いただき、本当にありがとうございました :two_hearts:")
+//            }
+//            if (!message.isOk) {
+//                ctx.logger.error("chat.postMessage failed: {}", message.error)
+//            }
+//        }
+        ctx.ack()
+    }
     app.command("/test-test") { req, ctx ->
         ctx.ack(asBlocks(
             section { section ->
