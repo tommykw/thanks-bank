@@ -9,7 +9,7 @@ data class Thank(
     val body: String,
     val targetSlackUserId: String?,
     val slackPostId: String?,
-    val parentSlackPostId: String,
+    val parentSlackPostId: String?,
     var realName: String,
     var targetRealName: String,
     var userImage: String,
