@@ -163,8 +163,10 @@ fun Application.module(testing: Boolean = false) {
         val event = payload.event
 
         if (event.item.channel == System.getenv("SLACK_THANKS_CHANNEL")) {
-            println("!!!!!!!! todo save reaction")
-            // save reaction
+            val repository = PlaygroundRepository()
+            launch {
+                repository.saveReaction(event)
+            }
         }
 
         ctx.ack()
@@ -174,8 +176,10 @@ fun Application.module(testing: Boolean = false) {
         val event = payload.event
 
         if (event.channel == System.getenv("SLACK_THANKS_CHANNEL")) {
-            println("!!!!!!!! todo save reply")
-            // save reply
+            val repository = PlaygroundRepository()
+            launch {
+                repository.saveThankReply(event)
+            }
         }
 
         ctx.ack()

@@ -8,6 +8,8 @@ data class Thank(
     val slackUserId: String,
     val body: String,
     val targetSlackUserId: String,
+    val slackPostId: String,
+    val parentSlackPostId: String,
     var realName: String,
     var targetRealName: String,
     var userImage: String,
@@ -20,6 +22,8 @@ object Thanks: IntIdTable() {
     val slackUserId = varchar("slack_user_id", 255)
     val body = text("body")
     val targetSlackUserId = varchar("target_slack_user_id", 255)
+    val slackPostId = varchar("slack_post_id", 255)
+    val parentSlackPostId = varchar("parent_slack_post_id", 255)
 }
 
 @kotlinx.serialization.Serializable

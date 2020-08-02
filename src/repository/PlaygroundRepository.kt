@@ -1,6 +1,8 @@
 package com.tommykw.repository
 
 import com.google.api.client.http.HttpResponse
+import com.slack.api.model.event.MessageEvent
+import com.slack.api.model.event.ReactionAddedEvent
 import com.tommykw.model.*
 import io.ktor.client.HttpClient
 import io.ktor.client.features.json.JsonFeature
@@ -107,7 +109,9 @@ class PlaygroundRepository : Repository {
             realName = "",
             targetRealName = "",
             userImage = "",
-            targetUserImage = ""
+            targetUserImage = "",
+            slackPostId = row[Thanks.slackPostId],
+            parentSlackPostId = row[Thanks.parentSlackPostId]
         )
     }
 
@@ -177,6 +181,29 @@ class PlaygroundRepository : Repository {
                 it[slackUserId] = thanks.slackUserId
                 it[body] = thanks.body
                 it[targetSlackUserId] = thanks.targetSlackUserId
+            }
+        }
+        Unit
+    }
+
+    override suspend fun saveThankReply(event: MessageEvent) {
+        transaction {
+            val inserted = Thanks.insert {
+                it[slackUserId] = event.user
+                it[body] = event.text
+                it[slackPostId] = event.ts
+                it[parentSlackPostId] = event.threadTs
+            }
+        }
+        Unit
+    }
+
+    override suspend fun saveReaction(event: ReactionAddedEvent) {
+        transaction {
+            val inserted = ThankReactions.insert {
+                it[slackUserId] = event.user
+                it[slackPostId] = event.eventTs
+                it[reactionName] = event.reaction
             }
         }
         Unit

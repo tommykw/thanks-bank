@@ -1,5 +1,7 @@
 package com.tommykw.repository
 
+import com.slack.api.model.event.MessageEvent
+import com.slack.api.model.event.ReactionAddedEvent
 import com.tommykw.model.*
 
 interface Repository {
@@ -17,4 +19,6 @@ interface Repository {
     suspend fun getThanks(): List<Thank>
     suspend fun createThank(thanks: ThankRequest)
     suspend fun getSlackMembers(): SlackUserRes
+    suspend fun saveReaction(event: ReactionAddedEvent)
+    suspend fun saveThankReply(event: MessageEvent)
 }
