@@ -45,8 +45,20 @@
 パーミッションの追加が必要です。
 https://api.slack.com/apps/A018EU8GR1N/oauth?
 
+### botを招待する
+`/invite xxxx`
 
-
+### Slackメッセージとリアクションを受け付ける
+- Slack アプリの設定 イベント API を有効にするには Slack アプリ管理画面にアクセスし、開発中のアプリを選択、左ペインの Features > Event Subscriptions へ遷移します。この画面でいくつかやることがあります。
+- Enable Events を Off から On にする
+- https://{あなたのドメイン}/slack/events を Request URL に設定
+- Bot User Event を設定
+- Subscribe to bot events をクリック
+- Add Bot User Event ボタンをクリック
+  - reaction_added
+  - message.channels
+- イベントを選択。最下部にある Save Changes ボタンをクリック
 
 ## 参考資料
 - https://slack.dev/java-slack-sdk/guides/ja/getting-started-with-bolt
+- [Slack Web API](https://slack.dev/java-slack-sdk/guides/ja/web-api-basics)
