@@ -211,7 +211,7 @@ class PlaygroundRepository : Repository {
 
     override suspend fun updateSlackPostId(ts: String, thank: Thank) {
         transaction {
-            val updated = ThankReactions.update({
+            val updated = Thanks.update({
                 Thanks.id eq thank.id
             }) {
                 it[slackPostId] = ts
