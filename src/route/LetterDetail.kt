@@ -7,8 +7,8 @@ import io.ktor.locations.get
 import io.ktor.response.respond
 import io.ktor.routing.Route
 
-@Location("/letter/detail")
-class LetterDetail
+@Location("/letter/{id}")
+class LetterDetail(val id: Int)
 
 fun Route.letterDetail() {
     get<LetterDetail> {
