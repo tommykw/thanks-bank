@@ -4,7 +4,7 @@
     <div class="cards">
         <#if thanks?? && (thanks?size > 0)>
             <#list thanks as thank>
-                <a href="/letter/detail">
+                <a href="/letter/${thank.id}">
                     <div class="card">
 
                         <div class="card-to-user">
