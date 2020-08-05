@@ -22,4 +22,5 @@ interface Repository {
     suspend fun saveReaction(event: ReactionAddedEvent)
     suspend fun saveThankReply(event: MessageEvent)
     suspend fun updateSlackPostId(ts: String, thank: Thank)
+    suspend fun getThreads(slackPostId: String): List<Thank>
 }

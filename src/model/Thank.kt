@@ -1,6 +1,7 @@
 package com.tommykw.model
 
 import org.jetbrains.exposed.dao.IntIdTable
+import org.joda.time.DateTime
 import java.io.Serializable
 
 data class Thank(
@@ -13,9 +14,9 @@ data class Thank(
     var realName: String,
     var targetRealName: String,
     var userImage: String,
-    var targetUserImage: String
-    // TODO created
-    // TODO updated
+    var targetUserImage: String,
+    val createdAt: DateTime?,
+    val updatedAt: DateTime?
 ) : Serializable
 
 object Thanks: IntIdTable() {
@@ -24,6 +25,8 @@ object Thanks: IntIdTable() {
     val targetSlackUserId = varchar("target_slack_user_id", 255).nullable()
     val slackPostId = varchar("slack_post_id", 255).nullable()
     val parentSlackPostId = varchar("parent_slack_post_id", 255).nullable()
+    val createdAt = datetime("created_at")
+    val updatedAt = datetime("updated_at")
 }
 
 @kotlinx.serialization.Serializable

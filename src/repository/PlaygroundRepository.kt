@@ -104,7 +104,9 @@ class PlaygroundRepository : Repository {
             userImage = "",
             targetUserImage = "",
             slackPostId = row[Thanks.slackPostId],
-            parentSlackPostId = row[Thanks.parentSlackPostId]
+            parentSlackPostId = row[Thanks.parentSlackPostId],
+            createdAt = row[Thanks.createdAt],
+            updatedAt = row[Thanks.updatedAt]
         )
     }
 
@@ -218,6 +220,14 @@ class PlaygroundRepository : Repository {
             }
         }
         Unit
+    }
+
+    override suspend fun getThreads(slackPostId: String): List<Thank> {
+        return DatabaseFactory.dbQuery {
+            Thanks.select {
+                Thanks.parentSlackPostId eq slackPostId
+            }.mapNotNull { toThank(it) }
+        }
     }
 
     private fun toUser(row: ResultRow): User {
