@@ -38,13 +38,19 @@ fun Route.letter() {
             thank.targetSlackUserId?.let {
                 thank.targetUserImage = idToProfileImage(it)
             }
+
+            thank.slackPostId?.let { slackPostId ->
+                val threads = repository.getThreads(slackPostId)
+                thank.threadCount = threads.size
+            }
         }
 
         call.respond(
             FreeMarkerContent(
                 "letter.ftl",
                 mapOf(
-                    "thanks" to thanks
+                    "thanks" to thanks,
+                    "threads" to null
                 )
             )
         )

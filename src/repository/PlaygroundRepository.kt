@@ -106,7 +106,9 @@ class PlaygroundRepository : Repository {
             slackPostId = row[Thanks.slackPostId],
             parentSlackPostId = row[Thanks.parentSlackPostId],
             createdAt = row[Thanks.createdAt],
-            updatedAt = row[Thanks.updatedAt]
+            updatedAt = row[Thanks.updatedAt],
+            threadCount = 0,
+            reactions = emptyList()
         )
     }
 
@@ -229,6 +231,8 @@ class PlaygroundRepository : Repository {
             }.mapNotNull { toThank(it) }
         }
     }
+
+
 
     private fun toUser(row: ResultRow): User {
         return User(

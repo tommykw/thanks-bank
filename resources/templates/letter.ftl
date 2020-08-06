@@ -18,7 +18,7 @@
 
                         <div class="card_reaction">
                             <img class="card_user_image" src="http://wwwjp.kodak.com/JP/images/ja/digital/cameras/samplePicture/dc21203.jpg" width="20" height="20"/>
-                            <div class="card_reaction_count">スレッド10件</div>
+                            <div class="card_reaction_count">スレッド${thank.threadCount}件</div>
                         </div>
 
                         <div class="card_info">

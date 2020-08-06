@@ -15,6 +15,8 @@ data class Thank(
     var targetRealName: String,
     var userImage: String,
     var targetUserImage: String,
+    var reactions: List<ThankReaction>,
+    var threadCount: Int,
     val createdAt: DateTime?,
     val updatedAt: DateTime?
 ) : Serializable
