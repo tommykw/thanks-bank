@@ -212,30 +212,12 @@ fun Application.module(testing: Boolean = false) {
         if (res.isOk) {
             val ackRes = ctx.ack()
 
-            val res = ctx.client().chatPostMessage {
+            val res = ctx.client().chatPostEphemeral {
                 it.token(ctx.botToken)
                 it.channel("#general")
                 it.text("メッセージが送信されました")
             }
             // TODO res.isOk
-
-            // TODO Test message
-            val repository = PlaygroundRepository()
-
-            launch {
-                val thanks = repository.getThanks()
-                val message = thanks.joinToString("\n") { thank ->
-                    "<@${thank.targetSlackUserId}>さんから<@${thank.slackUserId}>さんへメッセージが届いています。"
-                }
-
-                ctx.client().chatPostMessage {
-                    it.token(ctx.botToken)
-                    it.channel("#general")
-                    it.text(message)
-                    it.asUser(true)
-                    it.unfurlLinks(true)
-                }
-            }
 
             ackRes
         } else {
