@@ -17,6 +17,7 @@ interface Repository {
     suspend fun createSlackMessage(slackMessage: String, slackUserName: String)
     suspend fun slackMessages(): List<SlackMessage>
     suspend fun getThanks(): List<Thank>
+    suspend fun getThank(id: Int): Thank
     suspend fun createThank(thanks: ThankRequest)
     suspend fun getSlackMembers(): SlackUserRes
     suspend fun saveReaction(event: ReactionAddedEvent)

@@ -77,6 +77,14 @@ class PlaygroundRepository : Repository {
         }
     }
 
+    override suspend fun getThank(id: Int): Thank {
+        return transaction {
+            Thanks.select {
+                Thanks.id eq id
+            }.map { toThank(it) }.single()
+        }
+    }
+
     private fun toPlayground(row: ResultRow): Playground {
         return Playground(
             id = row[Playgrounds.id].value,
