@@ -8,9 +8,15 @@ import io.ktor.locations.get
 import io.ktor.routing.Route
 import org.kodein.di.generic.instance
 import org.kodein.di.ktor.kodein
+import java.text.SimpleDateFormat
+import java.util.*
 
 @Location("/api/thank/daily")
 class ThankDailyApi
+
+private val dateFormat = SimpleDateFormat("HH:mm:dd").apply {
+    timeZone = TimeZone.getTimeZone("Asia/Tokyo")
+}
 
 fun Route.workerThankApi(apiClient: MethodsClient) {
     get<ThankDailyApi> {
@@ -31,7 +37,7 @@ fun Route.workerThankApi(apiClient: MethodsClient) {
         thanks.forEach { thank ->
             val message = """
 ```
-Received: XXXX/XX/XX
+Received: ${dateFormat.format(thank.createdAt)}
 <@${thank.targetSlackUserId}>さんから
 <@${thank.slackUserId}>さんへメッセージが届いてるよ！
 ```
