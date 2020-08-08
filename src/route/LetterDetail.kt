@@ -2,7 +2,7 @@ package com.tommykw.route
 
 import com.tommykw.model.Thank
 import com.tommykw.model.ThankReaction
-import com.tommykw.repository.PlaygroundRepository
+import com.tommykw.repository.ThankRepository
 import io.ktor.application.call
 import io.ktor.freemarker.FreeMarkerContent
 import io.ktor.locations.Location
@@ -17,7 +17,7 @@ class LetterDetail(val thankId: Int)
 
 fun Route.letterDetail() {
     get<LetterDetail> { listing ->
-        val repository by kodein().instance<PlaygroundRepository>()
+        val repository by kodein().instance<ThankRepository>()
         val thank = repository.getThank(listing.thankId)
         var reactions: List<ThankReaction>? = null
         var threads: List<Thank>? = null

@@ -1,4 +1,4 @@
-<#import "common/milligram.ftl" as b>
+<#import "common/container.ftl" as b>
 
 <@b.page>
     <div class="cards">

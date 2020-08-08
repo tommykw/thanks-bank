@@ -15,9 +15,6 @@ object DatabaseFactory {
         Database.connect(hikari())
 
         transaction {
-            SchemaUtils.create(Users)
-            SchemaUtils.create(Playgrounds)
-            SchemaUtils.create(SlackMessages)
             SchemaUtils.create(Thanks)
             SchemaUtils.create(ThankReactions)
         }

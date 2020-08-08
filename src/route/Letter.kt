@@ -1,6 +1,6 @@
 package com.tommykw.route
 
-import com.tommykw.repository.PlaygroundRepository
+import com.tommykw.repository.ThankRepository
 import io.ktor.application.call
 import io.ktor.freemarker.FreeMarkerContent
 import io.ktor.locations.Location
@@ -15,7 +15,7 @@ class Letter
 
 fun Route.letter() {
     get<Letter> {
-        val repository by kodein().instance<PlaygroundRepository>()
+        val repository by kodein().instance<ThankRepository>()
         val members = repository.getSlackMembers()
         val thanks = repository.getThanks()
 
