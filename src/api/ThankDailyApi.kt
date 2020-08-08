@@ -21,7 +21,7 @@ private val dateFormat = SimpleDateFormat("HH:mm:dd").apply {
     timeZone = TimeZone.getTimeZone("Asia/Tokyo")
 }
 
-fun Route.workerThankApi(apiClient: MethodsClient) {
+fun Route.thankDailyApi(apiClient: MethodsClient) {
     post<ThankDailyApi> {
         val repository by kodein().instance<ThankRepository>()
         val thanks = repository.getThanks()

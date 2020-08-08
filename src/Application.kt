@@ -4,7 +4,7 @@ import com.slack.api.Slack
 import com.slack.api.bolt.App
 import com.slack.api.bolt.AppConfig
 import com.slack.api.bolt.util.SlackRequestParser
-import com.tommykw.api.workerThankApi
+import com.tommykw.api.thankDailyApi
 import com.tommykw.module.*
 import com.tommykw.repository.DatabaseFactory
 import com.tommykw.repository.ThankRepository
@@ -83,6 +83,6 @@ fun Application.module(testing: Boolean = false) {
         letterDetail()
         slackEvent()
 
-        workerThankApi(apiClient)
+        thankDailyApi(apiClient)
     }
 }
