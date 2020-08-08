@@ -18,7 +18,15 @@ fun Route.workerThankDaily(apiClient: MethodsClient) {
         val thanks = repository.getThanks()
 
         thanks.forEach { thank ->
-            val message = "<@${thank.targetSlackUserId}>さんから<@${thank.slackUserId}>さんへメッセージが届いています。"
+            val message = """
+```
+Received: XXXX/XX/XX
+<@${thank.targetSlackUserId}>さんから
+<@${thank.slackUserId}>さんへメッセージが届いてるよ！
+```
+${thank.body}
+----✁----✁----
+""".trimIndent()
 
             val request = ChatPostMessageRequest.builder()
                     .channel("#general")
