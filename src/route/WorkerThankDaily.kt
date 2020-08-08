@@ -17,8 +17,14 @@ fun Route.workerThankDaily(apiClient: MethodsClient) {
         val repository by kodein().instance<PlaygroundRepository>()
         val thanks = repository.getThanks()
 
+        if (thanks.isEmpty()) {
+            return@get
+        }
+
+        var message = "全部で${thanks.size}件のメッセージが届いているよ！"
+
         thanks.forEach { thank ->
-            val message = """
+            message += """
 ```
 Received: XXXX/XX/XX
 <@${thank.targetSlackUserId}>さんから
