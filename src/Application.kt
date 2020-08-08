@@ -4,10 +4,7 @@ import com.slack.api.Slack
 import com.slack.api.bolt.App
 import com.slack.api.bolt.AppConfig
 import com.slack.api.bolt.context.builtin.SlashCommandContext
-import com.slack.api.bolt.request.Request
-import com.slack.api.bolt.request.RequestHeaders
 import com.slack.api.bolt.response.Response
-import com.slack.api.bolt.util.QueryStringParser
 import com.slack.api.bolt.util.SlackRequestParser
 import com.slack.api.model.event.MessageEvent
 import com.slack.api.model.event.ReactionAddedEvent
@@ -21,28 +18,20 @@ import com.tommykw.repository.ThankRepository
 import com.tommykw.route.*
 import freemarker.cache.ClassTemplateLoader
 import io.ktor.application.Application
-import io.ktor.application.ApplicationCall
 import io.ktor.application.call
 import io.ktor.application.install
 import io.ktor.features.ContentNegotiation
 import io.ktor.features.DefaultHeaders
 import io.ktor.features.StatusPages
-import io.ktor.features.origin
 import io.ktor.freemarker.FreeMarker
 import io.ktor.gson.gson
 import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
-import io.ktor.http.content.TextContent
 import io.ktor.http.content.resources
 import io.ktor.http.content.static
 import io.ktor.locations.Locations
-import io.ktor.request.*
-import io.ktor.response.header
-import io.ktor.response.respond
 import io.ktor.response.respondText
-import io.ktor.routing.post
 import io.ktor.routing.routing
-import io.ktor.util.toMap
 import kotlinx.coroutines.launch
 import org.kodein.di.generic.bind
 import org.kodein.di.generic.instance
@@ -164,10 +153,6 @@ fun Application.module(testing: Boolean = false) {
     }
 
     routing {
-        post("/slack/events") {
-            respond(call, app.run(parseRequest(call)))
-        }
-
         static("/static") {
             resources("images")
             resources("css")
@@ -175,37 +160,9 @@ fun Application.module(testing: Boolean = false) {
 
         letter()
         letterDetail()
+        slackEvent()
 
         workerThankApi(apiClient)
-    }
-}
-
-suspend fun parseRequest(call: ApplicationCall): Request<*> {
-    val requestBody = call.receiveText()
-    val queryString = QueryStringParser.toMap(call.request.queryString())
-    val headers = RequestHeaders(call.request.headers.toMap())
-
-    return requestParser.parse(
-        SlackRequestParser.HttpRequest.builder()
-            .requestUri(call.request.uri)
-            .queryString(queryString)
-            .requestBody(requestBody)
-            .headers(headers)
-            .remoteAddress(call.request.origin.remoteHost)
-            .build()
-    )
-}
-
-suspend fun respond(call: ApplicationCall, slackResp: Response) {
-    for (header in slackResp.headers) {
-        for (value in header.value) {
-            call.response.header(header.key, value)
-        }
-    }
-
-    call.response.status(HttpStatusCode.fromValue(slackResp.statusCode))
-    if (slackResp.body != null) {
-        call.respond(TextContent(slackResp.body, ContentType.parse(slackResp.contentType)))
     }
 }
 
