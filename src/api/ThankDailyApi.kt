@@ -3,8 +3,11 @@ package com.tommykw.api
 import com.slack.api.methods.MethodsClient
 import com.slack.api.methods.request.chat.ChatPostMessageRequest
 import com.tommykw.repository.ThankRepository
+import io.ktor.application.call
+import io.ktor.http.HttpStatusCode
 import io.ktor.locations.Location
-import io.ktor.locations.get
+import io.ktor.locations.post
+import io.ktor.response.respond
 import io.ktor.routing.Route
 import org.kodein.di.generic.instance
 import org.kodein.di.ktor.kodein
@@ -19,12 +22,14 @@ private val dateFormat = SimpleDateFormat("HH:mm:dd").apply {
 }
 
 fun Route.workerThankApi(apiClient: MethodsClient) {
-    get<ThankDailyApi> {
+    post<ThankDailyApi> {
         val repository by kodein().instance<ThankRepository>()
         val thanks = repository.getThanks()
 
         if (thanks.isEmpty()) {
-            return@get
+            call.response.status(HttpStatusCode.OK)
+            call.respond(mapOf("status" to "OK"))
+            return@post
         }
 
         val request = ChatPostMessageRequest.builder()
@@ -54,7 +59,12 @@ ${thank.body}
 
             if (response.isOk) {
                 repository.updateSlackPostId(response.ts, thank)
+            } else {
+                // TODO エラーコード
             }
         }
+
+        call.response.status(HttpStatusCode.OK)
+        call.respond(mapOf("status" to "OK"))
     }
 }
