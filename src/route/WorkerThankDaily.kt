@@ -23,7 +23,7 @@ fun Route.workerThankDaily(apiClient: MethodsClient) {
 
         val request = ChatPostMessageRequest.builder()
                 .channel("#general")
-                .text("全部で${thanks.size}件のメッセージが届いているよ！")
+                .text("全部で${thanks.size}件のメッセージが届いているよ:tada::tada:\nリアクションやお返しをしてみよう！")
                 .build()
 
         apiClient.chatPostMessage(request)
