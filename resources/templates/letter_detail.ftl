@@ -7,7 +7,7 @@
             <img class="letter-detail-thank-fromto-image-target" src="http://wwwjp.kodak.com/JP/images/ja/digital/cameras/samplePicture/dc21203.jpg" width="40" height="40"/>
             <div class="letter-detail-thank-fromto-message">${thank.realName}さんから${thank.targetRealName}さんへ</div>
         </div>
-        <div class="letter-detail-thank-message">いつもありがとういつもありがとういつもありがとういつもありがとういつもありがとういつもありがとういつもありがとういつもありがとういつもありがとういつもありがとういつもありがとう</div>
+        <div class="letter-detail-thank-message">${thank.body}</div>
     </div>
 
     <#if reactions?? && (reactions?size > 0)>

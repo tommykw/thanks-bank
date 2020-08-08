@@ -23,8 +23,11 @@ fun Route.letterDetail() {
         var threads: List<Thank>? = null
 
         thank.slackPostId?.let { slackPostId ->
+            println("!!!!!!!! slackPostId " + slackPostId)
             reactions = repository.getReactions(slackPostId)
+            println("!!!!!!! reactions " + reactions)
             threads = repository.getThreads(slackPostId)
+            println("!!!!!!! threads " + threads)
         }
 
         call.respond(
