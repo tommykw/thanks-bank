@@ -232,7 +232,13 @@ class PlaygroundRepository : Repository {
         }
     }
 
-
+    override suspend fun getReactions(slackPostId: String): List<ThankReaction> {
+        return DatabaseFactory.dbQuery {
+            ThankReactions.select {
+                ThankReactions.slackPostId eq slackPostId
+            }.mapNotNull { toThankReaction(it) }
+        }
+    }
 
     private fun toUser(row: ResultRow): User {
         return User(
@@ -240,6 +246,17 @@ class PlaygroundRepository : Repository {
             email = row[Users.email],
             displayName = row[Users.displayName],
             passwordhash = row[Users.passwordHash]
+        )
+    }
+
+    private fun toThankReaction(row: ResultRow): ThankReaction {
+        return ThankReaction(
+            id = 1,
+            slackPostId = row[ThankReactions.slackPostId],
+            reactionName = row[ThankReactions.reactionName],
+            slackUserId = row[ThankReactions.slackUserId],
+            createdAt = row[ThankReactions.createdAt],
+            updatedAt = row[ThankReactions.updatedAt]
         )
     }
 }

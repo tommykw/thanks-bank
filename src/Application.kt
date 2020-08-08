@@ -9,6 +9,7 @@ import com.slack.api.bolt.request.RequestHeaders
 import com.slack.api.bolt.response.Response
 import com.slack.api.bolt.util.QueryStringParser
 import com.slack.api.bolt.util.SlackRequestParser
+import com.slack.api.methods.request.emoji.EmojiListRequest
 import com.slack.api.model.block.Blocks.asBlocks
 import com.slack.api.model.block.Blocks.section
 import com.slack.api.model.block.composition.BlockCompositions.*

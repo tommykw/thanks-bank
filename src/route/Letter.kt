@@ -42,6 +42,7 @@ fun Route.letter() {
             thank.slackPostId?.let { slackPostId ->
                 val threads = repository.getThreads(slackPostId)
                 thank.threadCount = threads.size
+                thank.reactions = repository.getReactions(slackPostId)
             }
         }
 
@@ -49,8 +50,7 @@ fun Route.letter() {
             FreeMarkerContent(
                 "letter.ftl",
                 mapOf(
-                    "thanks" to thanks,
-                    "threads" to null
+                    "thanks" to thanks
                 )
             )
         )
