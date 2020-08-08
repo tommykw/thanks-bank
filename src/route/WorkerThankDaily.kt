@@ -21,10 +21,15 @@ fun Route.workerThankDaily(apiClient: MethodsClient) {
             return@get
         }
 
-        var message = "全部で${thanks.size}件のメッセージが届いているよ！"
+        val request = ChatPostMessageRequest.builder()
+                .channel("#general")
+                .text("全部で${thanks.size}件のメッセージが届いているよ！")
+                .build()
+
+        apiClient.chatPostMessage(request)
 
         thanks.forEach { thank ->
-            message += """
+            val message = """
 ```
 Received: XXXX/XX/XX
 <@${thank.targetSlackUserId}>さんから
