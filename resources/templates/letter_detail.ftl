@@ -10,17 +10,17 @@
         <div class="letter-detail-thank-message">いつもありがとういつもありがとういつもありがとういつもありがとういつもありがとういつもありがとういつもありがとういつもありがとういつもありがとういつもありがとういつもありがとう</div>
     </div>
 
-    <div class="letter-detail-reaction">
-        <div class="letter-detail-reaction-title">集まったリアクション</div>
-        <#if reactions?? && (reactions?size > 0)>
+    <#if reactions?? && (reactions?size > 0)>
+        <div class="letter-detail-reaction">
+            <div class="letter-detail-reaction-title">集まったリアクション</div>
             <#list reactions as reaction>
                 <img class="letter-detail-reaction-icon" src="${reaction.reactionName}" alt="${reaction.reactionName}" width="20" height="20"/>
             </#list>
-        </#if>
-    </div>
+        </div>
+    </#if>
 
-    <div class="letter-detail-tread">
-        <#if threads?? && (threads?size > 0)>
+    <#if threads?? && (threads?size > 0)>
+        <div class="letter-detail-tread">
             <#list threads as thread>
                 <div class="letter-detail-tread-title">スレッド</div>
                 <div class="letter-detail-tread-user-info">
@@ -29,6 +29,6 @@
                 </div>
                 <div class="letter-detail-tread-message">こちらこそありがとう</div>
             </#list>
-        </#if>
-    </div>
+        </div>
+    </#if>
 </@b.page>
