@@ -40,9 +40,9 @@ fun Route.workerThankApi(apiClient: MethodsClient) {
         apiClient.chatPostMessage(request)
 
         thanks.forEach { thank ->
+//        Received: ${dateFormat.format(thank.createdAt)}
             val message = """
 ```
-Received: ${dateFormat.format(thank.createdAt)}
 <@${thank.targetSlackUserId}>さんから
 <@${thank.slackUserId}>さんへメッセージが届いてるよ！
 ```
