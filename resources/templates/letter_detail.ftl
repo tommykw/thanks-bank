@@ -3,8 +3,8 @@
 <@b.page>
     <div class="letter-detail-thank">
         <div class="letter-detail-thank-fromto">
-            <img class="letter-detail-thank-fromto-image-you" src="http://wwwjp.kodak.com/JP/images/ja/digital/cameras/samplePicture/dc21203.jpg" width="40" height="40"/>
-            <img class="letter-detail-thank-fromto-image-target" src="http://wwwjp.kodak.com/JP/images/ja/digital/cameras/samplePicture/dc21203.jpg" width="40" height="40"/>
+            <img class="letter-detail-thank-fromto-image-you" src="${thank.userImage}" width="40" height="40"/>
+            <img class="letter-detail-thank-fromto-image-target" src="${thank.targetUserImage}" width="40" height="40"/>
             <div class="letter-detail-thank-fromto-message">${thank.realName}さんから${thank.targetRealName}さんへ</div>
         </div>
         <div class="letter-detail-thank-message">${thank.body}</div>
