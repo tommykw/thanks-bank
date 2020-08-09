@@ -24,10 +24,10 @@ import io.ktor.routing.Route
 import io.ktor.util.toMap
 
 @Location("/slack/events")
-class SlackEvent
+class SlackEventRoute
 
 fun Route.slackEvent() {
-    post<SlackEvent> {
+    post<SlackEventRoute> {
         respond(call, app.run(parseRequest(call)))
     }
 }

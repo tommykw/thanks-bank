@@ -10,11 +10,11 @@ import io.ktor.routing.Route
 import org.kodein.di.generic.instance
 import org.kodein.di.ktor.kodein
 
-@Location("/letter")
-class Letter
+@Location("/thanks")
+class ThanksRoute
 
-fun Route.letter() {
-    get<Letter> {
+fun Route.thanks() {
+    get<ThanksRoute> {
         val repository by kodein().instance<ThankRepository>()
         val members = repository.getSlackMembers().members
         val thanks = repository.getThanks()
@@ -48,7 +48,7 @@ fun Route.letter() {
 
         call.respond(
             FreeMarkerContent(
-                "letter.ftl",
+                "thanks.ftl",
                 mapOf(
                     "thanks" to thanks
                 )

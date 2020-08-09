@@ -1,6 +1,5 @@
 package com.tommykw
 
-import com.slack.api.Slack
 import com.slack.api.bolt.App
 import com.slack.api.bolt.AppConfig
 import com.slack.api.bolt.util.SlackRequestParser
@@ -75,8 +74,8 @@ fun Application.module(testing: Boolean = false) {
             resources("css")
         }
 
-        letter()
-        letterDetail()
+        thanks()
+        thanksDetail()
         slackEvent()
 
         thankDailyApi()
