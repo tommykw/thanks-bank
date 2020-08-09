@@ -16,17 +16,17 @@ class Letter
 fun Route.letter() {
     get<Letter> {
         val repository by kodein().instance<ThankRepository>()
-        val members = repository.getSlackMembers()
+        val members = repository.getSlackMembers().members
         val thanks = repository.getThanks()
 
         fun idToRealName(slackId: String): String {
-            val res = members.members.find { it.id == slackId }
-            return res?.real_name ?: ""
+            val res = members.find { it.id == slackId }
+            return res?.realName ?: ""
         }
 
         fun idToProfileImage(slackId: String): String {
-            val res = members.members.find { it.id == slackId }
-            return res?.profile?.image_512 ?: ""
+            val res = members.find { it.id == slackId }
+            return res?.profile?.image512 ?: ""
         }
 
         thanks.map { thank ->

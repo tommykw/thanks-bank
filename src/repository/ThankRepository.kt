@@ -1,12 +1,12 @@
 package com.tommykw.repository
 
+import com.slack.api.Slack
+import com.slack.api.methods.request.users.UsersListRequest
+import com.slack.api.methods.response.users.UsersListResponse
 import com.slack.api.model.event.MessageEvent
 import com.slack.api.model.event.ReactionAddedEvent
 import com.slack.api.model.event.ReactionRemovedEvent
 import com.tommykw.model.*
-import io.ktor.client.HttpClient
-import io.ktor.client.features.json.JsonFeature
-import io.ktor.client.request.get
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.joda.time.DateTime
@@ -81,11 +81,16 @@ class ThankRepository : Repository {
         }
     }
 
-    override suspend fun getSlackMembers(): SlackUserRes {
-        val client = HttpClient {
-            install(JsonFeature)
-        }
-        return client.get<SlackUserRes>("https://slack.com/api/users.list?token=${System.getenv("SLACK_BOT_TOKEN")}")
+    override suspend fun getSlackMembers(): UsersListResponse {
+        val slack = Slack.getInstance()
+        val apiClient = slack.methods(System.getenv("SLACK_BOT_TOKEN"))
+
+        val request = UsersListRequest
+            .builder()
+            .token(System.getenv("SLACK_BOT_TOKEN"))
+            .build()
+
+        return apiClient.usersList(request)
     }
 
     override suspend fun updateSlackPostId(ts: String, thank: Thank) {

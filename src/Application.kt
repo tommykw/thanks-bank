@@ -35,9 +35,6 @@ val appConfig = AppConfig()
 val requestParser = SlackRequestParser(appConfig)
 val app = App(appConfig)
 
-val slack = Slack.getInstance()
-val apiClient = slack.methods(System.getenv("SLACK_BOT_TOKEN"))
-
 @Suppress("unused") // Referenced in application.conf
 @kotlin.jvm.JvmOverloads
 fun Application.module(testing: Boolean = false) {
@@ -83,6 +80,6 @@ fun Application.module(testing: Boolean = false) {
         letterDetail()
         slackEvent()
 
-        thankDailyApi(apiClient)
+        thankDailyApi()
     }
 }

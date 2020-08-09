@@ -1,6 +1,6 @@
 package com.tommykw.api
 
-import com.slack.api.methods.MethodsClient
+import com.slack.api.Slack
 import com.slack.api.methods.request.chat.ChatPostMessageRequest
 import com.tommykw.repository.ThankRepository
 import io.ktor.application.call
@@ -21,8 +21,11 @@ private val dateFormat = SimpleDateFormat("HH:mm:dd").apply {
     timeZone = TimeZone.getTimeZone("Asia/Tokyo")
 }
 
-fun Route.thankDailyApi(apiClient: MethodsClient) {
+fun Route.thankDailyApi() {
     post<ThankDailyApi> {
+        val slack = Slack.getInstance()
+        val apiClient = slack.methods(System.getenv("SLACK_BOT_TOKEN"))
+
         val repository by kodein().instance<ThankRepository>()
         val thanks = repository.getThanks()
 

@@ -19,26 +19,23 @@ fun Route.letterDetail() {
     get<LetterDetail> { listing ->
         val repository by kodein().instance<ThankRepository>()
         val thank = repository.getThank(listing.thankId)
-        val members = repository.getSlackMembers()
+        val members = repository.getSlackMembers().members
         var reactions: List<ThankReaction>? = null
         var threads: List<Thank>? = null
 
         fun idToRealName(slackId: String): String {
-            val res = members.members.find { it.id == slackId }
-            return res?.real_name ?: ""
+            val res = members.find { it.id == slackId }
+            return res?.realName ?: ""
         }
 
         fun idToProfileImage(slackId: String): String {
-            val res = members.members.find { it.id == slackId }
-            return res?.profile?.image_512 ?: ""
+            val res = members.find { it.id == slackId }
+            return res?.profile?.image512 ?: ""
         }
 
         thank.slackPostId?.let { slackPostId ->
-            println("!!!!!!!! slackPostId " + slackPostId)
             reactions = repository.getReactions(slackPostId)
-            println("!!!!!!! reactions " + reactions)
             threads = repository.getThreads(slackPostId)
-            println("!!!!!!! threads " + threads)
 
             thank.realName = idToRealName(thank.slackUserId)
             thank.targetSlackUserId?.let {
