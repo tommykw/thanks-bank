@@ -33,6 +33,13 @@ fun Application.slackViewSubmission(app: App) {
             }
         }
 
+        ctx.client().chatPostEphemeral {
+            it.token(ctx.botToken)
+            it.user(req.payload.user.id)
+            it.channel("#general")
+            it.text("メッセージが送信されました")
+        }
+
         ctx.ack()
     }
 }

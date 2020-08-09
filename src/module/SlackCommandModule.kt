@@ -7,7 +7,7 @@ import com.slack.api.model.view.Views
 import io.ktor.application.Application
 
 fun Application.slackCommand(app: App) {
-    app.command("/thanks") { req, ctx ->
+    app.command("/thanks") { _, ctx ->
         val res = ctx.client().viewsOpen {
             it.triggerId(ctx.triggerId)
             it.view(
@@ -45,24 +45,8 @@ fun Application.slackCommand(app: App) {
             )
         }
 
-        println("!!!!!!!!!! start")
         if (res.isOk) {
-            println("!!!!!!!!!! ok")
-            val ackRes = ctx.ack()
-
-            val res = ctx.client().chatPostEphemeral {
-                it.token(ctx.botToken)
-                it.user(req.payload.userId)
-                it.channel("#general")
-                it.text("メッセージが送信されました")
-            }
-
-            println("!!!!!!!!!! isOd " + res.isOk)
-            if (res.isOk) {
-                // TODO res.isOk
-            }
-
-            ackRes
+            ctx.ack()
         } else {
             Response.builder().statusCode(500).body(res.error).build()
         }
