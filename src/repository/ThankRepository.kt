@@ -114,7 +114,7 @@ class ThankRepository : Repository {
             ThankReactions.deleteWhere {
                 ThankReactions.slackUserId eq event.user
                 ThankReactions.reactionName eq event.reaction
-                ThankReactions.slackPostId eq event.eventTs
+                ThankReactions.slackPostId eq event.item.ts
             }
         }
     }
