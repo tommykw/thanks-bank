@@ -22,9 +22,11 @@ fun Application.slackReactionAddedEvent(app: App) {
     }
 
     app.event(ReactionRemovedEvent::class.java) { payload, ctx ->
+        println("!!!!!!!!!! removed")
         val event = payload.event
 
         if (event.item.channel == System.getenv("SLACK_THANKS_CHANNEL")) {
+            println("!!!!!!!!!! removed2 " + event.reaction)
             val repository = ThankRepository()
             launch {
                 repository.removeReaction(event.reaction)
