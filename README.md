@@ -59,6 +59,15 @@ https://api.slack.com/apps/A018EU8GR1N/oauth?
   - message.channels
 - イベントを選択。最下部にある Save Changes ボタンをクリック
 
+## Slackアプリの設定
+- https://api.slack.com/apps/A018EU8GR1N/event-subscriptions?
+- 左ペインの Features > Event Subscriptions へ遷移します
+- Enable Events を Off から On にする
+- https://{あなたのドメイン}/slack/events を Request URL に設定
+- Bot User Event を設定
+- 最下部にある Save Changes ボタンをクリック
+
+
 ## 参考資料
 - https://slack.dev/java-slack-sdk/guides/ja/getting-started-with-bolt
 - [Slack Web API](https://slack.dev/java-slack-sdk/guides/ja/web-api-basics)
