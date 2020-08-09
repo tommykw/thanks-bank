@@ -45,7 +45,9 @@ fun Application.slackCommand(app: App) {
             )
         }
 
+        println("!!!!!!!!!! start")
         if (res.isOk) {
+            println("!!!!!!!!!! ok")
             val ackRes = ctx.ack()
 
             val res = ctx.client().chatPostEphemeral {
@@ -53,6 +55,8 @@ fun Application.slackCommand(app: App) {
                 it.channel("#general")
                 it.text("メッセージが送信されました")
             }
+
+            println("!!!!!!!!!! isOd " + res.isOk)
             // TODO res.isOk
 
             ackRes
