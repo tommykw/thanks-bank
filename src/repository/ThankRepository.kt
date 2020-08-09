@@ -112,9 +112,9 @@ class ThankRepository : Repository {
     override suspend fun removeReaction(event: ReactionRemovedEvent) {
         return DatabaseFactory.dbQuery {
             ThankReactions.deleteWhere {
-                ThankReactions.slackUserId eq event.user
-                ThankReactions.reactionName eq event.reaction
-                ThankReactions.slackPostId eq event.item.ts
+                ThankReactions.slackUserId eq event.user and
+                (ThankReactions.reactionName eq event.reaction) and
+                (ThankReactions.slackPostId eq event.item.ts)
             }
         }
     }
