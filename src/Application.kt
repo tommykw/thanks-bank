@@ -72,7 +72,6 @@ fun Application.module(testing: Boolean = false) {
 
     routing {
         static("/static") {
-            resources("images")
             resources("css")
         }
 
