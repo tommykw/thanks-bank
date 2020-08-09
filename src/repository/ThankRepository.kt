@@ -108,6 +108,14 @@ class ThankRepository : Repository {
         }
     }
 
+    override suspend fun removeReaction(reactionName: String) {
+        return DatabaseFactory.dbQuery {
+            ThankReactions.deleteWhere {
+                ThankReactions.reactionName eq reactionName
+            }
+        }
+    }
+
     private fun toThankReaction(row: ResultRow): ThankReaction {
         return ThankReaction(
             id = 1,

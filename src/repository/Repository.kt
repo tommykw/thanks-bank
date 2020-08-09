@@ -10,6 +10,7 @@ interface Repository {
     suspend fun createThank(thanks: ThankRequest)
     suspend fun getSlackMembers(): SlackUserRes
     suspend fun saveReaction(event: ReactionAddedEvent)
+    suspend fun removeReaction(reactionName: String)
     suspend fun saveThankReply(event: MessageEvent)
     suspend fun updateSlackPostId(ts: String, thank: Thank)
     suspend fun getThreads(slackPostId: String): List<Thank>
