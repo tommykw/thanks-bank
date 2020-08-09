@@ -68,7 +68,7 @@ fun Application.module(testing: Boolean = false) {
 
     DatabaseFactory.init()
 
-    slackReactionAddedEvent(app)
+    slackReactionEvent(app)
     slackMessageEvent(app)
     slackCommand(app)
     slackViewSubmission(app)

@@ -2,6 +2,7 @@ package com.tommykw.repository
 
 import com.slack.api.model.event.MessageEvent
 import com.slack.api.model.event.ReactionAddedEvent
+import com.slack.api.model.event.ReactionRemovedEvent
 import com.tommykw.model.*
 
 interface Repository {
@@ -10,7 +11,7 @@ interface Repository {
     suspend fun createThank(thanks: ThankRequest)
     suspend fun getSlackMembers(): SlackUserRes
     suspend fun saveReaction(event: ReactionAddedEvent)
-    suspend fun removeReaction(reactionName: String)
+    suspend fun removeReaction(event: ReactionRemovedEvent)
     suspend fun saveThankReply(event: MessageEvent)
     suspend fun updateSlackPostId(ts: String, thank: Thank)
     suspend fun getThreads(slackPostId: String): List<Thank>

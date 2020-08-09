@@ -7,7 +7,7 @@ import com.tommykw.repository.ThankRepository
 import io.ktor.application.Application
 import kotlinx.coroutines.launch
 
-fun Application.slackReactionAddedEvent(app: App) {
+fun Application.slackReactionEvent(app: App) {
     app.event(ReactionAddedEvent::class.java) { payload, ctx ->
         val event = payload.event
 
@@ -26,10 +26,10 @@ fun Application.slackReactionAddedEvent(app: App) {
         val event = payload.event
 
         if (event.item.channel == System.getenv("SLACK_THANKS_CHANNEL")) {
-            println("!!!!!!!!!! removed2 " + event.reaction)
+            println("!!!!!!!!!! removed2 " + event)
             val repository = ThankRepository()
             launch {
-                repository.removeReaction(event.reaction)
+                repository.removeReaction(event)
             }
         }
 

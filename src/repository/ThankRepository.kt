@@ -2,6 +2,7 @@ package com.tommykw.repository
 
 import com.slack.api.model.event.MessageEvent
 import com.slack.api.model.event.ReactionAddedEvent
+import com.slack.api.model.event.ReactionRemovedEvent
 import com.tommykw.model.*
 import io.ktor.client.HttpClient
 import io.ktor.client.features.json.JsonFeature
@@ -108,10 +109,12 @@ class ThankRepository : Repository {
         }
     }
 
-    override suspend fun removeReaction(reactionName: String) {
+    override suspend fun removeReaction(event: ReactionRemovedEvent) {
         return DatabaseFactory.dbQuery {
             ThankReactions.deleteWhere {
-                ThankReactions.reactionName eq reactionName
+                ThankReactions.slackUserId eq event.user
+                ThankReactions.reactionName eq event.reaction
+                ThankReactions.slackPostId eq event.eventTs
             }
         }
     }
