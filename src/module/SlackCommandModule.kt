@@ -52,12 +52,15 @@ fun Application.slackCommand(app: App) {
 
             val res = ctx.client().chatPostEphemeral {
                 it.token(ctx.botToken)
+                it.user(req.payload.userId)
                 it.channel("#general")
                 it.text("メッセージが送信されました")
             }
 
             println("!!!!!!!!!! isOd " + res.isOk)
-            // TODO res.isOk
+            if (res.isOk) {
+                // TODO res.isOk
+            }
 
             ackRes
         } else {
