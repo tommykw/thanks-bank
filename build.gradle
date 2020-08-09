@@ -44,7 +44,6 @@ dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     compile "io.ktor:ktor-server-netty:$ktor_version"
     compile "ch.qos.logback:logback-classic:$logback_version"
-    testCompile "io.ktor:ktor-server-tests:$ktor_version"
     compile "io.ktor:ktor-gson:$ktor_version"
     compile "io.ktor:ktor-freemarker:$ktor_version"
     compile "io.ktor:ktor-locations:$ktor_version"
@@ -58,13 +57,8 @@ dependencies {
     compile "com.zaxxer:HikariCP:$hikaricp_version"
     compile "org.jetbrains.exposed:exposed:$exposed_version"
     compile "org.postgresql:postgresql:$postgres_version"
-    compile "io.ktor:ktor-auth-jwt:$ktor_version"
-    compile "com.auth0:java-jwt:3.1.0"
     compile "org.kodein.di:kodein-di-generic-jvm:6.3.3"
     compile "org.kodein.di:kodein-di-framework-ktor-server-jvm:6.3.3"
-    compile "com.google.api-client:google-api-client:1.30.9"
-    compile "com.google.oauth-client:google-oauth-client-jetty:1.30.6"
-    compile "com.google.apis:google-api-services-calendar:v3-rev411-1.25.0"
     compile "org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.20.0"
     compile "com.slack.api:slack-api-client:$slack_api_version"
     compile "com.slack.api:slack-api-model:$slack_api_version"
@@ -73,6 +67,9 @@ dependencies {
     compile "com.slack.api:bolt:$slack_api_version"
     compile "com.slack.api:bolt-servlet:$slack_api_version"
     compile "com.slack.api:bolt-jetty:$slack_api_version"
+
+    testCompile "io.ktor:ktor-server-test-host:$ktor_version"
+    testCompile "io.ktor:ktor-server-tests:$ktor_version"
 }
 
 task stage(dependsOn: ['installDist'])
