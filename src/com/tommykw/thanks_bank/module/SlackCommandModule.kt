@@ -1,4 +1,4 @@
-package com.tommykw.module
+package com.tommykw.thanks_bank.module
 
 import com.slack.api.bolt.App
 import com.slack.api.bolt.response.Response

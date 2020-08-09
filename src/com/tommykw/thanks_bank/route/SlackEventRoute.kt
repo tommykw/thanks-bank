@@ -1,12 +1,12 @@
-package com.tommykw.route
+package com.tommykw.thanks_bank.route
 
 import com.slack.api.bolt.request.Request
 import com.slack.api.bolt.request.RequestHeaders
 import com.slack.api.bolt.response.Response
 import com.slack.api.bolt.util.QueryStringParser
 import com.slack.api.bolt.util.SlackRequestParser
-import com.tommykw.app
-import com.tommykw.requestParser
+import com.tommykw.thanks_bank.app
+import com.tommykw.thanks_bank.requestParser
 import io.ktor.application.ApplicationCall
 import io.ktor.application.call
 import io.ktor.features.origin

@@ -1,9 +1,9 @@
-package com.tommykw.module
+package com.tommykw.thanks_bank.module
 
 import com.slack.api.bolt.App
 import com.slack.api.model.event.ReactionAddedEvent
 import com.slack.api.model.event.ReactionRemovedEvent
-import com.tommykw.repository.ThankRepository
+import com.tommykw.thanks_bank.repository.ThankRepository
 import io.ktor.application.Application
 import kotlinx.coroutines.launch
 

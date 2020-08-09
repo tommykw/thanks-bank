@@ -1,4 +1,4 @@
-package com.tommykw.model
+package com.tommykw.thanks_bank.model
 
 data class ThankRequest(
     val slackUserId: String,

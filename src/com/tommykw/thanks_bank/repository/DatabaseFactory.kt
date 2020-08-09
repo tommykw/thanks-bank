@@ -1,6 +1,7 @@
-package com.tommykw.repository
+package com.tommykw.thanks_bank.repository
 
-import com.tommykw.model.*
+import com.tommykw.thanks_bank.model.ThankReactions
+import com.tommykw.thanks_bank.model.Thanks
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
 import kotlinx.coroutines.Dispatchers

@@ -1,10 +1,12 @@
-package com.tommykw.repository
+package com.tommykw.thanks_bank.repository
 
 import com.slack.api.methods.response.users.UsersListResponse
 import com.slack.api.model.event.MessageEvent
 import com.slack.api.model.event.ReactionAddedEvent
 import com.slack.api.model.event.ReactionRemovedEvent
-import com.tommykw.model.*
+import com.tommykw.thanks_bank.model.Thank
+import com.tommykw.thanks_bank.model.ThankReaction
+import com.tommykw.thanks_bank.model.ThankRequest
 
 interface Repository {
     suspend fun getThanks(): List<Thank>

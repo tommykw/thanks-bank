@@ -1,13 +1,18 @@
-package com.tommykw
+package com.tommykw.thanks_bank
 
 import com.slack.api.bolt.App
 import com.slack.api.bolt.AppConfig
 import com.slack.api.bolt.util.SlackRequestParser
-import com.tommykw.api.thankDailyApi
-import com.tommykw.module.*
-import com.tommykw.repository.DatabaseFactory
-import com.tommykw.repository.ThankRepository
-import com.tommykw.route.*
+import com.tommykw.thanks_bank.api.thankDailyApi
+import com.tommykw.thanks_bank.module.slackCommand
+import com.tommykw.thanks_bank.module.slackMessageEvent
+import com.tommykw.thanks_bank.module.slackReactionEvent
+import com.tommykw.thanks_bank.module.slackViewSubmission
+import com.tommykw.thanks_bank.repository.DatabaseFactory
+import com.tommykw.thanks_bank.repository.ThankRepository
+import com.tommykw.thanks_bank.route.slackEvent
+import com.tommykw.thanks_bank.route.thanks
+import com.tommykw.thanks_bank.route.thanksDetail
 import freemarker.cache.ClassTemplateLoader
 import io.ktor.application.Application
 import io.ktor.application.call

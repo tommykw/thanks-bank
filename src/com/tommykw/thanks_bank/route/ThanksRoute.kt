@@ -1,6 +1,6 @@
-package com.tommykw.route
+package com.tommykw.thanks_bank.route
 
-import com.tommykw.repository.ThankRepository
+import com.tommykw.thanks_bank.repository.ThankRepository
 import io.ktor.application.call
 import io.ktor.freemarker.FreeMarkerContent
 import io.ktor.locations.Location

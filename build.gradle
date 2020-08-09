@@ -16,8 +16,6 @@ apply plugin: 'application'
 apply plugin: 'com.github.johnrengelman.shadow'
 apply plugin: 'kotlinx-serialization'
 
-mainClassName = 'com.tommykw.ApplicationKt'
-
 shadowJar {
     baseName = 'thanks-bank'
     classifier = null

@@ -1,6 +1,6 @@
-package com.tommykw.test
+package com.tommykw.thanks_bank.test
 
-import com.tommykw.module
+import com.tommykw.thanks_bank.module
 import io.ktor.http.*
 import io.ktor.server.testing.*
 import kotlin.test.*

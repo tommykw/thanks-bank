@@ -1,4 +1,4 @@
-package com.tommykw.model
+package com.tommykw.thanks_bank.model
 
 import org.jetbrains.exposed.dao.IntIdTable
 import org.joda.time.DateTime

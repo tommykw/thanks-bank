@@ -1,4 +1,4 @@
-package com.tommykw.repository
+package com.tommykw.thanks_bank.repository
 
 import com.slack.api.Slack
 import com.slack.api.methods.request.users.UsersListRequest
@@ -6,7 +6,7 @@ import com.slack.api.methods.response.users.UsersListResponse
 import com.slack.api.model.event.MessageEvent
 import com.slack.api.model.event.ReactionAddedEvent
 import com.slack.api.model.event.ReactionRemovedEvent
-import com.tommykw.model.*
+import com.tommykw.thanks_bank.model.*
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.joda.time.DateTime

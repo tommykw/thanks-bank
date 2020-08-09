@@ -1,8 +1,8 @@
-package com.tommykw.api
+package com.tommykw.thanks_bank.api
 
 import com.slack.api.Slack
 import com.slack.api.methods.request.chat.ChatPostMessageRequest
-import com.tommykw.repository.ThankRepository
+import com.tommykw.thanks_bank.repository.ThankRepository
 import io.ktor.application.call
 import io.ktor.http.HttpStatusCode
 import io.ktor.locations.Location

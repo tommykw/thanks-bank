@@ -1,8 +1,8 @@
-package com.tommykw.module
+package com.tommykw.thanks_bank.module
 
 import com.slack.api.bolt.App
-import com.tommykw.model.ThankRequest
-import com.tommykw.repository.ThankRepository
+import com.tommykw.thanks_bank.model.ThankRequest
+import com.tommykw.thanks_bank.repository.ThankRepository
 import io.ktor.application.Application
 import kotlinx.coroutines.launch
 import org.kodein.di.generic.instance
