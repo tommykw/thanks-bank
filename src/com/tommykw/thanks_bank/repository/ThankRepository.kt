@@ -7,6 +7,8 @@ import com.slack.api.model.event.MessageEvent
 import com.slack.api.model.event.ReactionAddedEvent
 import com.slack.api.model.event.ReactionRemovedEvent
 import com.tommykw.thanks_bank.model.*
+import com.tommykw.thanks_bank.model.ThankReactions.toThankReaction
+import com.tommykw.thanks_bank.model.Thanks.toThank
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.joda.time.DateTime
@@ -24,25 +26,6 @@ class ThankRepository : Repository {
                 Thanks.id eq id
             }.map { toThank(it) }.single()
         }
-    }
-
-    private fun toThank(row: ResultRow): Thank {
-        return Thank(
-            id = row[Thanks.id].value,
-            slackUserId = row[Thanks.slackUserId],
-            body = row[Thanks.body],
-            targetSlackUserId = row[Thanks.targetSlackUserId],
-            realName = "",
-            targetRealName = "",
-            userImage = "",
-            targetUserImage = "",
-            slackPostId = row[Thanks.slackPostId],
-            parentSlackPostId = row[Thanks.parentSlackPostId],
-            createdAt = row[Thanks.createdAt],
-            updatedAt = row[Thanks.updatedAt],
-            threadCount = 0,
-            reactions = emptyList()
-        )
     }
 
     override suspend fun createThank(thanks: ThankRequest) = DatabaseFactory.dbQuery {
@@ -127,16 +110,5 @@ class ThankRepository : Repository {
                 (ThankReactions.slackPostId eq event.item.ts)
             }
         }
-    }
-
-    private fun toThankReaction(row: ResultRow): ThankReaction {
-        return ThankReaction(
-            id = 1,
-            slackPostId = row[ThankReactions.slackPostId],
-            reactionName = row[ThankReactions.reactionName],
-            slackUserId = row[ThankReactions.slackUserId],
-            createdAt = row[ThankReactions.createdAt],
-            updatedAt = row[ThankReactions.updatedAt]
-        )
     }
 }

@@ -1,6 +1,7 @@
 package com.tommykw.thanks_bank.model
 
 import org.jetbrains.exposed.dao.IntIdTable
+import org.jetbrains.exposed.sql.ResultRow
 import org.joda.time.DateTime
 import java.io.Serializable
 
@@ -19,4 +20,15 @@ object ThankReactions: IntIdTable() {
     val slackPostId = varchar("slack_post_id", 255)
     val createdAt = datetime("created_at")
     val updatedAt = datetime("updated_at")
+
+    fun toThankReaction(row: ResultRow): ThankReaction {
+        return ThankReaction(
+            id = 1,
+            slackPostId = row[slackPostId],
+            reactionName = row[reactionName],
+            slackUserId = row[slackUserId],
+            createdAt = row[createdAt],
+            updatedAt = row[updatedAt]
+        )
+    }
 }
