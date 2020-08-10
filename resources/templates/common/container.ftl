@@ -2,7 +2,7 @@
     <!doctype html>
     <html lang="jp">
         <head>
-            <title>thanks-bank</title>
+            <title>${page_title}</title>
             <meta name="viewport" content="width=device-width, initial-scale=1">
             <link href="https://fonts.googleapis.com/css?family=Noto+Sans+JP:400,700&subset=japanese" rel="stylesheet">
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">

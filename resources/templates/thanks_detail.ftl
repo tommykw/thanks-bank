@@ -1,3 +1,4 @@
+<#global page_title = "おてがみ詳細" />
 <#import "common/container.ftl" as b>
 
 <@b.page>

@@ -15,10 +15,22 @@ class ApplicationTest {
 
         with(handleRequest(HttpMethod.Get, "/thanks")) {
             assertEquals(HttpStatusCode.OK, response.status())
+
+            val content = response.content
+            assertNotNull(content)
+
+            val lines = content.lines()
+            assertEquals(lines[4].trim(), "<title>おてがみ一覧</title>")
         }
 
         with(handleRequest(HttpMethod.Get, "/thanks/1")) {
             assertEquals(HttpStatusCode.OK, response.status())
+
+            val content = response.content
+            assertNotNull(content)
+
+            val lines = content.lines()
+            assertEquals(lines[4].trim(), "<title>おてがみ詳細</title>")
         }
     }
 }
