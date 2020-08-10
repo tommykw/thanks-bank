@@ -23,7 +23,7 @@ object ThankReactions: IntIdTable() {
 
     fun toThankReaction(row: ResultRow): ThankReaction {
         return ThankReaction(
-            id = 1,
+            id = row[id].value,
             slackPostId = row[slackPostId],
             reactionName = row[reactionName],
             slackUserId = row[slackUserId],

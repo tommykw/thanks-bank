@@ -28,9 +28,9 @@ class ThankRepository : Repository {
         }
     }
 
-    override suspend fun createThank(thanks: ThankRequest) = DatabaseFactory.dbQuery {
+    override suspend fun createThank(thanks: ThankRequest) {
         transaction {
-            val insertStatement = Thanks.insert {
+            Thanks.insert {
                 it[slackUserId] = thanks.slackUserId
                 it[body] = thanks.body
                 it[targetSlackUserId] = thanks.targetSlackUserId
@@ -38,12 +38,11 @@ class ThankRepository : Repository {
                 it[updatedAt] = DateTime()
             }
         }
-        Unit
     }
 
     override suspend fun createThankReply(event: MessageEvent) {
         transaction {
-            val inserted = Thanks.insert {
+            Thanks.insert {
                 it[slackUserId] = event.user
                 it[body] = event.text
                 it[slackPostId] = event.ts
@@ -54,7 +53,7 @@ class ThankRepository : Repository {
 
     override suspend fun createReaction(event: ReactionAddedEvent) {
         transaction {
-            val inserted = ThankReactions.insert {
+            ThankReactions.insert {
                 it[slackUserId] = event.user
                 it[slackPostId] = event.item.ts
                 it[reactionName] = event.reaction
@@ -78,7 +77,7 @@ class ThankRepository : Repository {
 
     override suspend fun updateSlackPostId(ts: String, thank: Thank) {
         transaction {
-            val updated = Thanks.update({
+            Thanks.update({
                 Thanks.id eq thank.id
             }) {
                 it[slackPostId] = ts
