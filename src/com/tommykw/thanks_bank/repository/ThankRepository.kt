@@ -9,19 +9,22 @@ import com.slack.api.model.event.ReactionRemovedEvent
 import com.tommykw.thanks_bank.model.*
 import com.tommykw.thanks_bank.model.ThankReactions.toThankReaction
 import com.tommykw.thanks_bank.model.Thanks.toThank
+import com.tommykw.thanks_bank.repository.DatabaseFactory.dbQuery
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.joda.time.DateTime
 
 class ThankRepository : Repository {
     override suspend fun getThanks(): List<Thank> {
-        return transaction {
+        return dbQuery {
             Thanks.selectAll().map { toThank(it) }
         }
     }
 
     override suspend fun getThank(id: Int): Thank {
-        return transaction {
+        return dbQuery {
             Thanks.select {
                 Thanks.id eq id
             }.map { toThank(it) }.single()
@@ -72,7 +75,9 @@ class ThankRepository : Repository {
             .token(System.getenv("SLACK_BOT_TOKEN"))
             .build()
 
-        return apiClient.usersList(request)
+        return withContext(Dispatchers.IO) {
+            apiClient.usersList(request)
+        }
     }
 
     override suspend fun updateSlackPostId(ts: String, thank: Thank) {
@@ -86,7 +91,7 @@ class ThankRepository : Repository {
     }
 
     override suspend fun getThreads(slackPostId: String): List<Thank> {
-        return DatabaseFactory.dbQuery {
+        return dbQuery {
             Thanks.select {
                 Thanks.parentSlackPostId eq slackPostId
             }.mapNotNull { toThank(it) }
@@ -94,20 +99,20 @@ class ThankRepository : Repository {
     }
 
     override suspend fun getReactions(slackPostId: String): List<ThankReaction> {
-        return DatabaseFactory.dbQuery {
+        return dbQuery {
             ThankReactions.select {
                 ThankReactions.slackPostId eq slackPostId
             }.mapNotNull { toThankReaction(it) }
         }
     }
 
-    override suspend fun removeReaction(event: ReactionRemovedEvent) {
-        return DatabaseFactory.dbQuery {
+    override suspend fun removeReaction(event: ReactionRemovedEvent): Boolean {
+        return dbQuery {
             ThankReactions.deleteWhere {
                 ThankReactions.slackUserId eq event.user and
                 (ThankReactions.reactionName eq event.reaction) and
                 (ThankReactions.slackPostId eq event.item.ts)
-            }
+            } > 0
         }
     }
 }
