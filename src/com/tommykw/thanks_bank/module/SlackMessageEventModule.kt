@@ -2,11 +2,11 @@ package com.tommykw.thanks_bank.module
 
 import com.slack.api.bolt.App
 import com.slack.api.model.event.MessageEvent
-import com.tommykw.thanks_bank.repository.ThankRepository
+import com.tommykw.thanks_bank.repository.Repository
 import io.ktor.application.Application
 import kotlinx.coroutines.launch
 
-fun Application.slackMessageEvent(app: App, repository: ThankRepository) {
+fun Application.slackMessageEvent(app: App, repository: Repository) {
     app.event(MessageEvent::class.java) { payload, ctx ->
         val event = payload.event
 

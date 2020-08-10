@@ -1,6 +1,6 @@
 package com.tommykw.thanks_bank.route
 
-import com.tommykw.thanks_bank.repository.ThankRepository
+import com.tommykw.thanks_bank.repository.Repository
 import io.ktor.application.call
 import io.ktor.freemarker.FreeMarkerContent
 import io.ktor.locations.Location
@@ -11,7 +11,7 @@ import io.ktor.routing.Route
 @Location("/thanks")
 class ThanksRoute
 
-fun Route.thanks(repository: ThankRepository) {
+fun Route.thanks(repository: Repository) {
     get<ThanksRoute> {
         val members = repository.getSlackMembers().members
         val thanks = repository.getThanks()
