@@ -5,10 +5,8 @@ import com.tommykw.thanks_bank.model.ThankRequest
 import com.tommykw.thanks_bank.repository.ThankRepository
 import io.ktor.application.Application
 import kotlinx.coroutines.launch
-import org.kodein.di.generic.instance
-import org.kodein.di.ktor.kodein
 
-fun Application.slackViewSubmission(app: App) {
+fun Application.slackViewSubmission(app: App, repository: ThankRepository) {
     app.viewSubmission("thanks-message") { req, ctx ->
         val stateValues = req.payload.view.state.values
         val message = stateValues["message-block"]?.get("message-action")?.value
@@ -17,15 +15,13 @@ fun Application.slackViewSubmission(app: App) {
         if (message?.isNotEmpty() == true && targetUsers?.isNotEmpty() == true) {
             try {
                 launch {
-                    val repository by kodein().instance<ThankRepository>()
-
                     targetUsers.forEach { targetUser ->
                         repository.createThank(
-                                ThankRequest(
-                                        slackUserId = req.payload.user.id,
-                                        targetSlackUserId = targetUser,
-                                        body = message
-                                )
+                            ThankRequest(
+                                slackUserId = req.payload.user.id,
+                                targetSlackUserId = targetUser,
+                                body = message
+                            )
                         )
                     }
                 }

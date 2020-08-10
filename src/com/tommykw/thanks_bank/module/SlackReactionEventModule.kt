@@ -7,13 +7,12 @@ import com.tommykw.thanks_bank.repository.ThankRepository
 import io.ktor.application.Application
 import kotlinx.coroutines.launch
 
-fun Application.slackReactionEvent(app: App) {
+fun Application.slackReactionEvent(app: App, repository: ThankRepository) {
 
     app.event(ReactionAddedEvent::class.java) { payload, ctx ->
         val event = payload.event
 
         if (event.item.channel == System.getenv("SLACK_THANKS_CHANNEL")) {
-            val repository = ThankRepository()
             launch {
                 repository.createReaction(event)
             }
@@ -26,7 +25,6 @@ fun Application.slackReactionEvent(app: App) {
         val event = payload.event
 
         if (event.item.channel == System.getenv("SLACK_THANKS_CHANNEL")) {
-            val repository = ThankRepository()
             launch {
                 repository.removeReaction(event)
             }

@@ -7,15 +7,12 @@ import io.ktor.locations.Location
 import io.ktor.locations.get
 import io.ktor.response.respond
 import io.ktor.routing.Route
-import org.kodein.di.generic.instance
-import org.kodein.di.ktor.kodein
 
 @Location("/thanks")
 class ThanksRoute
 
-fun Route.thanks() {
+fun Route.thanks(repository: ThankRepository) {
     get<ThanksRoute> {
-        val repository by kodein().instance<ThankRepository>()
         val members = repository.getSlackMembers().members
         val thanks = repository.getThanks()
 

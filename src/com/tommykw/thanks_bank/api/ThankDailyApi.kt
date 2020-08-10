@@ -9,8 +9,6 @@ import io.ktor.locations.Location
 import io.ktor.locations.post
 import io.ktor.response.respond
 import io.ktor.routing.Route
-import org.kodein.di.generic.instance
-import org.kodein.di.ktor.kodein
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -21,12 +19,11 @@ private val dateFormat = SimpleDateFormat("HH:mm:dd").apply {
     timeZone = TimeZone.getTimeZone("Asia/Tokyo")
 }
 
-fun Route.thankDailyApi() {
+fun Route.thankDailyApi(repository: ThankRepository) {
     post<ThankDailyApi> {
         val slack = Slack.getInstance()
         val apiClient = slack.methods(System.getenv("SLACK_BOT_TOKEN"))
 
-        val repository by kodein().instance<ThankRepository>()
         val thanks = repository.getThanks()
 
         if (thanks.isEmpty()) {

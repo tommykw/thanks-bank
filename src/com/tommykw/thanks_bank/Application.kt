@@ -29,9 +29,6 @@ import io.ktor.http.content.static
 import io.ktor.locations.Locations
 import io.ktor.response.respondText
 import io.ktor.routing.routing
-import org.kodein.di.generic.bind
-import org.kodein.di.generic.singleton
-import org.kodein.di.ktor.kodein
 
 fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 
@@ -42,11 +39,7 @@ val app = App(appConfig)
 @Suppress("unused") // Referenced in application.conf
 @kotlin.jvm.JvmOverloads
 fun Application.module(testing: Boolean = false) {
-    kodein {
-        bind<ThankRepository>() with singleton { ThankRepository() }
-    }
-
-    install(DefaultHeaders) {}
+    install(DefaultHeaders)
 
     install(StatusPages) {
         exception<Throwable> { e ->
@@ -68,21 +61,22 @@ fun Application.module(testing: Boolean = false) {
     install(Locations)
 
     DatabaseFactory.init()
+    val repository = ThankRepository()
 
-    slackReactionEvent(app)
-    slackMessageEvent(app)
+    slackReactionEvent(app, repository)
+    slackMessageEvent(app, repository)
     slackCommand(app)
-    slackViewSubmission(app)
+    slackViewSubmission(app, repository)
 
     routing {
         static("/static") {
             resources("css")
         }
 
-        thanks()
-        thanksDetail()
+        thanks(repository)
+        thanksDetail(repository)
         slackEvent()
 
-        thankDailyApi()
+        thankDailyApi(repository)
     }
 }
