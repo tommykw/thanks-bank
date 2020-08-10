@@ -34,7 +34,7 @@ fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 
 val appConfig = AppConfig()
 val requestParser = SlackRequestParser(appConfig)
-val app = App(appConfig)
+val slackApp = App(appConfig)
 
 @Suppress("unused") // Referenced in application.conf
 @kotlin.jvm.JvmOverloads
@@ -63,10 +63,10 @@ fun Application.module(testing: Boolean = false) {
     DatabaseFactory.init()
     val repository = ThankRepository()
 
-    slackReactionEvent(app, repository)
-    slackMessageEvent(app, repository)
-    slackCommand(app)
-    slackViewSubmission(app, repository)
+    slackReactionEvent(slackApp, repository)
+    slackMessageEvent(slackApp, repository)
+    slackCommand(slackApp)
+    slackViewSubmission(slackApp, repository)
 
     routing {
         static("/static") {
@@ -75,7 +75,7 @@ fun Application.module(testing: Boolean = false) {
 
         thanks(repository)
         thanksDetail(repository)
-        slackEvent()
+        slackEvent(slackApp)
 
         thankDailyApi(repository)
     }

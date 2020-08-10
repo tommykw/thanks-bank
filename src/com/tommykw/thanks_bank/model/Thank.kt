@@ -50,26 +50,3 @@ object Thanks: IntIdTable() {
         )
     }
 }
-
-@kotlinx.serialization.Serializable
-data class SlackUserRes(
-    val ok: Boolean,
-    val members: List<SlackUser>
-)
-
-@kotlinx.serialization.Serializable
-data class SlackUser(
-    val id: String,
-    val team_id: String,
-    val real_name: String,
-    val profile: SlackUserProfile
-)
-
-@kotlinx.serialization.Serializable
-data class SlackUserProfile(
-    val image_24: String,
-    val image_32: String,
-    val image_48: String,
-    val image_192: String,
-    val image_512: String
-)
