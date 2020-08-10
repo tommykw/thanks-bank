@@ -6,7 +6,6 @@ import com.slack.api.bolt.request.RequestHeaders
 import com.slack.api.bolt.response.Response
 import com.slack.api.bolt.util.QueryStringParser
 import com.slack.api.bolt.util.SlackRequestParser
-import com.tommykw.thanks_bank.requestParser
 import io.ktor.application.ApplicationCall
 import io.ktor.application.call
 import io.ktor.features.origin
@@ -26,25 +25,25 @@ import io.ktor.util.toMap
 @Location("/slack/events")
 class SlackEventRoute
 
-fun Route.slackEvent(app: App) {
+fun Route.slackEvent(app: App, requestParser: SlackRequestParser) {
     post<SlackEventRoute> {
-        respond(call, app.run(parseRequest(call)))
+        respond(call, app.run(parseRequest(call, requestParser)))
     }
 }
 
-suspend fun parseRequest(call: ApplicationCall): Request<*> {
+suspend fun parseRequest(call: ApplicationCall, requestParser: SlackRequestParser): Request<*> {
     val requestBody = call.receiveText()
     val queryString = QueryStringParser.toMap(call.request.queryString())
     val headers = RequestHeaders(call.request.headers.toMap())
 
     return requestParser.parse(
-            SlackRequestParser.HttpRequest.builder()
-                    .requestUri(call.request.uri)
-                    .queryString(queryString)
-                    .requestBody(requestBody)
-                    .headers(headers)
-                    .remoteAddress(call.request.origin.remoteHost)
-                    .build()
+        SlackRequestParser.HttpRequest.builder()
+            .requestUri(call.request.uri)
+            .queryString(queryString)
+            .requestBody(requestBody)
+            .headers(headers)
+            .remoteAddress(call.request.origin.remoteHost)
+            .build()
     )
 }
 
