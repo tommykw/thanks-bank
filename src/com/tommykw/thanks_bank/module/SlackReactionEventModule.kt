@@ -15,7 +15,7 @@ fun Application.slackReactionEvent(app: App) {
         if (event.item.channel == System.getenv("SLACK_THANKS_CHANNEL")) {
             val repository = ThankRepository()
             launch {
-                repository.saveReaction(event)
+                repository.createReaction(event)
             }
         }
 

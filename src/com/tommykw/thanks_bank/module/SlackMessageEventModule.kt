@@ -13,7 +13,7 @@ fun Application.slackMessageEvent(app: App) {
         if (event.channel == System.getenv("SLACK_THANKS_CHANNEL")) {
             val repository = ThankRepository()
             launch {
-                repository.saveThankReply(event)
+                repository.createThankReply(event)
             }
         }
 

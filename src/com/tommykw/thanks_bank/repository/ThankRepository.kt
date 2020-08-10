@@ -58,7 +58,7 @@ class ThankRepository : Repository {
         Unit
     }
 
-    override suspend fun saveThankReply(event: MessageEvent) {
+    override suspend fun createThankReply(event: MessageEvent) {
         transaction {
             val inserted = Thanks.insert {
                 it[slackUserId] = event.user
@@ -69,7 +69,7 @@ class ThankRepository : Repository {
         }
     }
 
-    override suspend fun saveReaction(event: ReactionAddedEvent) {
+    override suspend fun createReaction(event: ReactionAddedEvent) {
         transaction {
             val inserted = ThankReactions.insert {
                 it[slackUserId] = event.user
