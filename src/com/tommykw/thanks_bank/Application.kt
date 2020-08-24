@@ -10,6 +10,7 @@ import com.tommykw.thanks_bank.module.slackReactionEvent
 import com.tommykw.thanks_bank.module.slackViewSubmission
 import com.tommykw.thanks_bank.repository.DatabaseFactory
 import com.tommykw.thanks_bank.repository.ThankRepository
+import com.tommykw.thanks_bank.route.homeRoute
 import com.tommykw.thanks_bank.route.slackEvent
 import com.tommykw.thanks_bank.route.thanks
 import com.tommykw.thanks_bank.route.thanksDetail
@@ -72,6 +73,7 @@ fun Application.module(testing: Boolean = false) {
             resources("css")
         }
 
+        homeRoute()
         thanks(repository)
         thanksDetail(repository)
         slackEvent(slackApp, SlackRequestParser(slackAppConfig))
