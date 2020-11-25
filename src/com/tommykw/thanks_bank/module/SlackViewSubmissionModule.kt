@@ -20,7 +20,7 @@ fun Application.slackViewSubmission(app: App, repository: Repository) {
                             ThankRequest(
                                 slackUserId = req.payload.user.id,
                                 targetSlackUserId = targetUser,
-                                body = message
+                                body = message,
                             )
                         )
                     }

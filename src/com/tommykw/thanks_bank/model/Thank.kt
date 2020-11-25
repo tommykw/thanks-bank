@@ -19,7 +19,7 @@ data class Thank(
     var reactions: List<ThankReaction>,
     var threadCount: Int,
     val createdAt: DateTime?,
-    val updatedAt: DateTime?
+    val updatedAt: DateTime?,
 ) : Serializable
 
 object Thanks: IntIdTable() {
@@ -46,7 +46,7 @@ object Thanks: IntIdTable() {
             createdAt = row[createdAt],
             updatedAt = row[updatedAt],
             threadCount = 0,
-            reactions = emptyList()
+            reactions = emptyList(),
         )
     }
 }
