@@ -11,7 +11,7 @@ data class ThankReaction(
     val reactionName: String,
     val slackPostId: String,
     val createdAt: DateTime?,
-    val updatedAt: DateTime?
+    val updatedAt: DateTime?,
 ) : Serializable
 
 object ThankReactions: IntIdTable() {
@@ -28,7 +28,7 @@ object ThankReactions: IntIdTable() {
             reactionName = row[reactionName],
             slackUserId = row[slackUserId],
             createdAt = row[createdAt],
-            updatedAt = row[updatedAt]
+            updatedAt = row[updatedAt],
         )
     }
 }

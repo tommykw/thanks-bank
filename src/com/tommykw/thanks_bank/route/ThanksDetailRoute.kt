@@ -61,7 +61,7 @@ fun Route.thanksDetail(repository: Repository) {
                 mapOf(
                     "thank" to thank,
                     "reactions" to reactions,
-                    "threads" to threads
+                    "threads" to threads,
                 )
             )
         )
