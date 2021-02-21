@@ -28,7 +28,7 @@ object ThankReactions: IntIdTable() {
             reactionName = row[reactionName],
             slackUserId = row[slackUserId],
             createdAt = row[createdAt],
-            updatedAt = row[updatedAt]
+            updatedAt = row[updatedAt],
         )
     }
 }

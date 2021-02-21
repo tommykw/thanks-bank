@@ -47,7 +47,7 @@ fun Route.thanks(repository: Repository) {
             FreeMarkerContent(
                 "thanks.ftl",
                 mapOf(
-                    "thanks" to thanks
+                    "thanks" to thanks,
                 )
             )
         )

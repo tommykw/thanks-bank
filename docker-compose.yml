@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  db:
+    container_name: thanks-bank-db
+    image: postgres:13-alpine
+    environment:
+      POSTGRES_DB: "thanks-bank"
+      POSTGRES_USER: "postgres_user"
+      POSTGRES_PASSWORD: "postgres_pass"
+    ports:
+      - "5432:5432"

@@ -46,7 +46,7 @@ object Thanks: IntIdTable() {
             createdAt = row[createdAt],
             updatedAt = row[updatedAt],
             threadCount = 0,
-            reactions = emptyList()
+            reactions = emptyList(),
         )
     }
 }
