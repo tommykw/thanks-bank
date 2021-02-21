@@ -14,12 +14,12 @@ data class ThankReaction(
     val updatedAt: DateTime
 ) : Serializable
 
-object ThankReactions: IntIdTable() {
-    val slackUserId = varchar("slack_user_id", 255)
-    val reactionName = varchar("reaction_name", 255)
-    val slackPostId = varchar("slack_post_id", 255)
-    val createdAt = datetime("created_at").default(DateTime.now())
-    val updatedAt = datetime("updated_at").default(DateTime.now())
+object ThankReactionsTable: IntIdTable(name = "thank_reactions") {
+    val slackUserId = varchar(name = "slack_user_id", length = 255)
+    val reactionName = varchar(name = "reaction_name", length = 255)
+    val slackPostId = varchar(name = "slack_post_id", length = 255)
+    val createdAt = datetime(name = "created_at").default(DateTime.now())
+    val updatedAt = datetime(name = "updated_at").default(DateTime.now())
 
     fun toThankReaction(row: ResultRow): ThankReaction {
         return ThankReaction(

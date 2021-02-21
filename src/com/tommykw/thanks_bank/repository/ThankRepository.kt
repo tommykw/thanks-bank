@@ -7,8 +7,8 @@ import com.slack.api.model.event.MessageEvent
 import com.slack.api.model.event.ReactionAddedEvent
 import com.slack.api.model.event.ReactionRemovedEvent
 import com.tommykw.thanks_bank.model.*
-import com.tommykw.thanks_bank.model.ThankReactions.toThankReaction
-import com.tommykw.thanks_bank.model.Thanks.toThank
+import com.tommykw.thanks_bank.model.ThankReactionsTable.toThankReaction
+import com.tommykw.thanks_bank.model.ThanksTable.toThank
 import com.tommykw.thanks_bank.repository.DatabaseFactory.dbQuery
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -18,21 +18,21 @@ import org.jetbrains.exposed.sql.transactions.transaction
 class ThankRepository : Repository {
     override suspend fun getThanks(): List<Thank> {
         return dbQuery {
-            Thanks.selectAll().map { toThank(it) }
+            ThanksTable.selectAll().map { toThank(it) }
         }
     }
 
     override suspend fun getThank(id: Int): Thank {
         return dbQuery {
-            Thanks.select {
-                Thanks.id eq id
+            ThanksTable.select {
+                ThanksTable.id eq id
             }.map { toThank(it) }.single()
         }
     }
 
     override suspend fun createThank(thanks: ThankRequest) {
         transaction {
-            Thanks.insert {
+            ThanksTable.insert {
                 it[slackUserId] = thanks.slackUserId
                 it[body] = thanks.body
                 it[targetSlackUserId] = thanks.targetSlackUserId
@@ -42,7 +42,7 @@ class ThankRepository : Repository {
 
     override suspend fun createThankReply(event: MessageEvent) {
         transaction {
-            Thanks.insert {
+            ThanksTable.insert {
                 it[slackUserId] = event.user
                 it[body] = event.text
                 it[slackPostId] = event.ts
@@ -53,7 +53,7 @@ class ThankRepository : Repository {
 
     override suspend fun createReaction(event: ReactionAddedEvent) {
         transaction {
-            ThankReactions.insert {
+            ThankReactionsTable.insert {
                 it[slackUserId] = event.user
                 it[slackPostId] = event.item.ts
                 it[reactionName] = event.reaction
@@ -77,8 +77,8 @@ class ThankRepository : Repository {
 
     override suspend fun updateSlackPostId(ts: String, thank: Thank) {
         transaction {
-            Thanks.update({
-                Thanks.id eq thank.id
+            ThanksTable.update({
+                ThanksTable.id eq thank.id
             }) {
                 it[slackPostId] = ts
             }
@@ -87,26 +87,26 @@ class ThankRepository : Repository {
 
     override suspend fun getThreads(slackPostId: String): List<Thank> {
         return dbQuery {
-            Thanks.select {
-                Thanks.parentSlackPostId eq slackPostId
+            ThanksTable.select {
+                ThanksTable.parentSlackPostId eq slackPostId
             }.mapNotNull { toThank(it) }
         }
     }
 
     override suspend fun getReactions(slackPostId: String): List<ThankReaction> {
         return dbQuery {
-            ThankReactions.select {
-                ThankReactions.slackPostId eq slackPostId
+            ThankReactionsTable.select {
+                ThankReactionsTable.slackPostId eq slackPostId
             }.mapNotNull { toThankReaction(it) }
         }
     }
 
     override suspend fun removeReaction(event: ReactionRemovedEvent): Boolean {
         return dbQuery {
-            ThankReactions.deleteWhere {
-                ThankReactions.slackUserId eq event.user and
-                (ThankReactions.reactionName eq event.reaction) and
-                (ThankReactions.slackPostId eq event.item.ts)
+            ThankReactionsTable.deleteWhere {
+                ThankReactionsTable.slackUserId eq event.user and
+                (ThankReactionsTable.reactionName eq event.reaction) and
+                (ThankReactionsTable.slackPostId eq event.item.ts)
             } > 0
         }
     }
