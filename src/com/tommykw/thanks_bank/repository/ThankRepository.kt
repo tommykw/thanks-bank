@@ -14,7 +14,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
-import org.joda.time.DateTime
 
 class ThankRepository : Repository {
     override suspend fun getThanks(): List<Thank> {
@@ -37,8 +36,6 @@ class ThankRepository : Repository {
                 it[slackUserId] = thanks.slackUserId
                 it[body] = thanks.body
                 it[targetSlackUserId] = thanks.targetSlackUserId
-                it[createdAt] = DateTime()
-                it[updatedAt] = DateTime()
             }
         }
     }
@@ -60,8 +57,6 @@ class ThankRepository : Repository {
                 it[slackUserId] = event.user
                 it[slackPostId] = event.item.ts
                 it[reactionName] = event.reaction
-                it[createdAt] = DateTime()
-                it[updatedAt] = DateTime()
             }
         }
     }

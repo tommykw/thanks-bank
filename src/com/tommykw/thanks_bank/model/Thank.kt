@@ -18,8 +18,8 @@ data class Thank(
     var targetUserImage: String,
     var reactions: List<ThankReaction>,
     var threadCount: Int,
-    val createdAt: DateTime?,
-    val updatedAt: DateTime?,
+    val createdAt: DateTime,
+    val updatedAt: DateTime
 ) : Serializable
 
 object Thanks: IntIdTable() {
@@ -28,8 +28,8 @@ object Thanks: IntIdTable() {
     val targetSlackUserId = varchar("target_slack_user_id", 255).nullable()
     val slackPostId = varchar("slack_post_id", 255).nullable()
     val parentSlackPostId = varchar("parent_slack_post_id", 255).nullable()
-    val createdAt = datetime("created_at")
-    val updatedAt = datetime("updated_at")
+    val createdAt = datetime("created_at").default(DateTime.now())
+    val updatedAt = datetime("updated_at").default(DateTime.now())
 
     fun toThank(row: ResultRow): Thank {
         return Thank(
