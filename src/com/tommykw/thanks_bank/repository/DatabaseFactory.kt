@@ -1,7 +1,7 @@
 package com.tommykw.thanks_bank.repository
 
-import com.tommykw.thanks_bank.model.ThankReactions
-import com.tommykw.thanks_bank.model.Thanks
+import com.tommykw.thanks_bank.model.ThankReactionsTable
+import com.tommykw.thanks_bank.model.ThanksTable
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
 import kotlinx.coroutines.Dispatchers
@@ -16,8 +16,8 @@ object DatabaseFactory {
         Database.connect(hikari())
 
         transaction {
-            SchemaUtils.create(Thanks)
-            SchemaUtils.create(ThankReactions)
+            SchemaUtils.create(ThanksTable)
+            SchemaUtils.create(ThankReactionsTable)
         }
     }
 

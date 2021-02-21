@@ -22,14 +22,14 @@ data class Thank(
     val updatedAt: DateTime
 ) : Serializable
 
-object Thanks: IntIdTable() {
-    val slackUserId = varchar("slack_user_id", 255)
-    val body = text("body")
-    val targetSlackUserId = varchar("target_slack_user_id", 255).nullable()
-    val slackPostId = varchar("slack_post_id", 255).nullable()
-    val parentSlackPostId = varchar("parent_slack_post_id", 255).nullable()
-    val createdAt = datetime("created_at").default(DateTime.now())
-    val updatedAt = datetime("updated_at").default(DateTime.now())
+object ThanksTable: IntIdTable(name = "thanks") {
+    val slackUserId = varchar(name = "slack_user_id", length = 255)
+    val body = text(name = "body")
+    val targetSlackUserId = varchar(name = "target_slack_user_id", length = 255).nullable()
+    val slackPostId = varchar(name = "slack_post_id", length = 255).nullable()
+    val parentSlackPostId = varchar(name = "parent_slack_post_id", length = 255).nullable()
+    val createdAt = datetime(name = "created_at").default(DateTime.now())
+    val updatedAt = datetime(name = "updated_at").default(DateTime.now())
 
     fun toThank(row: ResultRow): Thank {
         return Thank(
