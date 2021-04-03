@@ -13,18 +13,18 @@
                             <div class="card-to-user-name">${thank.targetRealName}さんへ</div>
                         </div>
 
-                        <div class="card_content">
+                        <div class="card-content">
                             <p>${thank.body}</p>
                         </div>
 
-                        <div class="card_reaction">
+                        <div class="card-reaction">
                             <#list thank.reactions as reaction>
                                 <img class="card_user_image" src="${reaction.reactionName}" alt="${reaction.reactionName}" width="20" height="20"/>
                             </#list>
-                            <div class="card_reaction_count">スレッド${thank.threadCount}件</div>
+                            <div class="card-reaction-count">スレッド${thank.threadCount}件</div>
                         </div>
 
-                        <div class="card_info">
+                        <div class="card-info">
                             <img class="card-from-image" src="${thank.userImage}" alt="" width="30" height="30"/>
                             <div class="card-from-user-name">${thank.realName}より</div>
                         </div>
