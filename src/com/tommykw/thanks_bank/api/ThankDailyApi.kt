@@ -15,9 +15,7 @@ import java.util.*
 @Location("/api/thank/daily")
 class ThankDailyApi
 
-private val dateFormat = SimpleDateFormat("HH:mm:dd").apply {
-    timeZone = TimeZone.getTimeZone("Asia/Tokyo")
-}
+private val dateFormat = SimpleDateFormat("yyyy/MM/dd")
 
 fun Route.thankDailyApi(repository: ThankRepository) {
     post<ThankDailyApi> {
@@ -40,9 +38,9 @@ fun Route.thankDailyApi(repository: ThankRepository) {
         apiClient.chatPostMessage(request)
 
         thanks.forEach { thank ->
-//        Received: ${dateFormat.format(thank.createdAt)}
             val message = """
 ```
+${dateFormat.format(thank.createdAt.toDate())}
 <@${thank.targetSlackUserId}>さんから
 <@${thank.slackUserId}>さんへメッセージが届いてるよ！
 ```
@@ -50,17 +48,12 @@ ${thank.body}
 ----✁----✁----
 """.trimIndent()
 
-            val request = ChatPostMessageRequest.builder()
-                    .channel("#general")
-                    .text(message)
-                    .build()
+            request.text = message
 
             val response = apiClient.chatPostMessage(request)
 
             if (response.isOk) {
                 repository.updateSlackPostId(response.ts, thank)
-            } else {
-                // TODO エラーコード
             }
         }
 
