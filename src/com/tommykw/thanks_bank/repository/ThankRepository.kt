@@ -8,12 +8,13 @@ import com.tommykw.thanks_bank.model.ThankReactionsTable.toThankReaction
 import com.tommykw.thanks_bank.model.ThanksTable.toThank
 import com.tommykw.thanks_bank.repository.DatabaseFactory.dbQuery
 import org.jetbrains.exposed.sql.*
-import org.jetbrains.exposed.sql.transactions.transaction
 
 class ThankRepository {
     suspend fun getThanks(): List<Thank> {
         return dbQuery {
-            ThanksTable.selectAll().map { toThank(it) }
+            ThanksTable.selectAll()
+                .orderBy(ThanksTable.id, SortOrder.DESC)
+                .map { toThank(it) }
         }
     }
 
@@ -34,7 +35,7 @@ class ThankRepository {
     }
 
     suspend fun createThank(thanks: ThankRequest) {
-        transaction {
+        return dbQuery {
             ThanksTable.insert {
                 it[slackUserId] = thanks.slackUserId
                 it[body] = thanks.body
@@ -44,7 +45,7 @@ class ThankRepository {
     }
 
     suspend fun createThankReply(event: MessageEvent) {
-        transaction {
+        return dbQuery {
             ThanksTable.insert {
                 it[slackUserId] = event.user
                 it[body] = event.text
@@ -55,7 +56,7 @@ class ThankRepository {
     }
 
     suspend fun createReaction(event: ReactionAddedEvent) {
-        transaction {
+        return dbQuery {
             ThankReactionsTable.insert {
                 it[slackUserId] = event.user
                 it[slackPostId] = event.item.ts
@@ -65,7 +66,7 @@ class ThankRepository {
     }
 
     suspend fun updateSlackPostId(ts: String, thank: Thank) {
-        transaction {
+        return dbQuery {
             ThanksTable.update({
                 ThanksTable.id eq thank.id
             }) {

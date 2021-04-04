@@ -1,33 +1,33 @@
-<#global page_title = "おてがみ一覧" />
-<#import "common/container.ftl" as b>
+<#global page_title = "サンクス一覧" />
+<#import "common/container.ftl" as container>
 
-<@b.page>
-    <div class="cards">
+<@container.page>
+    <div class="thanks">
         <#if thanks?? && (thanks?size > 0)>
             <#list thanks as thank>
                 <a href="/thanks/${thank.id}">
-                    <div class="card">
+                    <div class="thanks-card">
 
-                        <div class="card-to-user">
-                            <img class="card_user_image" src="${thank.targetUserImage}" alt="" width="40" height="40"/>
-                            <div class="card-to-user-name">${thank.targetRealName}さんへ</div>
+                        <div class="thanks-card-to-user">
+                            <img class="thanks-card-user-image" src="${thank.targetUserImage}" alt="" width="40" height="40"/>
+                            <p class="thanks-card-to-user-name">${thank.targetRealName}さんへ</p>
                         </div>
 
-                        <div class="card-content">
+                        <div class="thanks-card-content">
                             <p>${thank.body}</p>
                         </div>
 
-                        <div class="card-reaction">
-                            <div class="card-reaction-count">スレッド${thank.threadCount}件</div>
+                        <div class="thanks-card-reaction">
+                            <p class="thanks-card-reaction-count">スレッド${thank.threadCount}件</p>
                         </div>
 
-                        <div class="card-info">
-                            <img class="card-from-image" src="${thank.userImage}" alt="" width="30" height="30"/>
-                            <div class="card-from-user-name">${thank.realName}より</div>
+                        <div class="thanks-card-info">
+                            <img class="thanks-card-from-image" src="${thank.userImage}" alt="" width="30" height="30"/>
+                            <p class="thanks-card-from-user-name">${thank.realName}より</p>
                         </div>
                     </div>
                 </a>
             </#list>
         </#if>
     </div>
-</@b.page>
+</@container.page>

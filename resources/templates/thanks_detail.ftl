@@ -1,33 +1,33 @@
-<#global page_title = "おてがみ詳細" />
-<#import "common/container.ftl" as b>
+<#global page_title = "サンクス詳細" />
+<#import "common/container.ftl" as container>
 
-<@b.page>
-    <div class="letter-detail-thank">
-        <div class="letter-detail-thank-fromto">
-            <img class="letter-detail-thank-fromto-image-you" src="${thank.userImage}" width="40" height="40"/>
-            <img class="letter-detail-thank-fromto-image-target" src="${thank.targetUserImage}" width="40" height="40"/>
-            <div class="letter-detail-thank-fromto-message">${thank.realName}さんから${thank.targetRealName}さんへ</div>
+<@container.page>
+    <div class="thanks-detail">
+        <div class="thanks-detail-fromto">
+            <img class="thanks-detail-fromto-image-you" src="${thank.userImage}" width="40" height="40"/>
+            <img class="thanks-detail-fromto-image-target" src="${thank.targetUserImage}" width="40" height="40"/>
+            <p class="thanks-detail-fromto-message">${thank.realName}さんから${thank.targetRealName}さんへ</p>
         </div>
-        <div class="letter-detail-thank-message">${thank.body}</div>
+        <div class="thanks-detail-message">${thank.body}</div>
     </div>
 
     <#if reactions?? && (reactions?size > 0)>
-        <div class="letter-detail-reaction">
-            <div class="letter-detail-reaction-title">集まったリアクション</div>
+        <div class="thanks-detail-reaction">
+            <p class="thanks-detail-reaction-title">集まったリアクション</p>
             <p>${reactions?size}件</p>
         </div>
     </#if>
 
     <#if threads?? && (threads?size > 0)>
-        <div class="letter-detail-tread">
-            <div class="letter-detail-tread-title">スレッド</div>
+        <div class="thanks-detail-tread">
+            <p class="thanks-detail-tread-title">スレッド</p>
             <#list threads as thread>
-                <div class="letter-detail-tread-user-info">
-                    <img class="letter-detail-tread-user-info-icon" src="${thread.userImage}" width="40" height="40"/>
-                    <div class="letter-detail-tread-user-info-name">${thread.realName}</div>
+                <div class="thanks-detail-tread-user-info">
+                    <img class="thanks-detail-tread-user-info-icon" src="${thread.userImage}" width="40" height="40"/>
+                    <p class="thanks-detail-tread-user-info-name">${thread.realName}</p>
                 </div>
-                <div class="letter-detail-tread-message">${thread.body}</div>
+                <div class="thanks-detail-tread-message">${thread.body}</div>
             </#list>
         </div>
     </#if>
-</@b.page>
+</@container.page>

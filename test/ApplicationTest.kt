@@ -20,7 +20,7 @@ class ApplicationTest {
             assertNotNull(content)
 
             val lines = content.lines()
-            assertEquals(lines[4].trim(), "<title>おてがみ一覧</title>")
+            assertEquals(lines[4].trim(), "<title>サンクス一覧</title>")
         }
 
         with(handleRequest(HttpMethod.Get, "/thanks/1")) {
@@ -30,7 +30,7 @@ class ApplicationTest {
             assertNotNull(content)
 
             val lines = content.lines()
-            assertEquals(lines[4].trim(), "<title>おてがみ詳細</title>")
+            assertEquals(lines[4].trim(), "<title>サンクス詳細</title>")
         }
     }
 }

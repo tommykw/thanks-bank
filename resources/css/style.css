@@ -77,7 +77,7 @@ th {
     white-space: nowrap;
 }
 
-/* Nav bar */
+/* Nav */
 .top-nav {
     background: #FFFFFF;
     width: 100%;
@@ -111,56 +111,7 @@ th {
     font-weight: bold;
 }
 
-.main-title {
-    font-size: 2.2rem;
-    letter-spacing: -.08rem;
-    line-height: 1.35;
-    color: #FF8080;
-}
-
-.secondary {
-    margin-top: 2.0rem;
-}
-
-.bottom-action {
-    margin-bottom: 2.0rem;
-}
-
-/* View action */
-.content .text {
-    margin-top: 1.2rem;
-}
-.related {
-    margin-top: 2.0rem;
-}
-
-/* Flash messages */
-.message {
-    padding: 1.0rem;
-
-    background: #FFFFFF;
-    color: #FF8080;
-
-    border-color: #FF8080;
-    border-width: 1px;
-    border-style: solid;
-    border-radius: 4px;
-    margin-bottom: 2.0rem;
-}
-.message.hidden {
-    display: none;
-}
-.message.success {
-    background: #FFF6A7;
-    color: #FF8080;
-    border-color: #F2EC58;
-}
-.message.error {
-    background: #FFA7A7;
-    color: #FFFFFF;
-    border-color: #F25858;
-}
-
+/* Footer */
 footer {
     margin-top: auto;
     width: 100%;
@@ -181,47 +132,8 @@ footer a {
     margin: 0 .5rem;
 }
 
-/* Letter */
-.thank-card {
-    height: 200px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #FFFFFF;
-    margin-bottom: 2rem;
-}
-
-.user-container {
-    display: block;
-    align-items: center;
-    justify-content: center;
-}
-
-.user-image {
-    display: inline;
-    border-radius: 30px;
-}
-
-.user-name {
-    margin-left: 1rem;
-}
-
-.target-user-container {
-    display: block;
-    align-items: center;
-    justify-content: left;
-}
-
-.target-user-image {
-    border-radius: 30px;
-}
-
-.target-user-name {
-    margin-left: 1rem;
-}
-
-/* card */
-.cards {
+/* Thanks */
+.thanks {
     margin: 0 auto;
     max-width: 1000px;
     display: grid;
@@ -229,21 +141,16 @@ footer a {
     gap: 20px;
 }
 
-.card {
+.thanks-card {
     box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
 }
 
-.card_image {
-    width: 100%;
-    display: block;
-}
-
-.card_user_image {
+.thanks-card-user-image {
     display: inline;
     border-radius: 20px;
 }
 
-.card-to-user {
+.thanks-card-to-user {
     display: flex;
     font-size: 1rem;
     align-items: center;
@@ -251,41 +158,41 @@ footer a {
     background: #ffffff;
 }
 
-.card-to-user > img {
+.thanks-card-to-user > img {
     margin-left: 2rem;
     margin-top: 2rem;
     margin-bottom: 1rem;
 }
 
-.card-to-user-name {
+.thanks-card-to-user-name {
     margin-left: 1rem;
 }
 
-.card-content {
+.thanks-card-content {
     line-height: 1.5;
     font-size: 0.9rem;
     padding: 5px 15px 15px 15px;
     background: #FFFFFF;
 }
 
-.card-content > p {
+.thanks-card-content > p {
     word-wrap: break-word;
 }
 
-.card-content > p:first-of-type {
+.thanks-card-content > p:first-of-type {
     margin-top: 0;
     display: -webkit-box;
     -webkit-box-orient: vertical;
-    -webkit-line-clamp: 3;
+    -webkit-line-clamp: 4;
     overflow: hidden;
-    height: 4.5rem;
+    height: 5rem;
 }
 
-.card-content > p:last-of-type {
+.thanks-card-content > p:last-of-type {
     margin-bottom: 0;
 }
 
-.card-info {
+.thanks-card-info {
     padding: 15px 15px 22px 15px;
     display: flex;
     align-items: center;
@@ -296,122 +203,123 @@ footer a {
     border-bottom: 2px solid #cccccc;
 }
 
-.card-from-image {
+.thanks-card-from-image {
     border-radius: 20px;
 }
 
-.card-from-user-name {
+.thanks-card-from-user-name {
     margin-left: 1rem;
     font-weight: bold;
 }
 
-.card-reaction {
+.thanks-card-reaction {
     display: flex;
     align-items: center;
     justify-content: space-between;
     background-color: #FFFFFF;
 }
 
-.card-reaction > img {
+.thanks-card-reaction > img {
     margin-left: 2rem;
 }
 
-.card-reaction-count {
+.thanks-card-reaction-count {
     font-size: 0.8rem;
     color: #D3D3D3;
     margin-right: 2rem;
     margin-left: 1.5rem;
 }
 
-.card-link {
+.thanks-card-link {
     color: #64968c;
     text-decoration: none;
 }
 
-.card-link:hover {
+.thanks-card-link:hover {
     text-decoration: underline;
 }
 
-.letter-detail-thank {
+/* Thanks Detail */
+.thanks-detail {
     background-color: #FFFFFF;
     padding: 15px 15px 30px 15px;
     border-radius: 8px;
 }
 
-.letter-detail-thank-fromto {
+.thanks-detail-fromto {
     display: flex;
     align-items: center;
     justify-content: start;
     background-color: #FFFFFF;
 }
 
-.letter-detail-thank-fromto-image-you {
+.thanks-detail-fromto-image-you {
     border-radius: 20px;
 }
 
-.letter-detail-thank-fromto-image-target {
+.thanks-detail-fromto-image-target {
     margin-left: 1rem;
     border-radius: 20px;
 }
 
-.letter-detail-thank-fromto-message {
+.thanks-detail-fromto-message {
     margin-left: 1.4rem;
     font-size: 1rem;
     font-weight: bold;
     background-color: #FFFFFF;
 }
 
-.letter-detail-thank-message {
+.thanks-detail-message {
     font-size: 16px;
     margin-top: 1rem;
 }
 
-.letter-detail-reaction {
+.thanks-detail-reaction {
     margin-top: 2rem;
     background-color: #FFFFFF;
     padding: 15px 15px 5px 15px;
     border-radius: 8px;
 }
 
-.letter-detail-reaction-title {
+.thanks-detail-reaction-title {
     font-size: 10px;
     font-weight: bold;
 }
 
-.letter-detail-reaction-icon {
+.thanks-detail-reaction-icon {
     margin-top: 1rem;
 }
 
-.letter-detail-tread {
+.thanks-detail-tread {
     margin-top: 2rem;
     background-color: #FFFFFF;
     padding: 15px 15px 30px 15px;
     border-radius: 8px;
 }
 
-.letter-detail-tread-title {
+.thanks-detail-tread-title {
     font-size: 10px;
     font-weight: bold;
 }
 
-.letter-detail-tread-user-info {
+.thanks-detail-tread-user-info {
     margin-top: 2rem;
     align-items: center;
     justify-content: start;
     display: flex;
 }
 
-.letter-detail-tread-user-info-icon {
+.thanks-detail-tread-user-info-icon {
     border-radius: 20px;
 }
 
-.letter-detail-tread-user-info-name {
+.thanks-detail-tread-user-info-name {
     margin-left: 1rem;
     font-size: 10px;
     font-weight: bold;
 }
 
-.letter-detail-tread-message {
+.thanks-detail-tread-message {
     margin-top: 2rem;
     font-size: 16px;
 }
