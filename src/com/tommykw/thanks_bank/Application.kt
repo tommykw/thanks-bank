@@ -70,10 +70,10 @@ fun Application.module(testing: Boolean = false) {
             resources("css")
         }
 
-        home()
-        thanks(repository)
-        thanksDetail(repository)
-        slackEvent(slackApp, SlackRequestParser(slackAppConfig))
+        homeRouting()
+        thanksRouting(repository)
+        thanksDetailRouting(repository)
+        slackEventRouting(slackApp, SlackRequestParser(slackAppConfig))
 
         thankDailyApi(repository)
     }

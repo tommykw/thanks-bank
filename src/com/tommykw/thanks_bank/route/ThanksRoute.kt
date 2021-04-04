@@ -11,7 +11,7 @@ import io.ktor.routing.Route
 @Location("/thanks")
 class ThanksRoute
 
-fun Route.thanks(repository: Repository) {
+fun Route.thanksRouting(repository: Repository) {
     get<ThanksRoute> {
         val members = repository.getSlackMembers().members
         val thanks = repository.getThanks()
