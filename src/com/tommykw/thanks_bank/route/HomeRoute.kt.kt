@@ -9,7 +9,7 @@ import io.ktor.routing.*
 class HomeRoute
 
 fun Route.homeRouting() {
-    get {
+    get<HomeRoute> {
         call.respondRedirect("/thanks")
     }
 }
