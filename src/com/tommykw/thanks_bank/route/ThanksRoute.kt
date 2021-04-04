@@ -1,6 +1,7 @@
 package com.tommykw.thanks_bank.route
 
 import com.tommykw.thanks_bank.repository.ThankRepository
+import com.tommykw.thanks_bank.repository.UserRepository
 import io.ktor.application.call
 import io.ktor.freemarker.FreeMarkerContent
 import io.ktor.locations.Location
@@ -11,12 +12,15 @@ import io.ktor.routing.Route
 @Location("/thanks")
 class ThanksRoute
 
-fun Route.thanksRouting(repository: ThankRepository) {
+fun Route.thanksRouting(
+    thankRepository: ThankRepository,
+    userRepository: UserRepository
+) {
     get<ThanksRoute> {
-        val thanks = repository.getThanks()
+        val thanks = thankRepository.getThanks()
 
         thanks.map { thank ->
-            val user = repository.getUser(thank.slackUserId)
+            val user = userRepository.getUser(thank.slackUserId)
 
             user?.let {
                 thank.realName = user.realName
@@ -24,16 +28,16 @@ fun Route.thanksRouting(repository: ThankRepository) {
             }
 
             thank.targetSlackUserId?.let {
-                repository.getUser(thank.targetSlackUserId)?.let {
+                userRepository.getUser(thank.targetSlackUserId)?.let {
                     thank.targetRealName = it.realName
                     thank.targetUserImage = it.userImage
                 }
             }
 
             thank.slackPostId?.let { slackPostId ->
-                val threads = repository.getThreads(slackPostId)
+                val threads = thankRepository.getThreads(slackPostId)
                 thank.threadCount = threads.size
-                thank.reactions = repository.getReactions(slackPostId)
+                thank.reactions = thankRepository.getReactions(slackPostId)
             }
         }
 

@@ -4,10 +4,15 @@ import com.slack.api.bolt.App
 import com.tommykw.thanks_bank.model.ThankRequest
 import com.tommykw.thanks_bank.model.UserRequest
 import com.tommykw.thanks_bank.repository.ThankRepository
+import com.tommykw.thanks_bank.repository.UserRepository
 import io.ktor.application.Application
 import kotlinx.coroutines.launch
 
-fun Application.slackViewSubmission(app: App, repository: ThankRepository) {
+fun Application.slackViewSubmission(
+    app: App,
+    thankRepository: ThankRepository,
+    userRepository: UserRepository
+) {
     app.viewSubmission("thanks-message") { req, ctx ->
         val stateValues = req.payload.view.state.values
         val message = stateValues["message-block"]?.get("message-action")?.value
@@ -16,7 +21,7 @@ fun Application.slackViewSubmission(app: App, repository: ThankRepository) {
         if (message?.isNotEmpty() == true && targetUsers?.isNotEmpty() == true) {
             try {
                 launch {
-                    val members = repository.getSlackMembers().members
+                    val members = userRepository.getSlackMembers().members
 
                     fun idToRealName(slackId: String): String {
                         val res = members.find { it.id == slackId }
@@ -29,7 +34,7 @@ fun Application.slackViewSubmission(app: App, repository: ThankRepository) {
                     }
 
                     targetUsers.forEach { targetUser ->
-                        repository.createThank(
+                        thankRepository.createThank(
                             ThankRequest(
                                 slackUserId = req.payload.user.id,
                                 targetSlackUserId = targetUser,
@@ -37,8 +42,8 @@ fun Application.slackViewSubmission(app: App, repository: ThankRepository) {
                             )
                         )
 
-                        if (repository.getUser(req.payload.user.id) == null) {
-                            repository.createUser(
+                        if (userRepository.getUser(req.payload.user.id) == null) {
+                            userRepository.createUser(
                                 UserRequest(
                                     slackUserId = req.payload.user.id,
                                     realName = idToRealName(req.payload.user.id),
@@ -47,8 +52,8 @@ fun Application.slackViewSubmission(app: App, repository: ThankRepository) {
                             )
                         }
 
-                        if (repository.getUser(targetUser) == null) {
-                            repository.createUser(
+                        if (userRepository.getUser(targetUser) == null) {
+                            userRepository.createUser(
                                 UserRequest(
                                     slackUserId = targetUser,
                                     realName = idToRealName(targetUser),

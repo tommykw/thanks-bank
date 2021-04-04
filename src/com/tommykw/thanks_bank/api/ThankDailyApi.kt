@@ -10,11 +10,11 @@ import java.util.*
 
 private val dateFormat = SimpleDateFormat("yyyy/MM/dd")
 
-fun Application.thankDailyApi(repository: ThankRepository) {
+fun Application.thankDailyApi(thankRepository: ThankRepository) {
     launch {
         val slack = Slack.getInstance()
         val apiClient = slack.methods(System.getenv("SLACK_BOT_TOKEN"))
-        val thanks = repository.getPostThanks()
+        val thanks = thankRepository.getPostThanks()
 
         if (thanks.isEmpty()) {
             return@launch
@@ -44,7 +44,7 @@ ${thank.body}
 
             if (response.isOk) {
                 thank.slackUserId
-                repository.updateSlackPostId(response.ts, thank)
+                thankRepository.updateSlackPostId(response.ts, thank)
             }
         }
     }
