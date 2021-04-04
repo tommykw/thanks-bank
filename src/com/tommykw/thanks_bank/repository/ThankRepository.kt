@@ -69,6 +69,30 @@ class ThankRepository : Repository {
         }
     }
 
+    suspend fun createUser(request: UserRequest) {
+        transaction {
+            UsersTable.insert {
+                it[slackUserId] = request.slackUserId
+                it[realName] = request.realName
+                it[userImage] = request.userImage
+            }
+        }
+    }
+
+    suspend fun getUsers(): List<User> {
+        return dbQuery {
+            UsersTable.selectAll().map { UsersTable.toUser(it) }
+        }
+    }
+
+    suspend fun getUser(slackUserId: String): User? {
+        return dbQuery {
+            UsersTable.select {
+                UsersTable.slackUserId eq slackUserId
+            }.map { UsersTable.toUser(it) }.singleOrNull()
+        }
+    }
+
     override suspend fun getSlackMembers(): UsersListResponse {
         val slack = Slack.getInstance()
         val apiClient = slack.methods(System.getenv("SLACK_BOT_TOKEN"))

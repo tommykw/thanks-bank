@@ -43,6 +43,7 @@ ${thank.body}
             val response = apiClient.chatPostMessage(request)
 
             if (response.isOk) {
+                thank.slackUserId
                 repository.updateSlackPostId(response.ts, thank)
             }
         }

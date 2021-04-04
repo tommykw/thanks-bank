@@ -2,6 +2,7 @@ package com.tommykw.thanks_bank.repository
 
 import com.tommykw.thanks_bank.model.ThankReactionsTable
 import com.tommykw.thanks_bank.model.ThanksTable
+import com.tommykw.thanks_bank.model.UsersTable
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
 import kotlinx.coroutines.Dispatchers
@@ -18,6 +19,7 @@ object DatabaseFactory {
         transaction {
             SchemaUtils.create(ThanksTable)
             SchemaUtils.create(ThankReactionsTable)
+            SchemaUtils.create(UsersTable)
         }
     }
 
