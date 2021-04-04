@@ -18,9 +18,6 @@
                         </div>
 
                         <div class="card-reaction">
-                            <#list thank.reactions as reaction>
-                                <img class="card_user_image" src="${reaction.reactionName}" alt="${reaction.reactionName}" width="20" height="20"/>
-                            </#list>
                             <div class="card-reaction-count">スレッド${thank.threadCount}件</div>
                         </div>
 

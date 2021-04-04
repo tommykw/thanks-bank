@@ -369,12 +369,12 @@ footer a {
 .letter-detail-reaction {
     margin-top: 2rem;
     background-color: #FFFFFF;
-    padding: 15px 15px 30px 15px;
+    padding: 15px 15px 5px 15px;
     border-radius: 8px;
 }
 
 .letter-detail-reaction-title {
-    font-size: 8px;
+    font-size: 10px;
     font-weight: bold;
 }
 
@@ -390,7 +390,7 @@ footer a {
 }
 
 .letter-detail-tread-title {
-    font-size: 8px;
+    font-size: 10px;
     font-weight: bold;
 }
 

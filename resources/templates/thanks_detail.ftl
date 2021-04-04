@@ -14,16 +14,14 @@
     <#if reactions?? && (reactions?size > 0)>
         <div class="letter-detail-reaction">
             <div class="letter-detail-reaction-title">集まったリアクション</div>
-            <#list reactions as reaction>
-                <img class="letter-detail-reaction-icon" src="${reaction.reactionName}" alt="${reaction.reactionName}" width="20" height="20"/>
-            </#list>
+            <p>${reactions?size}件</p>
         </div>
     </#if>
 
     <#if threads?? && (threads?size > 0)>
         <div class="letter-detail-tread">
+            <div class="letter-detail-tread-title">スレッド</div>
             <#list threads as thread>
-                <div class="letter-detail-tread-title">スレッド</div>
                 <div class="letter-detail-tread-user-info">
                     <img class="letter-detail-tread-user-info-icon" src="${thread.userImage}" width="40" height="40"/>
                     <div class="letter-detail-tread-user-info-name">${thread.realName}</div>
