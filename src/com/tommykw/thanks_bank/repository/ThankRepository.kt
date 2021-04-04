@@ -22,6 +22,14 @@ class ThankRepository : Repository {
         }
     }
 
+    override suspend fun getPostThanks(): List<Thank> {
+        return dbQuery {
+            ThanksTable.select {
+                ThanksTable.slackPostId.isNull()
+            }.map { toThank(it) }
+        }
+    }
+
     override suspend fun getThank(id: Int): Thank {
         return dbQuery {
             ThanksTable.select {

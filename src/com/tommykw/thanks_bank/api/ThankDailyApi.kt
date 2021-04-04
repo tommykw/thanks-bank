@@ -3,31 +3,21 @@ package com.tommykw.thanks_bank.api
 import com.slack.api.Slack
 import com.slack.api.methods.request.chat.ChatPostMessageRequest
 import com.tommykw.thanks_bank.repository.ThankRepository
-import io.ktor.application.call
-import io.ktor.http.HttpStatusCode
-import io.ktor.locations.Location
-import io.ktor.locations.post
-import io.ktor.response.respond
-import io.ktor.routing.Route
+import io.ktor.application.*
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 
-@Location("/api/thank/daily")
-class ThankDailyApi
-
 private val dateFormat = SimpleDateFormat("yyyy/MM/dd")
 
-fun Route.thankDailyApi(repository: ThankRepository) {
-    post<ThankDailyApi> {
+fun Application.thankDailyApi(repository: ThankRepository) {
+    launch {
         val slack = Slack.getInstance()
         val apiClient = slack.methods(System.getenv("SLACK_BOT_TOKEN"))
-
-        val thanks = repository.getThanks()
+        val thanks = repository.getPostThanks()
 
         if (thanks.isEmpty()) {
-            call.response.status(HttpStatusCode.OK)
-            call.respond(mapOf("status" to "OK"))
-            return@post
+            return@launch
         }
 
         val request = ChatPostMessageRequest.builder()
@@ -56,8 +46,5 @@ ${thank.body}
                 repository.updateSlackPostId(response.ts, thank)
             }
         }
-
-        call.response.status(HttpStatusCode.OK)
-        call.respond(mapOf("status" to "OK"))
     }
 }

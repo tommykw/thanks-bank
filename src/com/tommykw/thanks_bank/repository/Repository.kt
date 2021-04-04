@@ -10,6 +10,7 @@ import com.tommykw.thanks_bank.model.ThankRequest
 
 interface Repository {
     suspend fun getThanks(): List<Thank>
+    suspend fun getPostThanks(): List<Thank>
     suspend fun getThank(id: Int): Thank
     suspend fun createThank(thanks: ThankRequest)
     suspend fun getSlackMembers(): UsersListResponse
