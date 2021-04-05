@@ -26,7 +26,7 @@ data class Thank(
 object ThanksTable: IntIdTable(name = "thanks") {
     val slackUserId = varchar(name = "slack_user_id", length = 255)
     val body = text(name = "body")
-    val targetSlackUserId = varchar(name = "target_slack_user_id", length = 255)
+    val targetSlackUserId = varchar(name = "target_slack_user_id", length = 255).nullable()
     val slackPostId = varchar(name = "slack_post_id", length = 255).nullable()
     val parentSlackPostId = varchar(name = "parent_slack_post_id", length = 255).nullable()
     val createdAt = datetime(name = "created_at").default(DateTime.now())
@@ -45,7 +45,7 @@ object ThanksTable: IntIdTable(name = "thanks") {
         var targetUserImage = ""
 
         row[targetSlackUserId]?.let {
-            val targetUser = getUserBySlackUserId(row[targetSlackUserId])
+            val targetUser = getUserBySlackUserId(row[targetSlackUserId]!!)
 
             targetRealName = targetUser.realName
             targetUserImage = targetUser.userImage
