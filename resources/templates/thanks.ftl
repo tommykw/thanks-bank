@@ -9,8 +9,8 @@
                     <div class="thanks-card">
 
                         <div class="thanks-card-to-user">
-                            <img class="thanks-card-user-image" src="${thank.targetUserImage}" alt="" width="40" height="40"/>
-                            <p class="thanks-card-to-user-name">${thank.targetRealName}さんへ</p>
+                            <img src="${thank.targetUserImage}" alt="" width="40" height="40"/>
+                            <p>${thank.targetRealName}さんへ</p>
                         </div>
 
                         <div class="thanks-card-content">
@@ -18,12 +18,12 @@
                         </div>
 
                         <div class="thanks-card-reaction">
-                            <p class="thanks-card-reaction-count">スレッド${thank.threadCount}件</p>
+                            <p>スレッド${thank.threadCount}件</p>
                         </div>
 
-                        <div class="thanks-card-info">
-                            <img class="thanks-card-from-image" src="${thank.userImage}" alt="" width="30" height="30"/>
-                            <p class="thanks-card-from-user-name">${thank.realName}より</p>
+                        <div class="thanks-card-from-user">
+                            <img src="${thank.userImage}" alt="" width="30" height="30"/>
+                            <p>${thank.realName}より</p>
                         </div>
                     </div>
                 </a>

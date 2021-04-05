@@ -145,11 +145,6 @@ footer a {
     box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
 }
 
-.thanks-card-user-image {
-    display: inline;
-    border-radius: 20px;
-}
-
 .thanks-card-to-user {
     display: flex;
     font-size: 1rem;
@@ -158,14 +153,17 @@ footer a {
     background: #ffffff;
 }
 
-.thanks-card-to-user > img {
-    margin-left: 2rem;
+.thanks-card-to-user img {
+    display: inline;
+    margin-left: 1.5rem;
     margin-top: 2rem;
     margin-bottom: 1rem;
+    border-radius: 20px;
 }
 
-.thanks-card-to-user-name {
+.thanks-card-to-user p {
     margin-left: 1rem;
+    font-weight: bold;
 }
 
 .thanks-card-content {
@@ -175,11 +173,11 @@ footer a {
     background: #FFFFFF;
 }
 
-.thanks-card-content > p {
+.thanks-card-content p {
     word-wrap: break-word;
 }
 
-.thanks-card-content > p:first-of-type {
+.thanks-card-content p:first-of-type {
     margin-top: 0;
     display: -webkit-box;
     -webkit-box-orient: vertical;
@@ -188,11 +186,11 @@ footer a {
     height: 5rem;
 }
 
-.thanks-card-content > p:last-of-type {
+.thanks-card-content p:last-of-type {
     margin-bottom: 0;
 }
 
-.thanks-card-info {
+.thanks-card-from-user {
     padding: 15px 15px 22px 15px;
     display: flex;
     align-items: center;
@@ -203,11 +201,11 @@ footer a {
     border-bottom: 2px solid #cccccc;
 }
 
-.thanks-card-from-image {
+.thanks-card-from-user img {
     border-radius: 20px;
 }
 
-.thanks-card-from-user-name {
+.thanks-card-from-user p {
     margin-left: 1rem;
     font-weight: bold;
 }
@@ -219,24 +217,11 @@ footer a {
     background-color: #FFFFFF;
 }
 
-.thanks-card-reaction > img {
-    margin-left: 2rem;
-}
-
-.thanks-card-reaction-count {
+.thanks-card-reaction p {
     font-size: 0.8rem;
     color: #D3D3D3;
     margin-right: 2rem;
     margin-left: 1.5rem;
-}
-
-.thanks-card-link {
-    color: #64968c;
-    text-decoration: none;
-}
-
-.thanks-card-link:hover {
-    text-decoration: underline;
 }
 
 /* Thanks Detail */
