@@ -24,7 +24,6 @@ fun Application.slackViewSubmission(
                     val slackUserId = req.payload.user.id
 
                     listOf(*targetUsers.toTypedArray()).forEach { targetSlackUserId ->
-
                         thankRepository.createThank(
                             ThankRequest(
                                 slackUserId = slackUserId,
@@ -53,7 +52,7 @@ fun Application.slackViewSubmission(
                     it.text("メッセージの送信に失敗しました")
                 }
 
-                ctx.ack()
+                return@viewSubmission ctx.ack()
             }
         }
 
