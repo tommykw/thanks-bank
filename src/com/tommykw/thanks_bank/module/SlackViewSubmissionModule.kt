@@ -21,49 +21,39 @@ fun Application.slackViewSubmission(
         if (message?.isNotEmpty() == true && targetUsers?.isNotEmpty() == true) {
             try {
                 launch {
-                    val members = userRepository.getSlackMembers().members
+                    val slackUserId = req.payload.user.id
 
-                    fun idToRealName(slackId: String): String {
-                        val res = members.find { it.id == slackId }
-                        return res?.realName ?: ""
-                    }
+                    listOf(*targetUsers.toTypedArray()).forEach { targetSlackUserId ->
 
-                    fun idToProfileImage(slackId: String): String {
-                        val res = members.find { it.id == slackId }
-                        return res?.profile?.image512 ?: ""
-                    }
-
-                    targetUsers.forEach { targetUser ->
                         thankRepository.createThank(
                             ThankRequest(
-                                slackUserId = req.payload.user.id,
-                                targetSlackUserId = targetUser,
+                                slackUserId = slackUserId,
+                                targetSlackUserId = targetSlackUserId,
                                 body = message,
                             )
                         )
 
-                        if (userRepository.getUser(req.payload.user.id) == null) {
+                        if (userRepository.getUser(targetSlackUserId) == null) {
+                            val slackUsersInfo = userRepository.getSlackUsersInfo(targetSlackUserId)
                             userRepository.createUser(
                                 UserRequest(
-                                    slackUserId = req.payload.user.id,
-                                    realName = idToRealName(req.payload.user.id),
-                                    userImage = idToProfileImage(req.payload.user.id),
-                                )
-                            )
-                        }
-
-                        if (userRepository.getUser(targetUser) == null) {
-                            userRepository.createUser(
-                                UserRequest(
-                                    slackUserId = targetUser,
-                                    realName = idToRealName(targetUser),
-                                    userImage = idToProfileImage(targetUser),
+                                    slackUserId = targetSlackUserId,
+                                    realName = slackUsersInfo.user.realName,
+                                    userImage = slackUsersInfo.user.profile.image512,
                                 )
                             )
                         }
                     }
                 }
             } catch (e: Throwable) {
+                ctx.client().chatPostEphemeral {
+                    it.token(ctx.botToken)
+                    it.user(req.payload.user.id)
+                    it.channel("#general")
+                    it.text("メッセージの送信に失敗しました")
+                }
+
+                ctx.ack()
             }
         }
 

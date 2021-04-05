@@ -32,3 +32,9 @@ object UsersTable: IntIdTable(name = "users") {
         )
     }
 }
+
+data class UserRequest(
+    val slackUserId: String,
+    val realName: String,
+    val userImage: String,
+)

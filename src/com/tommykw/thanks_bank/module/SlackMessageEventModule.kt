@@ -21,23 +21,13 @@ fun Application.slackMessageEvent(
                 thankRepository.createThankReply(event)
 
                 if (userRepository.getUser(event.user) == null) {
-                    val members = userRepository.getSlackMembers().members
-
-                    fun idToRealName(slackId: String): String {
-                        val res = members.find { it.id == slackId }
-                        return res?.realName ?: ""
-                    }
-
-                    fun idToProfileImage(slackId: String): String {
-                        val res = members.find { it.id == slackId }
-                        return res?.profile?.image512 ?: ""
-                    }
+                    val slackUsersInfo = userRepository.getSlackUsersInfo(event.user)
 
                     userRepository.createUser(
                         UserRequest(
                             slackUserId = event.user,
-                            realName = idToRealName(event.user),
-                            userImage = idToProfileImage(event.user)
+                            realName = slackUsersInfo.user.realName,
+                            userImage = slackUsersInfo.user.profile.image512
                         )
                     )
                 }

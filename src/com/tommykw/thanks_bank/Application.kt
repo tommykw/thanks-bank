@@ -69,7 +69,8 @@ fun Application.module(testing: Boolean = false) {
     TaskScheduler {
         sendPostThanksMessages(thankRepository)
     }.start(
-        Every(1, TimeUnit.HOURS)
+        //Every(1, TimeUnit.HOURS)
+        Every(5, TimeUnit.MINUTES)
     )
 
     routing {
@@ -78,8 +79,8 @@ fun Application.module(testing: Boolean = false) {
         }
 
         homeRouting()
-        thanksRouting(thankRepository, userRepository)
-        thanksDetailRouting(thankRepository, userRepository)
+        thanksRouting(thankRepository)
+        thanksDetailRouting(thankRepository)
         slackEventRouting(slackApp, SlackRequestParser(slackAppConfig))
     }
 }
