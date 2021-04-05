@@ -8,8 +8,8 @@ import io.ktor.routing.*
 @Location("/")
 class HomeRoute
 
-fun Route.homeRoute() {
-    get {
+fun Route.homeRouting() {
+    get<HomeRoute> {
         call.respondRedirect("/thanks")
     }
 }

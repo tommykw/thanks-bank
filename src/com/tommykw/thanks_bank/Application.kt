@@ -10,10 +10,8 @@ import com.tommykw.thanks_bank.module.slackReactionEvent
 import com.tommykw.thanks_bank.module.slackViewSubmission
 import com.tommykw.thanks_bank.repository.DatabaseFactory
 import com.tommykw.thanks_bank.repository.ThankRepository
-import com.tommykw.thanks_bank.route.homeRoute
-import com.tommykw.thanks_bank.route.slackEvent
-import com.tommykw.thanks_bank.route.thanks
-import com.tommykw.thanks_bank.route.thanksDetail
+import com.tommykw.thanks_bank.repository.UserRepository
+import com.tommykw.thanks_bank.route.*
 import freemarker.cache.ClassTemplateLoader
 import io.ktor.application.Application
 import io.ktor.application.call
@@ -58,26 +56,27 @@ fun Application.module(testing: Boolean = false) {
     install(Locations)
 
     DatabaseFactory.init()
-    val repository = ThankRepository()
+    val thankRepository = ThankRepository()
+    val userRepository = UserRepository()
 
     val slackAppConfig = AppConfig()
     val slackApp = App(slackAppConfig)
 
-    slackReactionEvent(slackApp, repository)
-    slackMessageEvent(slackApp, repository)
+    slackReactionEvent(slackApp, thankRepository)
+    slackMessageEvent(slackApp, thankRepository, userRepository)
     slackCommand(slackApp)
-    slackViewSubmission(slackApp, repository)
+    slackViewSubmission(slackApp, thankRepository, userRepository)
 
     routing {
         static("/static") {
             resources("css")
         }
 
-        homeRoute()
-        thanks(repository)
-        thanksDetail(repository)
-        slackEvent(slackApp, SlackRequestParser(slackAppConfig))
+        homeRouting()
+        thanksRouting(thankRepository, userRepository)
+        thanksDetailRouting(thankRepository, userRepository)
+        slackEventRouting(slackApp, SlackRequestParser(slackAppConfig))
 
-        thankDailyApi(repository)
+        thankDailyApi(thankRepository)
     }
 }

@@ -12,7 +12,7 @@ import io.ktor.routing.Route
 @Location("/slack/events")
 class SlackEventRoute
 
-fun Route.slackEvent(app: App, requestParser: SlackRequestParser) {
+fun Route.slackEventRouting(app: App, requestParser: SlackRequestParser) {
     post<SlackEventRoute> {
         respond(call, app.run(toBoltRequest(call, requestParser)))
     }

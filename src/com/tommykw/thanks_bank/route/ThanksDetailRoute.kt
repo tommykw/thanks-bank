@@ -2,7 +2,8 @@ package com.tommykw.thanks_bank.route
 
 import com.tommykw.thanks_bank.model.Thank
 import com.tommykw.thanks_bank.model.ThankReaction
-import com.tommykw.thanks_bank.repository.Repository
+import com.tommykw.thanks_bank.repository.ThankRepository
+import com.tommykw.thanks_bank.repository.UserRepository
 import io.ktor.application.call
 import io.ktor.freemarker.FreeMarkerContent
 import io.ktor.locations.Location
@@ -13,44 +14,43 @@ import io.ktor.routing.Route
 @Location("/thanks/{thankId}")
 class ThanksDetailRoute(val thankId: Int)
 
-fun Route.thanksDetail(repository: Repository) {
+fun Route.thanksDetailRouting(
+    thankRepository: ThankRepository,
+    userRepository: UserRepository
+) {
     get<ThanksDetailRoute> { listing ->
-        val thank = repository.getThank(listing.thankId)
-        val members = repository.getSlackMembers().members
+        val thank = thankRepository.getThank(listing.thankId)
         var reactions: List<ThankReaction>? = null
         var threads: List<Thank>? = null
 
-        fun idToRealName(slackId: String): String {
-            val res = members.find { it.id == slackId }
-            return res?.realName ?: ""
-        }
-
-        fun idToProfileImage(slackId: String): String {
-            val res = members.find { it.id == slackId }
-            return res?.profile?.image512 ?: ""
-        }
-
         thank.slackPostId?.let { slackPostId ->
-            reactions = repository.getReactions(slackPostId)
-            threads = repository.getThreads(slackPostId)
+            reactions = thankRepository.getReactions(slackPostId)
+            threads = thankRepository.getThreads(slackPostId)
+            val user = userRepository.getUser(thank.slackUserId)
 
-            thank.realName = idToRealName(thank.slackUserId)
-            thank.targetSlackUserId?.let {
-                thank.targetRealName = idToRealName(it)
+            user?.let {
+                thank.realName = user.realName
+                thank.userImage = user.userImage
             }
-            thank.userImage = idToProfileImage(thank.slackUserId)
+
             thank.targetSlackUserId?.let {
-                thank.targetUserImage = idToProfileImage(it)
+                userRepository.getUser(thank.targetSlackUserId)?.let {
+                    thank.targetRealName = it.realName
+                    thank.targetUserImage = it.userImage
+                }
             }
 
             threads?.map { thread ->
-                thread.realName = idToRealName(thread.slackUserId)
-                thread.targetSlackUserId?.let {
-                    thread.targetRealName = idToRealName(it)
+                userRepository.getUser(thread.slackUserId)?.let {
+                    thread.realName = it.realName
+                    thread.userImage = it.userImage
                 }
-                thread.userImage = idToProfileImage(thread.slackUserId)
+
                 thread.targetSlackUserId?.let {
-                    thread.targetUserImage = idToProfileImage(it)
+                    userRepository.getUser(thread.targetSlackUserId)?.let {
+                        thread.targetRealName = it.realName
+                        thread.userImage = it.userImage
+                    }
                 }
             }
         }

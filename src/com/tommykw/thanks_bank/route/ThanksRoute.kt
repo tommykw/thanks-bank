@@ -1,6 +1,7 @@
 package com.tommykw.thanks_bank.route
 
-import com.tommykw.thanks_bank.repository.Repository
+import com.tommykw.thanks_bank.repository.ThankRepository
+import com.tommykw.thanks_bank.repository.UserRepository
 import io.ktor.application.call
 import io.ktor.freemarker.FreeMarkerContent
 import io.ktor.locations.Location
@@ -11,35 +12,32 @@ import io.ktor.routing.Route
 @Location("/thanks")
 class ThanksRoute
 
-fun Route.thanks(repository: Repository) {
+fun Route.thanksRouting(
+    thankRepository: ThankRepository,
+    userRepository: UserRepository
+) {
     get<ThanksRoute> {
-        val members = repository.getSlackMembers().members
-        val thanks = repository.getThanks()
-
-        fun idToRealName(slackId: String): String {
-            val res = members.find { it.id == slackId }
-            return res?.realName ?: ""
-        }
-
-        fun idToProfileImage(slackId: String): String {
-            val res = members.find { it.id == slackId }
-            return res?.profile?.image512 ?: ""
-        }
+        val thanks = thankRepository.getThanks()
 
         thanks.map { thank ->
-            thank.realName = idToRealName(thank.slackUserId)
-            thank.targetSlackUserId?.let {
-                thank.targetRealName = idToRealName(it)
+            val user = userRepository.getUser(thank.slackUserId)
+
+            user?.let {
+                thank.realName = user.realName
+                thank.userImage = user.userImage
             }
-            thank.userImage = idToProfileImage(thank.slackUserId)
+
             thank.targetSlackUserId?.let {
-                thank.targetUserImage = idToProfileImage(it)
+                userRepository.getUser(thank.targetSlackUserId)?.let {
+                    thank.targetRealName = it.realName
+                    thank.targetUserImage = it.userImage
+                }
             }
 
             thank.slackPostId?.let { slackPostId ->
-                val threads = repository.getThreads(slackPostId)
+                val threads = thankRepository.getThreads(slackPostId)
                 thank.threadCount = threads.size
-                thank.reactions = repository.getReactions(slackPostId)
+                thank.reactions = thankRepository.getReactions(slackPostId)
             }
         }
 

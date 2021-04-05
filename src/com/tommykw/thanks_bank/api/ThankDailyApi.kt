@@ -3,33 +3,21 @@ package com.tommykw.thanks_bank.api
 import com.slack.api.Slack
 import com.slack.api.methods.request.chat.ChatPostMessageRequest
 import com.tommykw.thanks_bank.repository.ThankRepository
-import io.ktor.application.call
-import io.ktor.http.HttpStatusCode
-import io.ktor.locations.Location
-import io.ktor.locations.post
-import io.ktor.response.respond
-import io.ktor.routing.Route
+import io.ktor.application.*
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 
-@Location("/api/thank/daily")
-class ThankDailyApi
+private val dateFormat = SimpleDateFormat("yyyy/MM/dd")
 
-private val dateFormat = SimpleDateFormat("HH:mm:dd").apply {
-    timeZone = TimeZone.getTimeZone("Asia/Tokyo")
-}
-
-fun Route.thankDailyApi(repository: ThankRepository) {
-    post<ThankDailyApi> {
+fun Application.thankDailyApi(thankRepository: ThankRepository) {
+    launch {
         val slack = Slack.getInstance()
         val apiClient = slack.methods(System.getenv("SLACK_BOT_TOKEN"))
-
-        val thanks = repository.getThanks()
+        val thanks = thankRepository.getPostThanks()
 
         if (thanks.isEmpty()) {
-            call.response.status(HttpStatusCode.OK)
-            call.respond(mapOf("status" to "OK"))
-            return@post
+            return@launch
         }
 
         val request = ChatPostMessageRequest.builder()
@@ -40,9 +28,9 @@ fun Route.thankDailyApi(repository: ThankRepository) {
         apiClient.chatPostMessage(request)
 
         thanks.forEach { thank ->
-//        Received: ${dateFormat.format(thank.createdAt)}
             val message = """
 ```
+${dateFormat.format(thank.createdAt.toDate())}
 <@${thank.targetSlackUserId}>さんから
 <@${thank.slackUserId}>さんへメッセージが届いてるよ！
 ```
@@ -50,21 +38,14 @@ ${thank.body}
 ----✁----✁----
 """.trimIndent()
 
-            val request = ChatPostMessageRequest.builder()
-                    .channel("#general")
-                    .text(message)
-                    .build()
+            request.text = message
 
             val response = apiClient.chatPostMessage(request)
 
             if (response.isOk) {
-                repository.updateSlackPostId(response.ts, thank)
-            } else {
-                // TODO エラーコード
+                thank.slackUserId
+                thankRepository.updateSlackPostId(response.ts, thank)
             }
         }
-
-        call.response.status(HttpStatusCode.OK)
-        call.respond(mapOf("status" to "OK"))
     }
 }

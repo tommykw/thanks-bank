@@ -1,36 +1,33 @@
-<#global page_title = "おてがみ一覧" />
-<#import "common/container.ftl" as b>
+<#global page_title = "サンクス一覧" />
+<#import "common/container.ftl" as container>
 
-<@b.page>
-    <div class="cards">
+<@container.page>
+    <div class="thanks">
         <#if thanks?? && (thanks?size > 0)>
             <#list thanks as thank>
                 <a href="/thanks/${thank.id}">
-                    <div class="card">
+                    <div class="thanks-card">
 
-                        <div class="card-to-user">
-                            <img class="card_user_image" src="${thank.targetUserImage}" alt="" width="40" height="40"/>
-                            <div class="card-to-user-name">${thank.targetRealName}さんへ</div>
+                        <div class="thanks-card-to-user">
+                            <img src="${thank.targetUserImage}" alt="" width="40" height="40"/>
+                            <p>${thank.targetRealName}さんへ</p>
                         </div>
 
-                        <div class="card_content">
+                        <div class="thanks-card-content">
                             <p>${thank.body}</p>
                         </div>
 
-                        <div class="card_reaction">
-                            <#list thank.reactions as reaction>
-                                <img class="card_user_image" src="${reaction.reactionName}" alt="${reaction.reactionName}" width="20" height="20"/>
-                            </#list>
-                            <div class="card_reaction_count">スレッド${thank.threadCount}件</div>
+                        <div class="thanks-card-reaction">
+                            <p>スレッド${thank.threadCount}件</p>
                         </div>
 
-                        <div class="card_info">
-                            <img class="card-from-image" src="${thank.userImage}" alt="" width="30" height="30"/>
-                            <div class="card-from-user-name">${thank.realName}より</div>
+                        <div class="thanks-card-from-user">
+                            <img src="${thank.userImage}" alt="" width="30" height="30"/>
+                            <p>${thank.realName}より</p>
                         </div>
                     </div>
                 </a>
             </#list>
         </#if>
     </div>
-</@b.page>
+</@container.page>
