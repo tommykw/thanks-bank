@@ -12,9 +12,9 @@ import org.jetbrains.exposed.sql.*
 class ThankRepository {
     suspend fun getThanks(): List<Thank> {
         return dbQuery {
-            ThanksTable.selectAll()
-                .orderBy(ThanksTable.id, SortOrder.DESC)
-                .map { toThank(it) }
+            ThanksTable.select {
+                ThanksTable.parentSlackPostId.isNull()
+            }.orderBy(ThanksTable.id, SortOrder.DESC).map { toThank(it) }
         }
     }
 
@@ -79,7 +79,7 @@ class ThankRepository {
         return dbQuery {
             ThanksTable.select {
                 ThanksTable.parentSlackPostId eq slackPostId
-            }.mapNotNull { toThank(it) }
+            }.map { toThank(it) }
         }
     }
 
@@ -87,7 +87,7 @@ class ThankRepository {
         return dbQuery {
             ThankReactionsTable.select {
                 ThankReactionsTable.slackPostId eq slackPostId
-            }.mapNotNull { toThankReaction(it) }
+            }.map { toThankReaction(it) }
         }
     }
 
