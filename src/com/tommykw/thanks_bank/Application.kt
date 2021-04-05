@@ -69,7 +69,6 @@ fun Application.module(testing: Boolean = false) {
     TaskScheduler {
         sendPostThanksMessages(thankRepository)
     }.start(
-        //Every(1, TimeUnit.HOURS)
         Every(5, TimeUnit.MINUTES)
     )
 

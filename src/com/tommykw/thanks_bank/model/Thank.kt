@@ -1,5 +1,6 @@
 package com.tommykw.thanks_bank.model
 
+import com.tommykw.thanks_bank.model.UsersTable.getUserBySlackUserId
 import org.jetbrains.exposed.dao.IntIdTable
 import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.select
@@ -17,7 +18,7 @@ data class Thank(
     val targetRealName: String,
     val userImage: String,
     val targetUserImage: String,
-    var threadCount: Int,
+    val threadCount: Int,
     val createdAt: DateTime,
     val updatedAt: DateTime
 ) : Serializable
@@ -31,26 +32,30 @@ object ThanksTable: IntIdTable(name = "thanks") {
     val createdAt = datetime(name = "created_at").default(DateTime.now())
     val updatedAt = datetime(name = "updated_at").default(DateTime.now())
 
+    fun getThreadCountBySlackPostId(slackPostId: String): Int {
+        return ThanksTable.select {
+            parentSlackPostId eq slackPostId
+        }.count()
+    }
+
     fun toThank(row: ResultRow): Thank {
-        val user = UsersTable.select { UsersTable.slackUserId eq row[slackUserId] }.map {
-            UsersTable.toUser(it)
-        }.single()
+        val user = getUserBySlackUserId(row[slackUserId])
 
         var targetRealName = ""
         var targetUserImage = ""
 
         row[targetSlackUserId]?.let {
-            val targetUser = UsersTable.select { UsersTable.slackUserId eq it }.map {
-                UsersTable.toUser(it)
-            }.single()
+            val targetUser = getUserBySlackUserId(row[targetSlackUserId])
 
             targetRealName = targetUser.realName
             targetUserImage = targetUser.userImage
         }
 
-        val threadCount = ThanksTable.select {
-            ThanksTable.parentSlackPostId eq row[slackPostId]
-        }.map { ThanksTable.toThank(it) }.size
+        val threadCount = if (row[slackPostId] != null) {
+            getThreadCountBySlackPostId(row[slackPostId]!!)
+        } else {
+            0
+        }
 
         return Thank(
             id = row[id].value,
