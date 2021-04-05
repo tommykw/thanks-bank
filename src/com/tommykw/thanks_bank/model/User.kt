@@ -2,6 +2,7 @@ package com.tommykw.thanks_bank.model
 
 import org.jetbrains.exposed.dao.IntIdTable
 import org.jetbrains.exposed.sql.ResultRow
+import org.jetbrains.exposed.sql.select
 import org.joda.time.DateTime
 import java.io.Serializable
 
@@ -21,6 +22,12 @@ object UsersTable: IntIdTable(name = "users") {
     val createdAt = datetime(name = "created_at").default(DateTime.now())
     val updatedAt = datetime(name = "updated_at").default(DateTime.now())
 
+    fun getUserBySlackUserId(slackUserId: String): User {
+        return UsersTable.select { UsersTable.slackUserId eq slackUserId }.map {
+            toUser(it)
+        }.single()
+    }
+
     fun toUser(row: ResultRow): User {
         return User(
             id = row[id].value,
@@ -32,3 +39,9 @@ object UsersTable: IntIdTable(name = "users") {
         )
     }
 }
+
+data class UserRequest(
+    val slackUserId: String,
+    val realName: String,
+    val userImage: String,
+)

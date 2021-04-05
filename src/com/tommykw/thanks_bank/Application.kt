@@ -3,15 +3,13 @@ package com.tommykw.thanks_bank
 import com.slack.api.bolt.App
 import com.slack.api.bolt.AppConfig
 import com.slack.api.bolt.util.SlackRequestParser
-import com.tommykw.thanks_bank.api.thankDailyApi
-import com.tommykw.thanks_bank.module.slackCommand
-import com.tommykw.thanks_bank.module.slackMessageEvent
-import com.tommykw.thanks_bank.module.slackReactionEvent
-import com.tommykw.thanks_bank.module.slackViewSubmission
+import com.tommykw.thanks_bank.module.*
 import com.tommykw.thanks_bank.repository.DatabaseFactory
 import com.tommykw.thanks_bank.repository.ThankRepository
 import com.tommykw.thanks_bank.repository.UserRepository
 import com.tommykw.thanks_bank.route.*
+import com.tommykw.thanks_bank.util.Every
+import com.tommykw.thanks_bank.util.TaskScheduler
 import freemarker.cache.ClassTemplateLoader
 import io.ktor.application.Application
 import io.ktor.application.call
@@ -28,6 +26,7 @@ import io.ktor.http.content.static
 import io.ktor.locations.Locations
 import io.ktor.response.respondText
 import io.ktor.routing.routing
+import java.util.concurrent.TimeUnit
 
 fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 
@@ -67,16 +66,20 @@ fun Application.module(testing: Boolean = false) {
     slackCommand(slackApp)
     slackViewSubmission(slackApp, thankRepository, userRepository)
 
+    TaskScheduler {
+        sendPostThanksMessages(thankRepository)
+    }.start(
+        Every(5, TimeUnit.MINUTES)
+    )
+
     routing {
         static("/static") {
             resources("css")
         }
 
         homeRouting()
-        thanksRouting(thankRepository, userRepository)
-        thanksDetailRouting(thankRepository, userRepository)
+        thanksRouting(thankRepository)
+        thanksDetailRouting(thankRepository)
         slackEventRouting(slackApp, SlackRequestParser(slackAppConfig))
-
-        thankDailyApi(thankRepository)
     }
 }

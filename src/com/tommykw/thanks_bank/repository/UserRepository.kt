@@ -1,15 +1,14 @@
 package com.tommykw.thanks_bank.repository
 
 import com.slack.api.Slack
-import com.slack.api.methods.request.users.UsersListRequest
-import com.slack.api.methods.response.users.UsersListResponse
+import com.slack.api.methods.request.users.UsersInfoRequest
+import com.slack.api.methods.response.users.UsersInfoResponse
 import com.tommykw.thanks_bank.model.User
 import com.tommykw.thanks_bank.model.UserRequest
 import com.tommykw.thanks_bank.model.UsersTable
 import com.tommykw.thanks_bank.repository.DatabaseFactory.dbQuery
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
-import org.jetbrains.exposed.sql.selectAll
 
 class UserRepository {
     suspend fun createUser(request: UserRequest) {
@@ -22,12 +21,6 @@ class UserRepository {
         }
     }
 
-    suspend fun getUsers(): List<User> {
-        return dbQuery {
-            UsersTable.selectAll().map { UsersTable.toUser(it) }
-        }
-    }
-
     suspend fun getUser(slackUserId: String): User? {
         return dbQuery {
             UsersTable.select {
@@ -36,17 +29,18 @@ class UserRepository {
         }
     }
 
-    suspend fun getSlackMembers(): UsersListResponse {
+    suspend fun getSlackUsersInfo(slackUserId: String): UsersInfoResponse {
         val slack = Slack.getInstance()
         val apiClient = slack.methods(System.getenv("SLACK_BOT_TOKEN"))
 
-        val request = UsersListRequest
+        val request = UsersInfoRequest
             .builder()
             .token(System.getenv("SLACK_BOT_TOKEN"))
+            .user(slackUserId)
             .build()
 
         return dbQuery {
-            apiClient.usersList(request)
+            apiClient.usersInfo(request)
         }
     }
 }

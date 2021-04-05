@@ -4,14 +4,13 @@ import com.slack.api.bolt.App
 import com.slack.api.model.event.ReactionAddedEvent
 import com.slack.api.model.event.ReactionRemovedEvent
 import com.tommykw.thanks_bank.repository.ThankRepository
-import io.ktor.application.Application
+import io.ktor.application.*
 import kotlinx.coroutines.launch
 
 fun Application.slackReactionEvent(
     app: App,
     thankRepository: ThankRepository
 ) {
-
     app.event(ReactionAddedEvent::class.java) { payload, ctx ->
         val event = payload.event
 
