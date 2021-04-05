@@ -19,40 +19,31 @@ fun Application.slackViewSubmission(
         val targetUsers = stateValues["user-block"]?.get("user-action")?.selectedUsers
 
         if (message?.isNotEmpty() == true && targetUsers?.isNotEmpty() == true) {
-            try {
-                launch {
-                    val slackUserId = req.payload.user.id
+            val slackUserId = req.payload.user.id
 
-                    listOf(*targetUsers.toTypedArray()).forEach { targetSlackUserId ->
-                        thankRepository.createThank(
-                            ThankRequest(
-                                slackUserId = slackUserId,
-                                targetSlackUserId = targetSlackUserId,
-                                body = message,
+            launch {
+                listOf(*targetUsers.toTypedArray()).forEach { targetSlackUserId ->
+                    thankRepository.createThank(
+                        ThankRequest(
+                            slackUserId = slackUserId,
+                            targetSlackUserId = targetSlackUserId,
+                            body = message,
+                        )
+                    )
+                }
+
+                listOf(*targetUsers.toTypedArray(), slackUserId).distinct().forEach { targetSlackUserId ->
+                    if (userRepository.getUser(targetSlackUserId) == null) {
+                        val slackUsersInfo = userRepository.getSlackUsersInfo(targetSlackUserId)
+                        userRepository.createUser(
+                            UserRequest(
+                                slackUserId = targetSlackUserId,
+                                realName = slackUsersInfo.user.realName,
+                                userImage = slackUsersInfo.user.profile.image512,
                             )
                         )
-
-                        if (userRepository.getUser(targetSlackUserId) == null) {
-                            val slackUsersInfo = userRepository.getSlackUsersInfo(targetSlackUserId)
-                            userRepository.createUser(
-                                UserRequest(
-                                    slackUserId = targetSlackUserId,
-                                    realName = slackUsersInfo.user.realName,
-                                    userImage = slackUsersInfo.user.profile.image512,
-                                )
-                            )
-                        }
                     }
                 }
-            } catch (e: Throwable) {
-                ctx.client().chatPostEphemeral {
-                    it.token(ctx.botToken)
-                    it.user(req.payload.user.id)
-                    it.channel("#general")
-                    it.text("メッセージの送信に失敗しました")
-                }
-
-                return@viewSubmission ctx.ack()
             }
         }
 
