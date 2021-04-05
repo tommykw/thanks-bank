@@ -31,8 +31,8 @@ fun Application.sendPostThanksMessages(thankRepository: ThankRepository) {
             val message = """
 ```
 ${dateFormat.format(thank.createdAt.toDate())}
-<@${thank.targetSlackUserId}>さんから
-<@${thank.slackUserId}>さんへメッセージが届いてるよ！
+<@${thank.slackUserId}>さんから
+<@${thank.targetSlackUserId}>さんへメッセージが届いてるよ！
 ```
 ${thank.body}
 ----✁----✁----
