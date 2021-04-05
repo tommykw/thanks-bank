@@ -225,37 +225,37 @@ footer a {
 }
 
 /* Thanks Detail */
-.thanks-detail {
+.thanks-detail-message {
     background-color: #FFFFFF;
     padding: 15px 15px 30px 15px;
     border-radius: 8px;
 }
 
-.thanks-detail-fromto {
+.thanks-detail-message-user {
     display: flex;
     align-items: center;
     justify-content: start;
     background-color: #FFFFFF;
 }
 
-.thanks-detail-fromto-image-you {
+.thanks-detail-message-user-from {
     border-radius: 20px;
 }
 
-.thanks-detail-fromto-image-target {
+.thanks-detail-message-user-to {
     margin-left: 1rem;
     border-radius: 20px;
 }
 
-.thanks-detail-fromto-message {
+.thanks-detail-message-user p {
     margin-left: 1.4rem;
     font-size: 1rem;
     font-weight: bold;
     background-color: #FFFFFF;
 }
 
-.thanks-detail-message {
-    font-size: 16px;
+.thanks-detail-message-body {
+    font-size: 14px;
     margin-top: 1rem;
 }
 
@@ -266,45 +266,41 @@ footer a {
     border-radius: 8px;
 }
 
-.thanks-detail-reaction-title {
-    font-size: 10px;
+.thanks-detail-reaction h2 {
+    font-size: 16px;
     font-weight: bold;
 }
 
-.thanks-detail-reaction-icon {
-    margin-top: 1rem;
-}
-
-.thanks-detail-tread {
+.thanks-detail-thread {
     margin-top: 2rem;
     background-color: #FFFFFF;
     padding: 15px 15px 30px 15px;
     border-radius: 8px;
 }
 
-.thanks-detail-tread-title {
-    font-size: 10px;
+.thanks-detail-thread h2 {
+    font-size: 16px;
     font-weight: bold;
 }
 
-.thanks-detail-tread-user-info {
+.thanks-detail-thread-user {
     margin-top: 2rem;
     align-items: center;
     justify-content: start;
     display: flex;
 }
 
-.thanks-detail-tread-user-info-icon {
+.thanks-detail-thread-user img {
     border-radius: 20px;
 }
 
-.thanks-detail-tread-user-info-name {
+.thanks-detail-thread-user p {
     margin-left: 1rem;
     font-size: 10px;
     font-weight: bold;
 }
 
-.thanks-detail-tread-message {
+.thanks-detail-thread-message {
     margin-top: 2rem;
-    font-size: 16px;
+    font-size: 14px;
 }
